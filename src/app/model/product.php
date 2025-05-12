@@ -263,8 +263,7 @@ function countAllProducts()
     
 }
 function countAllProductsByCategory($cate_id) {
-    $sql = "SELECT COUNT(*) as total FROM products WHERE cate_id = :cate_id";
-    $params = [':cate_id' => $cate_id];
-    $result = pdo_query_one($sql, $params);
+    $sql = "SELECT COUNT(*) as total FROM products WHERE cate_id = ?";
+    $result = pdo_query_one($sql, $cate_id);  // ✅ truyền biến, không truyền mảng
     return $result['total'];
 }
