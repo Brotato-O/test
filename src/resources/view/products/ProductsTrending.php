@@ -16,9 +16,11 @@
                     </a>
                 </div>
                 <div class="card-body">
-                    <a class="card-title two-line-clamp my-3 fs-6 text-dark text-decoration-none "
-                        href="index.php?act=productinformation&pro_id=<?= $pro_id ?>"
-                        class="product-link"><?php echo $product['pro_name']; ?></a>
+                    <a class="card-title two-line-clamp my-3 fs-6 text-dark text-decoration-none"
+                    href="index.php?act=productinformation&pro_id=<?= $pro_id ?>">
+                    <?php echo $pro_name; ?>
+                    </a>
+
                     <div class="d-flex align-items-center justify-content-between px-2">
                         <p class="card-text fw-bold fs-2 mb-0">$<?php echo $pro_price ?></p>
                         <p class="text-secondary ps-2 mt-3">by <?php echo $pro_brand ?></p>
