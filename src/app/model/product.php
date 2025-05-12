@@ -152,13 +152,41 @@ function updateProductViews($pro_id)
     }
 }
 
-function trending_products()
+function trending_products($limit, $offset)
 {
-    $sql = "SELECT * FROM products ORDER BY pro_viewer DESC LIMIT 20";
-    $favouriteProducts = pdo_queryall($sql);
-    return $favouriteProducts;
+    $sql = "SELECT * FROM products ORDER BY pro_viewer DESC LIMIT $limit OFFSET $offset";
+    return pdo_queryall($sql);
 }
 
+
+
+
+// function trending_products()
+// {
+//     $sql = "SELECT * FROM products ORDER BY pro_viewer DESC LIMIT 20";
+//     $favouriteProducts = pdo_queryall($sql);
+//     return $favouriteProducts;
+// }
+
+function countTrendingProducts()
+{
+    // luôn là 20 sản phẩm
+    return 20;
+}
+
+
+
+// function queryallpro1($key, $idcate, $limit, $offset)
+// {
+//     $sql = "select * from products where trangthai = 0";
+//     if ($key != '') {
+//         $sql .= " and pro_name like '%$key%'";
+//     }
+//     if ($idcate > 0) {
+//         $sql .= " and cate_id = $idcate";
+//     }
+
+// }
 
 
 
