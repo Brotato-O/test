@@ -239,3 +239,32 @@ function  getAllChitietSp($id)
     $result = pdo_queryall($sql);
     return $result;
 }
+
+function queryallpro1($key, $idcate, $limit, $offset)
+{
+    $sql = "select * from products where trangthai = 0";
+    if ($key != '') {
+        $sql .= " and pro_name like '%$key%'";
+    }
+    if ($idcate > 0) {
+        $sql .= " and cate_id = $idcate";
+    }
+
+    
+    $sql .= " ORDER BY pro_id DESC LIMIT $limit OFFSET $offset";
+    $result = pdo_queryall($sql);
+    return $result;
+}
+function countAllProducts()
+{
+    $sql = "SELECT COUNT(*) as total FROM products WHERE trangthai = 0";
+    $result = pdo_query_one($sql);
+    return $result['total'];
+    
+}
+function countAllProductsByCategory($cate_id) {
+    $sql = "SELECT COUNT(*) as total FROM products WHERE cate_id = :cate_id";
+    $params = [':cate_id' => $cate_id];
+    $result = pdo_query_one($sql, $params);
+    return $result['total'];
+}
