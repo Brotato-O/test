@@ -54,11 +54,21 @@
                 </form>
                 <br>
                 <form method="GET" id="limitForm" class="mb-3">
-                    <input type="hidden" name="start_price" value="<?= isset($_GET['start_price']) ? $_GET['start_price'] : '' ?>">
-                    <input type="hidden" name="end_price" value="<?= isset($_GET['end_price']) ? $_GET['end_price'] : '' ?>">
-                    <select name="limit" onchange="document.getElementById('limitForm').submit()">
+                    <!-- Giữ lại tham số lọc giá (nếu có) -->
+                    <?php if (isset($_GET['start_price']) && isset($_GET['end_price'])): ?>
+                        <input type="hidden" name="start_price" value="<?= htmlspecialchars($_GET['start_price']) ?>">
+                        <input type="hidden" name="end_price" value="<?= htmlspecialchars($_GET['end_price']) ?>">
+                    <?php endif; ?>
+
+                    <!-- Giữ lại tham số danh mục (nếu có) -->
+                    <?php if (isset($_GET['category'])): ?>
+                        <input type="hidden" name="category" value="<?= htmlspecialchars($_GET['category']) ?>">
+                    <?php endif; ?>
+
+                    <!-- Select box phân trang -->
+                    <select name="limit" onchange="this.form.submit()">
                         <?php
-                        $selectedLimit = isset($_GET['limit']) ? $_GET['limit'] : 6;
+                        $selectedLimit = $_GET['limit'] ?? 6;
                         $options = [6, 9, 12, 15, 18];
                         foreach ($options as $option) {
                             $selected = ($option == $selectedLimit) ? 'selected' : '';
@@ -114,6 +124,7 @@
                     }
                     ?>
                     <!-- Hiển thị phân trang chỉ cho sản phẩm chưa lọc -->
+                <?php if ($total_pages > 1): ?>
                     <div class="col-12 d-flex justify-content-center mt-4">
                         <div class="pagination">
                             <?php if ($page > 1): ?>
@@ -133,6 +144,7 @@
                             <?php endif; ?>
                         </div>
                     </div>
+                 <?php endif; ?>
                     <?php
                     
                 } elseif (isset($_GET['filter'])) { ?>
@@ -189,6 +201,7 @@
 
                                 ?>
                                                     <!-- Hiển thị phân trang chỉ cho sản phẩm chưa lọc -->
+                                    <?php if ($total_pages > 1): ?>
                                         <div class="col-12 d-flex justify-content-center mt-4">
                                             <div class="pagination">
                                                 <?php if ($page > 1): ?>
@@ -208,6 +221,7 @@
                                                 <?php endif; ?>
                                             </div>
                                         </div>
+                                    <?php endif; ?>
                                 <?php
                             } else {
                                 echo "No Record Found";
@@ -286,25 +300,27 @@
                     }
                     ?>
                     <!-- Hiển thị phân trang chỉ cho sản phẩm chưa lọc -->
-    <div class="col-12 d-flex justify-content-center mt-4">
-        <div class="pagination">
-            <?php if ($page > 1): ?>
-                <a href="index.php?page=<?= $page - 1 ?>" style="margin: 0 5px;">Previous</a>
-            <?php endif; ?>
+            <?php if ($total_pages > 1): ?>
+                <div class="col-12 d-flex justify-content-center mt-4">
+                    <div class="pagination">
+                        <?php if ($page > 1): ?>
+                            <a href="index.php?page=<?= $page - 1 ?>" style="margin: 0 5px;">Previous</a>
+                        <?php endif; ?>
 
-            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                <?php if ($i == $page): ?>
-                    <span style="margin: 0 5px; background-color: #007bff; color: white; padding: 5px 10px; border-radius: 5px;"><?= $i ?></span>
-                <?php else: ?>
-                    <a href="index.php?page=<?= $i ?>" style="margin: 0 5px; padding: 5px 10px;"><?= $i ?></a>
-                <?php endif; ?>
-            <?php endfor; ?>
+                        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                            <?php if ($i == $page): ?>
+                                <span style="margin: 0 5px; background-color: #007bff; color: white; padding: 5px 10px; border-radius: 5px;"><?= $i ?></span>
+                            <?php else: ?>
+                                <a href="index.php?page=<?= $i ?>" style="margin: 0 5px; padding: 5px 10px;"><?= $i ?></a>
+                            <?php endif; ?>
+                        <?php endfor; ?>
 
-            <?php if ($page < $total_pages): ?>
-                <a href="index.php?page=<?= $page + 1 ?>" style="margin: 0 5px;">Next</a>
+                        <?php if ($page < $total_pages): ?>
+                            <a href="index.php?page=<?= $page + 1 ?>" style="margin: 0 5px;">Next</a>
+                        <?php endif; ?>
+                    </div>
+                </div>
             <?php endif; ?>
-        </div>
-    </div>
                     <?php
                     
                 }

@@ -58,8 +58,8 @@
             <?php
             }
             ?>
-
-          <div class="col-12 d-flex justify-content-center mt-4">
+    <?php if ($total_pages > 1): ?>
+        <div class="col-12 d-flex justify-content-center mt-4">
             <div class="pagination">
                 <?php
                 // Gộp $_GET với act=productstrending để dùng cho phân trang
@@ -83,6 +83,10 @@
                 <?php endif; ?>
             </div>
         </div>
+    <?php endif; ?>
+
+
+        
 
 
         </div>
