@@ -1,5 +1,5 @@
     <?php
-    function loadall_donhang($kyw = "", $start_date = "", $end_date = "")
+    function loadall_donhang($kyw = "", $start_date = "", $end_date = "", $offset = 0, $limit = 0)
     {
         $sql = "
                 SELECT 
@@ -40,6 +40,12 @@
 
         $sql .= " GROUP BY order.order_id";
         $sql .= " ORDER BY `order`.`order_id` DESC";
+
+        // Thêm phân trang nếu có yêu cầu
+        if ($limit > 0) {
+            $sql .= " LIMIT $offset, $limit";
+        }
+
         $result = pdo_queryall($sql);
         return $result;
     }
@@ -70,6 +76,11 @@
 
         return true; // Trả về true để thể hiện rằng việc xoá thành công
     }
+    function loadone_donhang($order_id) {
+    $sql = "SELECT * FROM `order` WHERE order_id = ?";
+    return pdo_query_one($sql, $order_id);
+}
+
     function loadall_one_donhang($order_id)
     {
         $sql = "
@@ -81,19 +92,12 @@
         $result =  pdo_query_one($sql);
         return $result;
     }
-    function updatedh($order_trangthai, $order_id)
-    {
-        if ($order_trangthai === 'Đã nhận hàng') {
-            // Nếu đơn đã nhận hàng, cập nhật trạng thái và ngày nhận hàng (date_rev)
-            $ngay_nhan = date('Y-m-d'); // hoặc date('Y-m-d H:i:s') nếu dùng DATETIME
-            $sql = "UPDATE `order` SET order_trangthai = '$order_trangthai', date_rev = '$ngay_nhan' WHERE order_id = $order_id";
-        } else {
-            // Cập nhật chỉ trạng thái
-            $sql = "UPDATE `order` SET order_trangthai = '$order_trangthai' WHERE order_id = $order_id";
-        }
+   function updatedh($order_trangthai, $order_id)
+{
+    $sql = "UPDATE `order` SET order_trangthai = '$order_trangthai' WHERE order_id = $order_id";
+    pdo_execute($sql);
+}
 
-        pdo_execute($sql);
-    }
 
     function loadall_chitietdh($order_id)
     {
@@ -130,12 +134,13 @@
         $result = pdo_query_one($sql);
         return $result;
     }
-    function thongke_donhang()
+    function thongke_donhang_trangthai()
     {
         $sql = "
                 SELECT 
-                    `order`.`order_trangthai`,`order`.`order_totalprice`,
-                    COUNT(`order`.`order_id`) as `so_luong_donhang`
+                    `order`.`order_trangthai`,
+                    COUNT(`order`.`order_id`) as `soluong`,
+                    SUM(`order`.`order_totalprice`) as `tongtien`
                 FROM 
                     `order`
                 WHERE 
@@ -204,5 +209,39 @@
         return $result;
     }
 
+    function count_all_donhang($kyw = "", $start_date = "", $end_date = "")
+    {
+        $sql = "
+                SELECT 
+                    COUNT(DISTINCT `order`.`order_id`) as total
+                FROM 
+                    `order`
+                LEFT JOIN 
+                    `khachhang` ON `order`.`kh_id` = `khachhang`.`kh_id`
+                LEFT JOIN 
+                    `order_chitiet` ON `order`.`order_id` = `order_chitiet`.`order_id`
+                WHERE 
+                    1
+            ";
+
+        if ($kyw !== '') {
+            $sql .= " AND `order`.`order_id` LIKE '%$kyw%'";
+        }
+
+        if ($start_date !== '') {
+            // đổi format ngày từ YYYY-MM-DD sang DD-MM-YY
+            $start_date = date('d-m-y', strtotime($start_date));
+            $sql .= " AND STR_TO_DATE(`order`.`order_date`, '%d-%m-%y') >= STR_TO_DATE('$start_date', '%d-%m-%y')";
+        }
+
+        if ($end_date !== '') {
+            // đổi format ngày từ YYYY-MM-DD sang DD-MM-YY
+            $end_date = date('d-m-y', strtotime($end_date));
+            $sql .= " AND STR_TO_DATE(`order`.`order_date`, '%d-%m-%y') <= STR_TO_DATE('$end_date', '%d-%m-%y')";
+        }
+
+        $result = pdo_query_one($sql);
+        return $result['total'];
+    }
 
     ?>

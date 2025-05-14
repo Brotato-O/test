@@ -1,0 +1,17 @@
+{
+  "name": "pttkht/php-ecommerce",
+  "description": "Hệ thống E-commerce PHP",
+  "type": "project",
+  "require": {
+    "php": ">=7.0",
+    "setasign/fpdf": "^1.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  },
+  "config": {
+    "vendor-dir": "src/vendor"
+  }
+}

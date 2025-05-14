@@ -1,6 +1,12 @@
 
             
     <!-- main -->
+       <?php if (!empty($message)): ?>
+          <script>
+              alert("<?= $message ?>");
+          </script>
+      <?php endif; ?>
+
                 <div class="container">
                     <h2 class="border border-4 mb-4 text-bg-secondary p-3 text-center rounded">Danh sách tài khoản khách hàng</h2>
                     <!-- <form action="" class="mb-4">
@@ -20,6 +26,7 @@
                         </div>
                         </form> -->
                         <div class="table-responsive">
+
                           <table class="table table-bordered">
                               <thead>
                                 <tr>
@@ -31,6 +38,7 @@
                                   <Th class="text-bg-secondary">Địa chỉ</Th>
                                   <Th class="text-bg-secondary">Số điện thoại</Th>
                                   <Th class="text-bg-secondary">Vai trò</Th>
+                                  <Th class="text-bg-secondary">Trạng thái</Th>
                                   <Th class="text-bg-secondary">Thao tác</Th>
                                 </tr>
                               </thead>
@@ -46,12 +54,26 @@
                                   <td><?= $kh_mail ?></td>
                                   <td><?= $kh_address ?></td>
                                   <td><?= $kh_tel ?></td>
+                                  <td>
+                                    <?= ($trangthai == 0) ? "Đang hoạt động" : "Đã khóa"; ?>
+                                  </td>
                                   <td><?= $vaitro_id ?></td>
                                   <td>
                                       <a href="indexadmin.php?act=suatk&kh_id=<?php echo $kh_id ?>" class="mb-2"><input class="mb-2 text-bg-secondary rounded" type="button" name="" value="Sửa" id=""></a>
                                       <a href="indexadmin.php?act=xoatk&kh_id=<?php echo $kh_id ?>"><input type="button"  class="mb-2 text-bg-danger rounded" onclick="return confirm('Bạn có chắc muốn xoá ?')" name="" value="Xoá cứng" id=""></a>
-                                      <a href="indexadmin.php?act=soft_xoatk&kh_id=<?php echo $kh_id ?>"><input type="button" class="mb-2 text-bg-success rounded" onclick="return confirm('Bạn có chắc muốn xoá ?')" name="" value="Xoá mềm" id=""></a>
-                                  </td>
+                                      <!-- <a href="indexadmin.php?act=soft_xoatk&kh_id=<?php echo $kh_id ?>"><input type="button" class="mb-2 text-bg-success rounded" onclick="return confirm('Bạn có chắc muốn khóa tài khoản ?')" name="" value="Khóa" id=""></a>
+                                      <a href="indexadmin.php?act=mokhoatk&kh_id=<?php echo $kh_id ?>"><input type="button" class="mb-2 text-bg-success rounded" name="" value="Mở khóa" id=""></a>
+                                     -->
+                                      <?php if ($trangthai == 1): ?>
+                                        <a href="indexadmin.php?act=mokhoatk&kh_id=<?= $kh_id ?>">
+                                          <input type="button" class="mb-2 text-bg-success rounded" value="Mở khóa">
+                                        </a>
+                                      <?php else: ?>
+                                        <a href="indexadmin.php?act=soft_xoatk&kh_id=<?= $kh_id ?>">
+                                          <input type="button" class="mb-2 text-bg-warning rounded" onclick="return confirm('Bạn có chắc muốn khóa tài khoản ?')" value="Khóa">
+                                        </a>
+                                      <?php endif; ?>
+                                    </td>
                                 </tr>
                               <?php  } ?>
                               </tbody>
@@ -66,5 +88,6 @@
                             </a>
                         </div>
                 </div>
+        
            
     

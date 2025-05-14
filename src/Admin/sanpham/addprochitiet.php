@@ -3,7 +3,7 @@
         <h2 class="border border-4 mb-4 text-black-50 p-3 text-center rounded">Thêm mới chi tiết sản phẩm</h2>
         <div class="container text-bg-light rounded">
 
-            <form action="indexadmin.php?act=addpro_ct" method="post" enctype="multipart/form-data">
+            <form action="indexadmin.php?act=addpro_ct" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
                 <?php
                 if (isset($_GET['prochitietid'])) {
                     $pro_id = $_GET['prochitietid'];
@@ -68,3 +68,34 @@
             </form>
         </div>
     </div>
+
+     <script>
+    function validateForm() {
+        const proId = document.getElementsByName("pro_id")[0]?.value.trim();
+        const colorId = document.getElementsByName("color_id")[0].value;
+        const sizeId = document.getElementsByName("size_id")[0].value;
+        const quantity = document.getElementsByName("soluong")[0].value.trim();
+
+        if (!proId || proId === "") {
+            alert("Thiếu ID sản phẩm.");
+            return false;
+        }
+
+        if (!colorId || colorId === "0") {
+            alert("Vui lòng chọn màu.");
+            return false;
+        }
+
+        if (!sizeId || sizeId === "0") {
+            alert("Vui lòng chọn size.");
+            return false;
+        }
+
+        if (quantity === "" || isNaN(quantity) || parseInt(quantity) <= 0) {
+            alert("Số lượng phải là một số nguyên dương.");
+            return false;
+        }
+
+        return true; // Dữ liệu hợp lệ, cho phép submit
+    }
+</script>

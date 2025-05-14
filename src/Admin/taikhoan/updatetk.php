@@ -9,7 +9,7 @@ if (is_array($tk)) {
     <h2 class="border border-4 mb-4 text-bg-secondary p-3 text-center rounded">Cập nhật tài khoản</h2>
     <div class="container text-bg-light rounded">
 
-        <form action="indexadmin.php?act=updatetk" method="post">
+        <form action="indexadmin.php?act=updatetk" method="post"  onsubmit="return validateForm();">
             <div class="mb-3 mt-3">
                 <label for="kh_id " class="form-label text-danger">Id khách hàng:</label>
                 <input type="text" class="form-control" id="kh_id " placeholder="Tên đăng nhập" value="<?= $kh_id ?>"
@@ -40,13 +40,21 @@ if (is_array($tk)) {
                 <input type="tel" class="form-control" id="kh_tel" placeholder="Số điện thoại" value="<?= $kh_tel ?>"
                     name="kh_tel">
             </div>
-            <div class="mb-3 mt-3">
+             <div class="mb-3 mt-3">
                 <label for="vaitro" class="form-label text-danger">Vai trò:</label>
+                <?php
+                $vaitros = getallvt(); // Hàm này bạn cần định nghĩa để trả về mảng vai trò
+                ?>
                 <select class="form-select" id="vaitro" name="vaitro_id">
-                    <option <?php if ($vaitro_id == 0) echo "selected" ?> value="0">Khách Hàng</option>
-                    <option <?php if ($vaitro_id == 1) echo "selected" ?> value="1">Quản trị</option>
-                    <option <?php if ($vaitro_id == 3) echo "selected" ?> value="0">Nhân Viên</option>
-                    <option <?php if ($vaitro_id == 4) echo "selected" ?> value="0">Nhân Viên Kho</option>
+                    <?php
+                    foreach ($vaitros as $vt) {
+                    ?>
+                        <option value="<?php echo $vt['vaitro_id']; ?>" <?php if ($vt['vaitro_id'] == $vaitro_id) echo 'selected'; ?>>
+                            <?php echo $vt['vaitro_name']; ?>
+                        </option>
+                    <?php
+                    }
+                    ?>
                 </select>
             </div>
             <div class="mb-3 mt-3">
@@ -59,3 +67,49 @@ if (is_array($tk)) {
         </form>
     </div>
 </div>
+
+<script>
+    function validateForm() {
+        const name = document.getElementById("kh_name").value.trim();
+        const pass = document.getElementById("kh_pass").value.trim();
+        const email = document.getElementById("kh_mail").value.trim();
+        const address = document.getElementById("kh_address").value.trim();
+        const tel = document.getElementById("kh_tel").value.trim();
+        const vaitro = document.getElementById("vaitro").value;
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const telRegex = /^[0-9]{9,11}$/;
+
+        if (name === "") {
+            alert("Vui lòng nhập tên đăng nhập.");
+            return false;
+        }
+
+        if (pass === "") {
+            alert("Vui lòng nhập mật khẩu.");
+            return false;
+        }
+
+        if (email === "" || !emailRegex.test(email)) {
+            alert("Vui lòng nhập email hợp lệ.");
+            return false;
+        }
+
+        if (address === "") {
+            alert("Vui lòng nhập địa chỉ.");
+            return false;
+        }
+
+        if (tel === "" || !telRegex.test(tel)) {
+            alert("Vui lòng nhập số điện thoại hợp lệ (9–11 chữ số).");
+            return false;
+        }
+
+        if (vaitro === "" || vaitro === "0") {
+            alert("Vui lòng chọn vai trò.");
+            return false;
+        }
+
+        return true;
+    }
+</script>

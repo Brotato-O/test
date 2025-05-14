@@ -1,0 +1,13 @@
+[2025-05-13 11:40:59] Bắt đầu xử lý hủy thanh toán cho đơn hàng: 155
+[2025-05-13 11:40:59] Đã cập nhật trạng thái đơn hàng thành 'Đã hủy'
+[2025-05-13 11:40:59] Đơn hàng có 1 sản phẩm
+[2025-05-13 11:40:59] Session product_updates tồn tại với 1 sản phẩm
+[2025-05-13 11:40:59] Sản phẩm 0: pro_id = 66, size_id = 3, color_id = 1, quantity = 10
+[2025-05-13 11:40:59] Khách hàng ID: 39
+[2025-05-13 11:40:59] Giỏ hàng hiện tại: Tồn tại (cart_id: 6)
+[2025-05-13 11:40:59] Đang thêm sản phẩm: pro_id=66, color=1, size=3, qty=10, price=300
+[2025-05-13 11:40:59] Kiểm tra sản phẩm trong giỏ hàng: Chưa có
+[2025-05-13 11:40:59] Thêm mới sản phẩm vào giỏ hàng cart_id=6
+[2025-05-13 11:40:59] Sau khi cập nhật, giỏ hàng có 1 sản phẩm
+[2025-05-13 11:40:59] Đã xóa thông tin đơn hàng khỏi session
+[2025-05-13 11:40:59] Kết thúc xử lý hủy thanh toán, chuyển hướng về trang chủ

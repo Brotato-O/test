@@ -9,11 +9,12 @@ if (isset($dh) && is_array($dh)) {
                     <label for="tendm" class="form-label text-danger">Trạng thái đơn hàng:</label>
                     
                     <select name="order_trangthai" id="">
-                            <option value="Đang chờ xác nhận">Đang chờ xác nhận</option>
-                            <option value="Đang giao hàng">Đang giao hàng</option>
-                            <option value="Đã nhận hàng">Đã giao hàng</option>
-                            <option value="Đã hủy">Đã hủy</option>
+                        <option value="Đang chờ xác nhận" <?= ($dh['order_trangthai'] == 'Đang chờ xác nhận') ? 'selected' : '' ?>>Đang chờ xác nhận</option>
+                        <option value="Đang giao hàng" <?= ($dh['order_trangthai'] == 'Đang giao hàng') ? 'selected' : '' ?>>Đang giao hàng</option>
+                        <option value="Đã nhận hàng" <?= ($dh['order_trangthai'] == 'Đã nhận hàng') ? 'selected' : '' ?>>Đã giao hàng</option>
+                        <option value="Đã hủy" <?= ($dh['order_trangthai'] == 'Đã hủy') ? 'selected' : '' ?>>Đã hủy</option>
                     </select>
+
                 </div>
                 <input type="hidden" name="order_id" value="<?php echo $dh['order_id']?>">
                 <div class="">

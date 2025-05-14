@@ -32,6 +32,22 @@ function delete_ncc($ncc_id)
     pdo_execute($sql);
 }
 
+// Thêm nhà cung cấp mới và trả về ID
+function insert_ncc_return_id($ncc_name, $ncc_email, $ncc_sdt, $ncc_diachi)
+{
+    try {
+        $conn = get_connect();
+        $sql = "INSERT INTO nhacungcap (ncc_name, ncc_email, ncc_sdt, ncc_diachi, ncc_trangthai) 
+                VALUES (?, ?, ?, ?, 0)";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$ncc_name, $ncc_email, $ncc_sdt, $ncc_diachi]);
+        return $conn->lastInsertId();
+    } catch (PDOException $e) {
+        echo "❌ Lỗi khi thêm nhà cung cấp: " . $e->getMessage();
+        return 0;
+    }
+}
+
 function loadall_ncc($keyword = '', $sapXep = 'id', $thuTu = 'asc')
 {
     $sql = "SELECT * FROM nhacungcap WHERE 1";

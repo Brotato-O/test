@@ -46,7 +46,6 @@ body {
   height: 100vh;
 }
 
-
 /* ---------- HEADER ---------- */
 
 .header {
@@ -63,7 +62,6 @@ body {
 .menu-icon {
   display: none;
 }
-
 
 /* ---------- SIDEBAR ---------- */
 
@@ -115,6 +113,17 @@ body {
   color: #9799ab;
 }
 
+/* Active sidebar item */
+.sidebar-list-item.active {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-left: 4px solid #4f35a1;
+}
+
+.sidebar-list-item.active > a {
+  color: #ffffff;
+  font-weight: bold;
+}
+
 .sidebar-responsive {
   display: inline !important;
   position: absolute;
@@ -126,7 +135,6 @@ body {
   */
   z-index: 12 !important;
 }
-
 
 /* ---------- MAIN ---------- */
 
@@ -224,7 +232,6 @@ body {
   font-weight: 600;
 }
 
-
 /* ---------- SCROLLBARS ---------- */
 
 ::-webkit-scrollbar {
@@ -246,9 +253,7 @@ body {
   background-color: #a5aaad;
 }
 
-
 /* ---------- MEDIA QUERIES ---------- */
-
 
 /* Medium <= 992px */
 @media screen and (max-width: 992px) {

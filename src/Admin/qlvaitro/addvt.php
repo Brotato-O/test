@@ -1,9 +1,9 @@
 <!-- main -->
 <div class="container">
-        <h2 class="border border-4 mb-4 text-bg-secondary p-3 text-center rounded">Thêm màu</h2>
+        <h2 class="border border-4 mb-4 text-bg-secondary p-3 text-center rounded">Thêm Vai trò</h2>
         <div class="container text-bg-light rounded">
 
-            <form action="indexadmin.php?act=addvt" method="post" enctype="multipart/form-data">
+            <form action="indexadmin.php?act=addvt" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
                 <div class="mb-3 mt-3">
                     <label for="tensp" class="form-label text-danger">Tên vai trò:</label>
                     <input type="text" class="form-control" id="tensp" placeholder="Tên vai trò" name="vaitro_name">
@@ -20,3 +20,16 @@
             </form>
         </div>
     </div>
+
+    <script>
+    function validateForm() {
+        const tenVaiTro = document.getElementById("tensp").value.trim();
+
+        if (tenVaiTro === "") {
+            alert("Vui lòng nhập tên vai trò.");
+            return false;
+        }
+
+        return true; // Dữ liệu hợp lệ, cho phép submit
+    }
+</script>

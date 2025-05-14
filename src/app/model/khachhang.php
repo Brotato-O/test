@@ -40,6 +40,11 @@ function soft_deletekh($kh_id)
     $sql = "UPDATE `khachhang` set trangthai = 1 WHERE `khachhang`.`kh_id` = $kh_id";
     pdo_execute($sql);
 }
+function openkh($kh_id)
+{
+    $sql = "UPDATE `khachhang` set trangthai = 0 WHERE `khachhang`.`kh_id` = $kh_id";
+    pdo_execute($sql);
+}
 function loadall_taikhoans()
 {
     $sql = "select * from khachhang where trangthai = 1";
@@ -59,7 +64,7 @@ function countkh()
 }
 function loadall_taikhoan()
 {
-    $sql = "select * from khachhang where trangthai = 0";
+    $sql = "select * from khachhang";
     $result = pdo_queryall($sql);
     return $result;
 }

@@ -2,7 +2,7 @@
 
 
 
-function queryallpro($key, $idcate)
+function queryallpro($key, $idcate, $offset = null, $limit = null)
 {
     $sql = "select * from products where trangthai = 0";
     if ($key != '') {
@@ -13,14 +13,20 @@ function queryallpro($key, $idcate)
     }
 
     $sql .= " order by pro_id desc";
+
+    // Add pagination if offset and limit are provided
+    if ($offset !== null && $limit !== null) {
+        $sql .= " limit $offset, $limit";
+    }
+
     $result = pdo_queryall($sql);
     return $result;
 }
 
 
-function addpro($ten, $img, $price, $ct, $cate, $stock, $brand)
+function addpro($ten, $img, $price, $ct, $cate, $inventory, $brand)
 {
-    $sql = "insert into products(pro_name,pro_img,pro_price,pro_desc,pro_brand,pro_stock,cate_id) values('$ten','$img',$price,'$ct','$brand','$stock',$cate)";
+    $sql = "insert into products(pro_name,pro_img,pro_price,pro_desc,pro_brand,pro_stock,cate_id) values('$ten','$img',$price,'$ct','$brand','$inventory',$cate)";
     pdo_execute($sql);
 }
 function queryonepro($id)
@@ -115,6 +121,19 @@ function khoiphuc_product($id)
     pdo_execute($sql);
 }
 
+// Hàm tính tổng tồn kho của một sản phẩm
+function get_total_inventory($pro_id)
+{
+    $sql = "SELECT SUM(soluong) as total_stock FROM pro_chitiet WHERE pro_id = $pro_id";
+    $result = pdo_query_one($sql);
+
+    if ($result && isset($result['total_stock'])) {
+        return $result['total_stock'];
+    }
+
+    return 0; // Trả về 0 nếu không có dữ liệu
+}
+
 function countProId()
 {
     $sql = "SELECT COUNT(*) as countpro FROM products";
@@ -152,45 +171,40 @@ function updateProductViews($pro_id)
     }
 }
 
-function trending_products($limit, $offset)
+function count_products($key = '', $idcate = 0)
 {
-    $sql = "SELECT * FROM products ORDER BY pro_viewer DESC LIMIT $limit OFFSET $offset";
-    return pdo_queryall($sql);
+    $sql = "SELECT COUNT(*) as total FROM products WHERE trangthai = 0";
+    if ($key != '') {
+        $sql .= " AND pro_name LIKE '%$key%'";
+    }
+    if ($idcate > 0) {
+        $sql .= " AND cate_id = $idcate";
+    }
+    $result = pdo_query_one($sql);
+    return $result['total'];
 }
 
-
-
-
-// function trending_products()
-// {
-//     $sql = "SELECT * FROM products ORDER BY pro_viewer DESC LIMIT 20";
-//     $favouriteProducts = pdo_queryall($sql);
-//     return $favouriteProducts;
-// }
-
-function countTrendingProducts()
+function trending_products($offset = null, $limit = null)
 {
-    // luôn là 20 sản phẩm
-    return 20;
+    $sql = "SELECT * FROM products ORDER BY pro_viewer DESC";
+
+    // Add pagination if offset and limit are provided
+    if ($offset !== null && $limit !== null) {
+        $sql .= " LIMIT $offset, $limit";
+    } else {
+        $sql .= " LIMIT 20"; // Default limit
+    }
+
+    $favouriteProducts = pdo_queryall($sql);
+    return $favouriteProducts;
 }
 
-
-
-// function queryallpro1($key, $idcate, $limit, $offset)
-// {
-//     $sql = "select * from products where trangthai = 0";
-//     if ($key != '') {
-//         $sql .= " and pro_name like '%$key%'";
-//     }
-//     if ($idcate > 0) {
-//         $sql .= " and cate_id = $idcate";
-//     }
-
-// }
-
-
-
-
+function count_trending_products()
+{
+    $sql = "SELECT COUNT(*) as total FROM products WHERE 1";
+    $result = pdo_query_one($sql);
+    return $result['total'];
+}
 
 // function addProductToFavourite($kh_id, $pro_id)
 // {
@@ -266,32 +280,4 @@ function  getAllChitietSp($id)
     $sql  = "SELECT * FROM `pro_chitiet` WHERE pro_id = $id";
     $result = pdo_queryall($sql);
     return $result;
-}
-
-function queryallpro1($key, $idcate, $limit, $offset)
-{
-    $sql = "select * from products where trangthai = 0";
-    if ($key != '') {
-        $sql .= " and pro_name like '%$key%'";
-    }
-    if ($idcate > 0) {
-        $sql .= " and cate_id = $idcate";
-    }
-
-    
-    $sql .= " ORDER BY pro_id DESC LIMIT $limit OFFSET $offset";
-    $result = pdo_queryall($sql);
-    return $result;
-}
-function countAllProducts()
-{
-    $sql = "SELECT COUNT(*) as total FROM products WHERE trangthai = 0";
-    $result = pdo_query_one($sql);
-    return $result['total'];
-    
-}
-function countAllProductsByCategory($cate_id) {
-    $sql = "SELECT COUNT(*) as total FROM products WHERE cate_id = ?";
-    $result = pdo_query_one($sql, $cate_id);  // ✅ truyền biến, không truyền mảng
-    return $result['total'];
 }

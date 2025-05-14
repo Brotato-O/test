@@ -1,3 +1,9 @@
+<?php if (isset($thongbao)) : ?>
+    <script>
+        alert("<?= addslashes($thongbao) ?>");
+    </script>
+<?php endif; ?>
+
 <div class="container">
     <h2 class="border border-4 mb-4 text-bg-secondary p-3 text-center rounded">Danh sách phân quyền</h2>
 

@@ -77,11 +77,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     return true;
   }
-  document
-    .getElementById("updateButton")
-    .addEventListener("click", function (event) {
+
+  // Kiểm tra xem phần tử với id 'updateButton' có tồn tại không
+  var updateButton = document.getElementById("updateButton");
+  if (updateButton) {
+    console.log("Button 'updateButton' found.");
+    updateButton.addEventListener("click", function (event) {
       if (!validateForm()) {
-        event.preventDefault();
+        event.preventDefault(); // Ngăn không cho form gửi đi nếu validate không thành công
       }
     });
+  } else {
+    console.error("Button with id 'updateButton' not found.");
+  }
 });

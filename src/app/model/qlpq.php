@@ -46,5 +46,10 @@ function deletevaitro($id){
     $sql = "delete from vaitro where vaitro_id = $id";
     pdo_execute($sql);
 }
+function check_permission_exist($role_id, $permission_id) {
+    $sql = "SELECT * FROM chi_tiet_nhom_quyen WHERE role_id = ? AND permission_id = ?";
+    return pdo_query_one($sql, $role_id, $permission_id);
+}
+
 
 ?>
