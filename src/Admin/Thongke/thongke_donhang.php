@@ -1,39 +1,26 @@
 <!-- main -->
 <div class="container">
     <style>
-    .trang-thai-huy {
-        background-color: #ffeeee;
-        color: #dc3545;
-    }
+        .trang-thai-huy {
+            background-color: #ffeeee;
+            color: #dc3545;
+        }
 
-    .trang-thai-dang-giao {
-        background-color: #fff8e1;
-        color: #ff9800;
-    }
+        .trang-thai-dang-giao {
+            background-color: #fff8e1;
+            color: #ff9800;
+        }
 
-    .trang-thai-da-giao {
-        background-color: #e8f5e9;
-        color: #28a745;
-    }
+        .trang-thai-da-giao {
+            background-color: #e8f5e9;
+            color: #28a745;
+        }
     </style>
 
-    <!-- Thanh menu thống kê -->
-    <div class="row mb-4">
-        <div class="col-md-12">
-            <ul class="nav nav-pills nav-fill">
-                <li class="nav-item">
-                    <a class="nav-link" href="indexadmin.php?act=thongke_sanpham">Thống kê sản phẩm bán chạy</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="indexadmin.php?act=thongke_doanhthu">Thống kê doanh thu</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active bg-primary" href="indexadmin.php?act=thongke_donhang">Thống kê đơn
-                        hàng</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+    <?php
+    $page = 'donhang';
+    include 'menu_thongke.php';
+    ?>
 
     <!-- Form chọn kiểu thống kê -->
     <div class="row mb-4">
@@ -83,12 +70,12 @@
                             $trang_thai_class = 'trang-thai-da-giao';
                         }
                 ?>
-                <tr class="<?= $trang_thai_class ?>">
-                    <td><?= $label_prefix . $thoi_gian ?></td>
-                    <td><?= $order_trangthai ?></td>
-                    <td><?= $so_don_hang ?></td>
-                    <td>$<?= number_format($tong_gia_tri, 2) ?></td>
-                </tr>
+                        <tr class="<?= $trang_thai_class ?>">
+                            <td><?= $label_prefix . $thoi_gian ?></td>
+                            <td><?= $order_trangthai ?></td>
+                            <td><?= $so_don_hang ?></td>
+                            <td>$<?= number_format($tong_gia_tri, 2) ?></td>
+                        </tr>
                 <?php
                     }
                 } else {
