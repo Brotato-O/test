@@ -844,8 +844,12 @@ function hasPermission($action, $permissions)
                     if (isset($_GET['pro_idxoa'])) {
                         $pro_id = $_GET['pro_idxoa'];
 
-
-                        deletepro($pro_id);
+                        if (kiemtra_sp_dangtrongdonhang($pro_id)) {
+                            echo "<script>alert('Sản phẩm đang có trong đơn hàng chưa hoàn tất. Vui lòng thực hiện xóa mềm thay vì xóa cứng!');</script>";
+                        } else {
+                            deletepro($pro_id);
+                            echo "<script>alert('Xóa cứng sản phẩm thành công.');</script>";
+                        }
                     }
                     $result_pro = queryallpro('', 0);
                     include './sanpham/listproduct.php';
