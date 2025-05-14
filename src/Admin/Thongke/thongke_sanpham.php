@@ -1,22 +1,9 @@
 <!-- main -->
 <div class="container">
-    <!-- Thanh menu thống kê -->
-    <div class="row mb-4">
-        <div class="col-md-12">
-            <ul class="nav nav-pills nav-fill">
-                <li class="nav-item">
-                    <a class="nav-link active bg-primary" href="indexadmin.php?act=thongke_sanpham">Thống kê sản phẩm
-                        bán chạy</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="indexadmin.php?act=thongke_doanhthu">Thống kê doanh thu</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="indexadmin.php?act=thongke_donhang">Thống kê đơn hàng</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+    <?php
+    $page = 'sanpham';
+    include 'menu_thongke.php';
+    ?>
 
     <!-- Form chọn số lượng sản phẩm hiển thị -->
     <div class="row mb-4">
@@ -54,14 +41,14 @@
                 foreach ($sp_banchay as $sp) {
                     extract($sp);
                 ?>
-                <tr>
-                    <td><?= $pro_id ?></td>
-                    <td><img src="./sanpham/img/<?= $pro_img ?>" width="100" height="100" alt="<?= $pro_name ?>"></td>
-                    <td><?= $pro_name ?></td>
-                    <td>$<?= number_format($pro_price, 2) ?></td>
-                    <td><?= $so_luong_ban ?></td>
-                    <td>$<?= number_format($doanh_thu, 2) ?></td>
-                </tr>
+                    <tr>
+                        <td><?= $pro_id ?></td>
+                        <td><img src="./sanpham/img/<?= $pro_img ?>" width="100" height="100" alt="<?= $pro_name ?>"></td>
+                        <td><?= $pro_name ?></td>
+                        <td>$<?= number_format($pro_price, 2) ?></td>
+                        <td><?= $so_luong_ban ?></td>
+                        <td>$<?= number_format($doanh_thu, 2) ?></td>
+                    </tr>
                 <?php } ?>
             </tbody>
         </table>

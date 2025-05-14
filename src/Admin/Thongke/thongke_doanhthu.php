@@ -1,22 +1,9 @@
 <!-- main -->
 <div class="container">
-    <!-- Thanh menu thống kê -->
-    <div class="row mb-4">
-        <div class="col-md-12">
-            <ul class="nav nav-pills nav-fill">
-                <li class="nav-item">
-                    <a class="nav-link" href="indexadmin.php?act=thongke_sanpham">Thống kê sản phẩm bán chạy</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active bg-primary" href="indexadmin.php?act=thongke_doanhthu">Thống kê doanh
-                        thu</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="indexadmin.php?act=thongke_donhang">Thống kê đơn hàng</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+    <?php
+    $page = 'doanhthu';
+    include 'menu_thongke.php';
+    ?>
 
     <!-- Form chọn kiểu thống kê -->
     <div class="row mb-4">
@@ -57,11 +44,11 @@
                     foreach ($doanh_thu as $dt) {
                         extract($dt);
                 ?>
-                <tr>
-                    <td><?= $label_prefix . $thoi_gian ?></td>
-                    <td>$<?= number_format($doanh_thu, 2) ?></td>
-                    <td><?= $so_don_hang ?></td>
-                </tr>
+                        <tr>
+                            <td><?= $label_prefix . $thoi_gian ?></td>
+                            <td>$<?= number_format($doanh_thu, 2) ?></td>
+                            <td><?= $so_don_hang ?></td>
+                        </tr>
                 <?php
                     }
                 } else {
