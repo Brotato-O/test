@@ -585,6 +585,123 @@ INSERT INTO `order_chitiet` (`order_chitiet_id`, `order_id`, `pro_id`, `color_id
 (204, 166, 63, 1, 1, 130, 1, 130),
 (205, 166, 65, 2, 1, 300, 1, 300);
 
+-- Thêm dữ liệu cho order_id = 26 (order_totalprice = 310)
+INSERT INTO `order_chitiet` (`order_chitiet_id`, `order_id`, `pro_id`, `color_id`, `size_id`, `pro_price`, `soluong`, `total_price`) 
+VALUES 
+(206, 26, 66, 2, 1, 300, 1, 300),
+(207, 26, 49, 1, 1, 10, 1, 10);
+
+-- Thêm dữ liệu cho order_id = 33 (order_totalprice = 770)
+INSERT INTO `order_chitiet` (`order_chitiet_id`, `order_id`, `pro_id`, `color_id`, `size_id`, `pro_price`, `soluong`, `total_price`) 
+VALUES 
+(208, 33, 65, 2, 1, 300, 2, 600),
+(209, 33, 58, 1, 1, 120, 1, 120),
+(210, 33, 54, 2, 1, 50, 1, 50);
+
+-- Thêm dữ liệu cho order_id = 167 (order_totalprice = 520)
+INSERT INTO `order_chitiet` (`order_chitiet_id`, `order_id`, `pro_id`, `color_id`, `size_id`, `pro_price`, `soluong`, `total_price`) 
+VALUES 
+(211, 167, 66, 2, 1, 300, 1, 300),
+(212, 167, 65, 1, 2, 220, 1, 220);
+
+-- Thêm dữ liệu cho order_id = 168 (order_totalprice = 480)
+INSERT INTO `order_chitiet` (`order_chitiet_id`, `order_id`, `pro_id`, `color_id`, `size_id`, `pro_price`, `soluong`, `total_price`) 
+VALUES 
+(213, 168, 63, 1, 1, 130, 2, 260),
+(214, 168, 65, 2, 1, 220, 1, 220);
+
+-- Thêm dữ liệu cho order_id = 169 (order_totalprice = 610)
+INSERT INTO `order_chitiet` (`order_chitiet_id`, `order_id`, `pro_id`, `color_id`, `size_id`, `pro_price`, `soluong`, `total_price`) 
+VALUES 
+(215, 169, 66, 2, 1, 300, 2, 600),
+(216, 169, 49, 1, 1, 10, 1, 10);
+
+-- Thêm dữ liệu cho order_id = 170 (order_totalprice = 590)
+INSERT INTO `order_chitiet` (`order_chitiet_id`, `order_id`, `pro_id`, `color_id`, `size_id`, `pro_price`, `soluong`, `total_price`) 
+VALUES 
+(217, 170, 66, 2, 1, 300, 1, 300),
+(218, 170, 63, 1, 1, 130, 2, 260),
+(219, 170, 54, 2, 1, 30, 1, 30);
+
+-- Thêm dữ liệu cho order_id = 171 (order_totalprice = 650)
+INSERT INTO `order_chitiet` (`order_chitiet_id`, `order_id`, `pro_id`, `color_id`, `size_id`, `pro_price`, `soluong`, `total_price`) 
+VALUES 
+(220, 171, 65, 2, 1, 300, 2, 600),
+(221, 171, 54, 2, 1, 50, 1, 50);
+
+-- Thêm dữ liệu cho order_id = 172 (order_totalprice = 570)
+INSERT INTO `order_chitiet` (`order_chitiet_id`, `order_id`, `pro_id`, `color_id`, `size_id`, `pro_price`, `soluong`, `total_price`) 
+VALUES 
+(222, 172, 66, 2, 1, 300, 1, 300),
+(223, 172, 63, 1, 1, 130, 2, 260),
+(224, 172, 49, 1, 1, 10, 1, 10);
+
+-- Thêm dữ liệu cho order_id = 173 (order_totalprice = 630)
+INSERT INTO `order_chitiet` (`order_chitiet_id`, `order_id`, `pro_id`, `color_id`, `size_id`, `pro_price`, `soluong`, `total_price`) 
+VALUES 
+(225, 173, 65, 2, 1, 300, 2, 600),
+(226, 173, 54, 2, 1, 30, 1, 30);
+
+-- Thêm dữ liệu cho order_id = 174 (order_totalprice = 590)
+INSERT INTO `order_chitiet` (`order_chitiet_id`, `order_id`, `pro_id`, `color_id`, `size_id`, `pro_price`, `soluong`, `total_price`) 
+VALUES 
+(227, 174, 66, 2, 1, 300, 1, 300),
+(228, 174, 63, 1, 1, 130, 2, 260),
+(229, 174, 54, 2, 1, 30, 1, 30);
+
+-- Thêm dữ liệu cho order_id = 175 (order_totalprice = 680)
+INSERT INTO `order_chitiet` (`order_chitiet_id`, `order_id`, `pro_id`, `color_id`, `size_id`, `pro_price`, `soluong`, `total_price`) 
+VALUES 
+(230, 175, 65, 2, 1, 300, 2, 600),
+(231, 175, 58, 1, 1, 80, 1, 80);
+
+-- Thêm dữ liệu cho order_id = 176 (order_totalprice = 750)
+INSERT INTO `order_chitiet` (`order_chitiet_id`, `order_id`, `pro_id`, `color_id`, `size_id`, `pro_price`, `soluong`, `total_price`) 
+VALUES 
+(232, 176, 65, 2, 1, 300, 2, 600),
+(233, 176, 58, 1, 1, 120, 1, 120),
+(234, 176, 54, 2, 1, 30, 1, 30);
+
+-- Thêm dữ liệu cho order_id = 177 (order_totalprice = 820)
+INSERT INTO `order_chitiet` (`order_chitiet_id`, `order_id`, `pro_id`, `color_id`, `size_id`, `pro_price`, `soluong`, `total_price`) 
+VALUES 
+(235, 177, 66, 2, 1, 300, 2, 600),
+(236, 177, 65, 2, 1, 220, 1, 220);
+
+-- Thêm dữ liệu cho order_id = 178 (order_totalprice = 790)
+INSERT INTO `order_chitiet` (`order_chitiet_id`, `order_id`, `pro_id`, `color_id`, `size_id`, `pro_price`, `soluong`, `total_price`) 
+VALUES 
+(237, 178, 66, 2, 1, 300, 2, 600),
+(238, 178, 63, 1, 1, 130, 1, 130),
+(239, 178, 61, 2, 3, 60, 1, 60);
+
+-- Thêm dữ liệu cho order_id = 179 (order_totalprice = 910)
+INSERT INTO `order_chitiet` (`order_chitiet_id`, `order_id`, `pro_id`, `color_id`, `size_id`, `pro_price`, `soluong`, `total_price`) 
+VALUES 
+(240, 179, 66, 2, 1, 300, 3, 900),
+(241, 179, 49, 1, 1, 10, 1, 10);
+
+-- Thêm dữ liệu cho một số đơn hàng có order_id lớn
+-- Thêm dữ liệu cho order_id = 218 (order_totalprice = 1100)
+INSERT INTO `order_chitiet` (`order_chitiet_id`, `order_id`, `pro_id`, `color_id`, `size_id`, `pro_price`, `soluong`, `total_price`) 
+VALUES 
+(242, 218, 66, 2, 1, 300, 3, 900),
+(243, 218, 63, 1, 1, 130, 1, 130),
+(244, 218, 58, 1, 1, 70, 1, 70);
+
+-- Thêm dữ liệu cho order_id = 219 (order_totalprice = 1050)
+INSERT INTO `order_chitiet` (`order_chitiet_id`, `order_id`, `pro_id`, `color_id`, `size_id`, `pro_price`, `soluong`, `total_price`) 
+VALUES 
+(245, 219, 65, 2, 1, 300, 3, 900),
+(246, 219, 58, 1, 1, 120, 1, 120),
+(247, 219, 54, 2, 1, 30, 1, 30);
+
+-- Thêm dữ liệu cho order_id = 220 (order_totalprice = 1150)
+INSERT INTO `order_chitiet` (`order_chitiet_id`, `order_id`, `pro_id`, `color_id`, `size_id`, `pro_price`, `soluong`, `total_price`) 
+VALUES 
+(248, 220, 66, 2, 1, 300, 3, 900),
+(249, 220, 65, 2, 1, 220, 1, 220),
+(250, 220, 54, 2, 1, 30, 1, 30);
 -- --------------------------------------------------------
 
 --
