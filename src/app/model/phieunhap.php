@@ -96,17 +96,17 @@ function insert_receipt_detail($receipt_id, $pro_id, $color_id, $size_id, $quant
 // Hàm cập nhật số lượng tồn kho khi nhập hàng
 function update_product_stock($pro_id, $color_id, $size_id, $quantity)
 {
-    // Kiểm tra xem đã có bản ghi trong product_detail chưa
-    $sql_check = "SELECT * FROM product_detail WHERE pro_id = ? AND color_id = ? AND size_id = ?";
+    // Kiểm tra xem đã có bản ghi trong pro_chitiet chưa
+    $sql_check = "SELECT * FROM pro_chitiet WHERE pro_id = ? AND color_id = ? AND size_id = ?";
     $result = pdo_query_one($sql_check, $pro_id, $color_id, $size_id);
 
     if ($result) {
         // Nếu đã có, cập nhật số lượng
-        $sql = "UPDATE product_detail SET soluong = soluong + ? WHERE pro_id = ? AND color_id = ? AND size_id = ?";
+        $sql = "UPDATE pro_chitiet SET soluong = soluong + ? WHERE pro_id = ? AND color_id = ? AND size_id = ?";
         pdo_execute($sql, $quantity, $pro_id, $color_id, $size_id);
     } else {
         // Nếu chưa có, thêm mới
-        $sql = "INSERT INTO product_detail (pro_id, color_id, size_id, soluong) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO pro_chitiet (pro_id, color_id, size_id, soluong) VALUES (?, ?, ?, ?)";
         pdo_execute($sql, $pro_id, $color_id, $size_id, $quantity);
     }
 
@@ -141,7 +141,7 @@ function delete_receipt_detail($detail_id)
             // Nếu phiếu đã nhập kho (status = 1), cần giảm số lượng tồn kho khi xóa chi tiết
             if ($receipt && $receipt['status'] == 1) {
                 // Cập nhật giảm số lượng tồn kho
-                $sql_update = "UPDATE product_detail 
+                $sql_update = "UPDATE pro_chitiet 
                               SET soluong = GREATEST(0, soluong - ?) 
                               WHERE pro_id = ? AND color_id = ? AND size_id = ?";
                 pdo_execute($sql_update, $detail['quantity'], $detail['pro_id'], $detail['color_id'], $detail['size_id']);
