@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 22, 2025 lúc 04:56 PM
--- Phiên bản máy phục vụ: 10.4.32-MariaDB
--- Phiên bản PHP: 8.1.25
+-- Host: 127.0.0.1
+-- Generation Time: May 14, 2025 at 06:20 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `da1`
+-- Database: `da1`
 --
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `cart`
+-- Table structure for table `cart`
 --
 
 CREATE TABLE `cart` (
@@ -34,7 +34,7 @@ CREATE TABLE `cart` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `cart`
+-- Dumping data for table `cart`
 --
 
 INSERT INTO `cart` (`cart_id`, `kh_id`, `tongtien`) VALUES
@@ -46,7 +46,7 @@ INSERT INTO `cart` (`cart_id`, `kh_id`, `tongtien`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `cart_chitiet`
+-- Table structure for table `cart_chitiet`
 --
 
 CREATE TABLE `cart_chitiet` (
@@ -61,7 +61,7 @@ CREATE TABLE `cart_chitiet` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `cart_chitiet`
+-- Dumping data for table `cart_chitiet`
 --
 
 INSERT INTO `cart_chitiet` (`cart_chitiet_id`, `cart_id`, `pro_id`, `color_id`, `size_id`, `price`, `soluong`, `total_price`) VALUES
@@ -73,7 +73,7 @@ INSERT INTO `cart_chitiet` (`cart_chitiet_id`, `cart_id`, `pro_id`, `color_id`, 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `category`
+-- Table structure for table `category`
 --
 
 CREATE TABLE `category` (
@@ -83,7 +83,7 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `category`
+-- Dumping data for table `category`
 --
 
 INSERT INTO `category` (`cate_id`, `cate_name`, `trangthai`) VALUES
@@ -98,7 +98,7 @@ INSERT INTO `category` (`cate_id`, `cate_name`, `trangthai`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `chi_tiet_kiem_ke`
+-- Table structure for table `chi_tiet_kiem_ke`
 --
 
 CREATE TABLE `chi_tiet_kiem_ke` (
@@ -112,7 +112,7 @@ CREATE TABLE `chi_tiet_kiem_ke` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `chi_tiet_nhom_quyen`
+-- Table structure for table `chi_tiet_nhom_quyen`
 --
 
 CREATE TABLE `chi_tiet_nhom_quyen` (
@@ -122,20 +122,42 @@ CREATE TABLE `chi_tiet_nhom_quyen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `chi_tiet_nhom_quyen`
+-- Dumping data for table `chi_tiet_nhom_quyen`
 --
 
 INSERT INTO `chi_tiet_nhom_quyen` (`role_id`, `permission_id`, `hanh_dong`) VALUES
+(1, 'Q1', NULL),
+(1, 'Q10', NULL),
+(1, 'Q11', NULL),
+(1, 'Q12', NULL),
+(1, 'Q13', NULL),
 (1, 'Q14', NULL),
 (1, 'Q15', NULL),
+(1, 'Q2', NULL),
 (1, 'Q3', NULL),
+(1, 'Q4', NULL),
+(1, 'Q5', NULL),
 (1, 'Q6', NULL),
-(3, 'Q3', NULL);
+(1, 'Q7', NULL),
+(1, 'Q8', NULL),
+(1, 'Q9', NULL),
+(3, 'Q1', NULL),
+(3, 'Q12', NULL),
+(3, 'Q13', NULL),
+(3, 'Q2', NULL),
+(3, 'Q3', NULL),
+(3, 'Q5', NULL),
+(3, 'Q7', NULL),
+(3, 'Q9', NULL),
+(4, 'Q1', NULL),
+(4, 'Q11', NULL),
+(4, 'Q3', NULL),
+(4, 'Q8', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `color`
+-- Table structure for table `color`
 --
 
 CREATE TABLE `color` (
@@ -145,7 +167,7 @@ CREATE TABLE `color` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `color`
+-- Dumping data for table `color`
 --
 
 INSERT INTO `color` (`color_id`, `color_name`, `color_ma`) VALUES
@@ -156,7 +178,7 @@ INSERT INTO `color` (`color_id`, `color_name`, `color_ma`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `coment`
+-- Table structure for table `coment`
 --
 
 CREATE TABLE `coment` (
@@ -168,7 +190,7 @@ CREATE TABLE `coment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `coment`
+-- Dumping data for table `coment`
 --
 
 INSERT INTO `coment` (`cmt_id`, `cmt_content`, `cmt_date`, `pro_id`, `kh_id`) VALUES
@@ -180,7 +202,7 @@ INSERT INTO `coment` (`cmt_id`, `cmt_content`, `cmt_date`, `pro_id`, `kh_id`) VA
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `import_receipts`
+-- Table structure for table `import_receipts`
 --
 
 CREATE TABLE `import_receipts` (
@@ -193,7 +215,7 @@ CREATE TABLE `import_receipts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `import_receipts`
+-- Dumping data for table `import_receipts`
 --
 
 INSERT INTO `import_receipts` (`id`, `ncc_id`, `receipt_date`, `created_by`, `status`, `note`) VALUES
@@ -208,26 +230,47 @@ INSERT INTO `import_receipts` (`id`, `ncc_id`, `receipt_date`, `created_by`, `st
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `import_receipt_details`
+-- Table structure for table `import_receipt_details`
 --
 
 CREATE TABLE `import_receipt_details` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `receipt_id` int(11) NOT NULL COMMENT 'ID phiếu nhập',
   `pro_id` int(11) NOT NULL COMMENT 'ID sản phẩm',
   `color_id` int(11) NOT NULL COMMENT 'ID màu sắc',
   `size_id` int(11) NOT NULL COMMENT 'ID kích cỡ',
   `quantity` int(11) NOT NULL COMMENT 'Số lượng nhập',
   `unit_price` decimal(10,2) NOT NULL COMMENT 'Đơn giá nhập',
-  `total_price` decimal(12,2) NOT NULL COMMENT 'Thành tiền',
-  PRIMARY KEY (`id`)
+  `total_price` decimal(12,2) NOT NULL COMMENT 'Thành tiền'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `import_receipt_details`
+--
+
+INSERT INTO `import_receipt_details` (`id`, `receipt_id`, `pro_id`, `color_id`, `size_id`, `quantity`, `unit_price`, `total_price`) VALUES
+(1, 1, 66, 2, 1, 10, 200.00, 2000.00),
+(2, 1, 66, 3, 2, 5, 200.00, 1000.00),
+(3, 1, 65, 1, 2, 8, 180.00, 1440.00),
+(4, 3, 41, 1, 1, 15, 80.00, 1200.00),
+(5, 3, 43, 2, 3, 10, 250.00, 2500.00),
+(6, 3, 53, 3, 3, 12, 220.00, 2640.00),
+(7, 4, 52, 1, 2, 20, 90.00, 1800.00),
+(8, 4, 49, 2, 1, 15, 70.00, 1050.00),
+(9, 4, 61, 1, 2, 10, 100.00, 1000.00),
+(10, 5, 63, 1, 1, 8, 90.00, 720.00),
+(11, 5, 64, 2, 3, 10, 120.00, 1200.00),
+(12, 6, 56, 1, 2, 6, 180.00, 1080.00),
+(13, 6, 47, 3, 2, 5, 250.00, 1250.00),
+(14, 7, 58, 2, 3, 12, 85.00, 1020.00),
+(15, 7, 54, 1, 1, 15, 35.00, 525.00),
+(16, 8, 44, 3, 1, 10, 150.00, 1500.00),
+(17, 8, 45, 2, 2, 8, 40.00, 320.00);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `khachhang`
+-- Table structure for table `khachhang`
 --
 
 CREATE TABLE `khachhang` (
@@ -242,7 +285,7 @@ CREATE TABLE `khachhang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `khachhang`
+-- Dumping data for table `khachhang`
 --
 
 INSERT INTO `khachhang` (`kh_id`, `kh_name`, `kh_pass`, `kh_mail`, `kh_tel`, `kh_address`, `vaitro_id`, `trangthai`) VALUES
@@ -257,7 +300,7 @@ INSERT INTO `khachhang` (`kh_id`, `kh_name`, `kh_pass`, `kh_mail`, `kh_tel`, `kh
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `nhacungcap`
+-- Table structure for table `nhacungcap`
 --
 
 CREATE TABLE `nhacungcap` (
@@ -270,7 +313,7 @@ CREATE TABLE `nhacungcap` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `nhacungcap`
+-- Dumping data for table `nhacungcap`
 --
 
 INSERT INTO `nhacungcap` (`ncc_id`, `ncc_name`, `ncc_diachi`, `ncc_sdt`, `ncc_email`, `ncc_trangthai`) VALUES
@@ -288,7 +331,7 @@ INSERT INTO `nhacungcap` (`ncc_id`, `ncc_name`, `ncc_diachi`, `ncc_sdt`, `ncc_em
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `order`
+-- Table structure for table `order`
 --
 
 CREATE TABLE `order` (
@@ -301,7 +344,7 @@ CREATE TABLE `order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `order`
+-- Dumping data for table `order`
 --
 
 INSERT INTO `order` (`order_id`, `kh_id`, `order_date`, `order_trangthai`, `order_adress`, `order_totalprice`) VALUES
@@ -315,12 +358,108 @@ INSERT INTO `order` (`order_id`, `kh_id`, `order_date`, `order_trangthai`, `orde
 (133, 41, '04-12-23', 'Đã hủy', '', 310),
 (134, 41, '04-12-23', 'Đang giao hàng', '', 310),
 (135, 41, '06-12-23', 'Đang giao hàng', '', 310),
-(136, 11, '16-04-25', 'Đang giao hàng', 'Tan Binh', 310);
+(136, 11, '16-04-25', 'Đang giao hàng', 'Tan Binh', 310),
+(137, 42, '15-01-22', 'Đã giao hàng', 'Hà Nội', 430),
+(138, 39, '22-02-22', 'Đã giao hàng', 'Hà Nội', 650),
+(139, 43, '10-03-22', 'Đã giao hàng', 'Hồ Chí Minh', 300),
+(140, 42, '05-04-22', 'Đã giao hàng', 'Hà Nội', 490),
+(141, 39, '18-05-22', 'Đã giao hàng', 'Hà Nội', 260),
+(142, 43, '23-06-22', 'Đã giao hàng', 'Hồ Chí Minh', 450),
+(143, 42, '09-07-22', 'Đã giao hàng', 'Hà Nội', 350),
+(144, 39, '14-08-22', 'Đã giao hàng', 'Hà Nội', 500),
+(145, 43, '28-09-22', 'Đã giao hàng', 'Hồ Chí Minh', 430),
+(146, 42, '07-10-22', 'Đã giao hàng', 'Hà Nội', 600),
+(147, 39, '19-11-22', 'Đã giao hàng', 'Hà Nội', 380),
+(148, 43, '24-12-22', 'Đã hủy', 'Hồ Chí Minh', 720),
+(149, 42, '08-01-23', 'Đã giao hàng', 'Hà Nội', 280),
+(150, 39, '17-01-23', 'Đã giao hàng', 'Hà Nội', 310),
+(151, 43, '25-01-23', 'Đã hủy', 'Hồ Chí Minh', 250),
+(152, 42, '05-02-23', 'Đã giao hàng', 'Hà Nội', 360),
+(153, 39, '14-02-23', 'Đã giao hàng', 'Hà Nội', 420),
+(154, 43, '23-02-23', 'Đã hủy', 'Hồ Chí Minh', 180),
+(155, 42, '08-03-23', 'Đã giao hàng', 'Hà Nội', 390),
+(156, 39, '17-03-23', 'Đã giao hàng', 'Hà Nội', 280),
+(157, 43, '26-03-23', 'Đã hủy', 'Hồ Chí Minh', 430),
+(158, 42, '05-04-23', 'Đã giao hàng', 'Hà Nội', 350),
+(159, 39, '15-04-23', 'Đã giao hàng', 'Hà Nội', 310),
+(160, 43, '22-04-23', 'Đã hủy', 'Hồ Chí Minh', 270),
+(161, 42, '07-05-23', 'Đã giao hàng', 'Hà Nội', 400),
+(162, 39, '16-05-23', 'Đã giao hàng', 'Hà Nội', 320),
+(163, 43, '25-05-23', 'Đã hủy', 'Hồ Chí Minh', 380),
+(164, 42, '08-06-23', 'Đã giao hàng', 'Hà Nội', 290),
+(165, 39, '19-06-23', 'Đã giao hàng', 'Hà Nội', 350),
+(166, 43, '28-06-23', 'Đã hủy', 'Hồ Chí Minh', 430),
+(167, 42, '10-07-23', 'Đã giao hàng', 'Hà Nội', 520),
+(168, 39, '17-07-23', 'Đã giao hàng', 'Hà Nội', 480),
+(169, 43, '24-07-23', 'Đã hủy', 'Hồ Chí Minh', 610),
+(170, 42, '06-08-23', 'Đã giao hàng', 'Hà Nội', 590),
+(171, 39, '13-08-23', 'Đã giao hàng', 'Hà Nội', 650),
+(172, 43, '21-08-23', 'Đã hủy', 'Hồ Chí Minh', 570),
+(173, 42, '05-09-23', 'Đã giao hàng', 'Hà Nội', 630),
+(174, 39, '14-09-23', 'Đã giao hàng', 'Hà Nội', 590),
+(175, 43, '22-09-23', 'Đã hủy', 'Hồ Chí Minh', 680),
+(176, 42, '07-10-23', 'Đã giao hàng', 'Hà Nội', 750),
+(177, 39, '16-10-23', 'Đã giao hàng', 'Hà Nội', 820),
+(178, 43, '23-10-23', 'Đã hủy', 'Hồ Chí Minh', 790),
+(179, 42, '08-11-23', 'Đã giao hàng', 'Hà Nội', 910),
+(180, 39, '15-11-23', 'Đã giao hàng', 'Hà Nội', 860),
+(181, 43, '22-11-23', 'Đã hủy', 'Hồ Chí Minh', 900),
+(182, 42, '04-12-23', 'Đã giao hàng', 'Hà Nội', 1050),
+(183, 39, '11-12-23', 'Đã giao hàng', 'Hà Nội', 980),
+(184, 43, '18-12-23', 'Đã hủy', 'Hồ Chí Minh', 1120),
+(185, 42, '07-01-24', 'Đã giao hàng', 'Hà Nội', 780),
+(186, 39, '14-01-24', 'Đã giao hàng', 'Hà Nội', 720),
+(187, 43, '22-01-24', 'Đã hủy', 'Hồ Chí Minh', 800),
+(188, 42, '05-02-24', 'Đã giao hàng', 'Hà Nội', 920),
+(189, 39, '12-02-24', 'Đã giao hàng', 'Hà Nội', 1090),
+(190, 43, '20-02-24', 'Đã hủy', 'Hồ Chí Minh', 1150),
+(191, 42, '04-03-24', 'Đã giao hàng', 'Hà Nội', 890),
+(192, 39, '11-03-24', 'Đã giao hàng', 'Hà Nội', 750),
+(193, 43, '18-03-24', 'Đã hủy', 'Hồ Chí Minh', 810),
+(194, 42, '03-04-24', 'Đã giao hàng', 'Hà Nội', 680),
+(195, 39, '10-04-24', 'Đã giao hàng', 'Hà Nội', 730),
+(196, 43, '17-04-24', 'Đã hủy', 'Hồ Chí Minh', 690),
+(197, 42, '01-05-24', 'Đã giao hàng', 'Hà Nội', 620),
+(198, 39, '08-05-24', 'Đã giao hàng', 'Hà Nội', 580),
+(199, 43, '15-05-24', 'Đã hủy', 'Hồ Chí Minh', 640),
+(200, 42, '03-06-24', 'Đã giao hàng', 'Hà Nội', 540),
+(201, 39, '10-06-24', 'Đã giao hàng', 'Hà Nội', 600),
+(202, 43, '17-06-24', 'Đã hủy', 'Hồ Chí Minh', 560),
+(203, 42, '01-07-24', 'Đang giao hàng', 'Hà Nội', 590),
+(204, 39, '08-07-24', 'Đang giao hàng', 'Hà Nội', 630),
+(205, 43, '15-07-24', 'Đã hủy', 'Hồ Chí Minh', 540),
+(206, 42, '05-08-24', 'Đang giao hàng', 'Hà Nội', 700),
+(207, 39, '12-08-24', 'Đang giao hàng', 'Hà Nội', 750),
+(208, 43, '19-08-24', 'Đã hủy', 'Hồ Chí Minh', 800),
+(209, 42, '06-01-25', 'Đã giao hàng', 'Hà Nội', 870),
+(210, 39, '13-01-25', 'Đã giao hàng', 'Hà Nội', 920),
+(211, 43, '20-01-25', 'Đã hủy', 'Hồ Chí Minh', 860),
+(212, 42, '03-02-25', 'Đã giao hàng', 'Hà Nội', 950),
+(213, 39, '10-02-25', 'Đã giao hàng', 'Hà Nội', 1020),
+(214, 43, '17-02-25', 'Đã hủy', 'Hồ Chí Minh', 980),
+(215, 42, '05-03-25', 'Đã giao hàng', 'Hà Nội', 910),
+(216, 39, '12-03-25', 'Đã giao hàng', 'Hà Nội', 890),
+(217, 43, '19-03-25', 'Đã hủy', 'Hồ Chí Minh', 940),
+(218, 42, '02-04-25', 'Đang giao hàng', 'Hà Nội', 1100),
+(219, 39, '09-04-25', 'Đang giao hàng', 'Hà Nội', 1050),
+(220, 43, '16-04-25', 'Đang giao hàng', 'Hồ Chí Minh', 1150),
+(221, 42, '14-03-22', 'Đã hủy', 'Hà Nội', 480),
+(222, 39, '25-06-22', 'Đã hủy', 'Hà Nội', 550),
+(223, 43, '18-09-22', 'Đã hủy', 'Hồ Chí Minh', 470),
+(224, 42, '21-02-23', 'Đã hủy', 'Hà Nội', 330),
+(225, 39, '05-05-23', 'Đã hủy', 'Hà Nội', 450),
+(226, 43, '14-08-23', 'Đã hủy', 'Hồ Chí Minh', 620),
+(227, 42, '09-10-23', 'Đã hủy', 'Hà Nội', 780),
+(228, 39, '28-11-23', 'Đã hủy', 'Hà Nội', 840),
+(229, 43, '03-01-24', 'Đã hủy', 'Hồ Chí Minh', 750),
+(230, 42, '17-03-24', 'Đã hủy', 'Hà Nội', 870),
+(231, 39, '22-05-24', 'Đã hủy', 'Hà Nội', 600),
+(232, 43, '08-07-24', 'Đã hủy', 'Hồ Chí Minh', 680);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `order_chitiet`
+-- Table structure for table `order_chitiet`
 --
 
 CREATE TABLE `order_chitiet` (
@@ -335,7 +474,7 @@ CREATE TABLE `order_chitiet` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `order_chitiet`
+-- Dumping data for table `order_chitiet`
 --
 
 INSERT INTO `order_chitiet` (`order_chitiet_id`, `order_id`, `pro_id`, `color_id`, `size_id`, `pro_price`, `soluong`, `total_price`) VALUES
@@ -350,12 +489,106 @@ INSERT INTO `order_chitiet` (`order_chitiet_id`, `order_id`, `pro_id`, `color_id
 (108, 134, 66, 1, 2, 300, 1, 300),
 (109, 135, 66, 1, 3, 300, 1, 300),
 (110, 136, 66, 2, 1, 300, 1, 300),
-(111, 136, 66, 2, 1, 300, 1, 300);
+(111, 136, 66, 2, 1, 300, 1, 300),
+(112, 137, 66, 2, 1, 300, 1, 300),
+(113, 137, 63, 1, 1, 130, 1, 130),
+(114, 138, 65, 1, 2, 300, 2, 600),
+(115, 138, 54, 1, 1, 50, 1, 50),
+(116, 139, 66, 2, 1, 300, 1, 300),
+(117, 140, 61, 2, 3, 145, 2, 290),
+(118, 140, 49, 1, 1, 100, 2, 200),
+(119, 141, 63, 1, 1, 130, 2, 260),
+(120, 142, 66, 2, 1, 300, 1, 300),
+(121, 142, 58, 1, 1, 120, 1, 120),
+(122, 142, 54, 2, 1, 50, 1, 50),
+(123, 143, 65, 2, 1, 300, 1, 300),
+(124, 143, 55, 3, 3, 300, 1, 300),
+(125, 144, 64, 1, 1, 160, 1, 160),
+(126, 144, 62, 1, 2, 130, 1, 130),
+(127, 144, 53, 3, 3, 300, 1, 300),
+(128, 145, 63, 3, 3, 130, 2, 260),
+(129, 145, 58, 1, 2, 120, 1, 120),
+(130, 145, 54, 1, 1, 50, 1, 50),
+(131, 146, 66, 2, 1, 300, 1, 300),
+(132, 146, 60, 1, 2, 300, 1, 300),
+(133, 147, 63, 1, 1, 130, 2, 260),
+(134, 147, 58, 1, 1, 120, 1, 120),
+(135, 148, 65, 2, 1, 300, 2, 600),
+(136, 148, 58, 1, 1, 120, 1, 120),
+(137, 221, 66, 2, 1, 300, 1, 300),
+(138, 221, 63, 1, 1, 130, 1, 130),
+(139, 221, 54, 2, 1, 50, 1, 50),
+(140, 222, 65, 1, 2, 300, 1, 300),
+(141, 222, 63, 1, 1, 130, 2, 260),
+(142, 223, 66, 2, 1, 300, 1, 300),
+(143, 223, 58, 1, 1, 120, 1, 120),
+(144, 223, 54, 2, 1, 50, 1, 50),
+(145, 224, 66, 2, 1, 300, 1, 300),
+(146, 224, 54, 2, 1, 50, 1, 50),
+(147, 225, 65, 2, 1, 300, 1, 300),
+(148, 225, 58, 1, 1, 120, 1, 120),
+(149, 225, 54, 2, 1, 50, 1, 50),
+(150, 226, 66, 2, 1, 300, 2, 600),
+(151, 226, 54, 2, 1, 50, 1, 50),
+(152, 227, 65, 2, 1, 300, 2, 600),
+(153, 227, 63, 1, 1, 130, 1, 130),
+(154, 227, 54, 2, 1, 50, 1, 50),
+(155, 228, 66, 2, 1, 300, 2, 600),
+(156, 228, 63, 1, 1, 130, 2, 260),
+(157, 229, 66, 2, 1, 300, 2, 600),
+(158, 229, 58, 1, 1, 120, 1, 120),
+(159, 229, 54, 2, 1, 50, 1, 50),
+(160, 230, 65, 2, 1, 300, 2, 600),
+(161, 230, 63, 1, 1, 130, 2, 260),
+(162, 231, 66, 2, 1, 300, 1, 300),
+(163, 231, 63, 1, 1, 130, 2, 260),
+(164, 231, 49, 1, 1, 100, 1, 100),
+(165, 232, 65, 2, 1, 300, 2, 600),
+(166, 232, 58, 1, 1, 120, 1, 120),
+(167, 149, 63, 1, 1, 130, 1, 130),
+(168, 149, 58, 1, 1, 120, 1, 120),
+(169, 149, 54, 2, 1, 50, 1, 50),
+(170, 150, 65, 2, 1, 300, 1, 300),
+(171, 150, 49, 1, 1, 100, 1, 100),
+(172, 151, 63, 1, 1, 130, 1, 130),
+(173, 151, 58, 1, 1, 120, 1, 120),
+(174, 152, 66, 2, 1, 300, 1, 300),
+(175, 152, 61, 2, 3, 145, 1, 145),
+(176, 153, 65, 2, 1, 300, 1, 300),
+(177, 153, 58, 1, 1, 120, 1, 120),
+(178, 154, 63, 1, 1, 130, 1, 130),
+(179, 154, 54, 2, 1, 50, 1, 50),
+(180, 155, 66, 2, 1, 300, 1, 300),
+(181, 155, 58, 1, 1, 120, 1, 120),
+(182, 156, 63, 1, 1, 130, 1, 130),
+(183, 156, 58, 1, 1, 120, 1, 120),
+(184, 156, 54, 2, 1, 50, 1, 50),
+(185, 157, 66, 2, 1, 300, 1, 300),
+(186, 157, 58, 1, 1, 120, 1, 120),
+(187, 158, 65, 2, 1, 300, 1, 300),
+(188, 158, 54, 2, 1, 50, 1, 50),
+(189, 159, 63, 1, 1, 130, 1, 130),
+(190, 159, 58, 1, 1, 120, 1, 120),
+(191, 160, 66, 2, 1, 300, 1, 300),
+(192, 160, 58, 1, 1, 120, 1, 120),
+(193, 161, 63, 1, 1, 130, 1, 130),
+(194, 161, 61, 1, 2, 145, 1, 145),
+(195, 161, 54, 2, 1, 50, 1, 50),
+(196, 162, 66, 2, 1, 300, 1, 300),
+(197, 162, 58, 1, 1, 120, 1, 120),
+(198, 163, 65, 2, 1, 300, 1, 300),
+(199, 163, 54, 2, 1, 50, 1, 50),
+(200, 164, 63, 1, 1, 130, 1, 130),
+(201, 164, 65, 2, 1, 300, 1, 300),
+(202, 165, 66, 2, 1, 300, 1, 300),
+(203, 165, 49, 3, 3, 100, 1, 100),
+(204, 166, 63, 1, 1, 130, 1, 130),
+(205, 166, 65, 2, 1, 300, 1, 300);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `phieu_bao_hanh`
+-- Table structure for table `phieu_bao_hanh`
 --
 
 CREATE TABLE `phieu_bao_hanh` (
@@ -369,7 +602,7 @@ CREATE TABLE `phieu_bao_hanh` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `phieu_bao_hanh`
+-- Dumping data for table `phieu_bao_hanh`
 --
 
 INSERT INTO `phieu_bao_hanh` (`id`, `pro_id`, `kh_id`, `nhan_vien_id`, `ngay_bao_hanh`, `noi_dung`, `thoi_gian_bao_hanh`) VALUES
@@ -378,7 +611,7 @@ INSERT INTO `phieu_bao_hanh` (`id`, `pro_id`, `kh_id`, `nhan_vien_id`, `ngay_bao
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `phieu_doi`
+-- Table structure for table `phieu_doi`
 --
 
 CREATE TABLE `phieu_doi` (
@@ -395,7 +628,7 @@ CREATE TABLE `phieu_doi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `phieu_doi`
+-- Dumping data for table `phieu_doi`
 --
 
 INSERT INTO `phieu_doi` (`id`, `order_id`, `pro_id`, `pro_moi_id`, `color_id`, `size_id`, `kh_id`, `ngay_doi`, `ly_do`, `trang_thai`) VALUES
@@ -405,7 +638,7 @@ INSERT INTO `phieu_doi` (`id`, `order_id`, `pro_id`, `pro_moi_id`, `color_id`, `
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `phieu_kiem_ke`
+-- Table structure for table `phieu_kiem_ke`
 --
 
 CREATE TABLE `phieu_kiem_ke` (
@@ -419,7 +652,7 @@ CREATE TABLE `phieu_kiem_ke` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `products`
+-- Table structure for table `products`
 --
 
 CREATE TABLE `products` (
@@ -437,7 +670,7 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `products`
+-- Dumping data for table `products`
 --
 
 INSERT INTO `products` (`pro_id`, `pro_name`, `pro_img`, `pro_price`, `pro_desc`, `pro_brand`, `pro_stock`, `cate_id`, `ncc_id`, `trangthai`, `pro_viewer`) VALUES
@@ -469,7 +702,7 @@ INSERT INTO `products` (`pro_id`, `pro_name`, `pro_img`, `pro_price`, `pro_desc`
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `products_favourite`
+-- Table structure for table `products_favourite`
 --
 
 CREATE TABLE `products_favourite` (
@@ -479,7 +712,7 @@ CREATE TABLE `products_favourite` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `products_favourite`
+-- Dumping data for table `products_favourite`
 --
 
 INSERT INTO `products_favourite` (`pro_favourite_id`, `kh_id`, `pro_id`) VALUES
@@ -514,7 +747,7 @@ INSERT INTO `products_favourite` (`pro_favourite_id`, `kh_id`, `pro_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `pro_chitiet`
+-- Table structure for table `pro_chitiet`
 --
 
 CREATE TABLE `pro_chitiet` (
@@ -526,134 +759,84 @@ CREATE TABLE `pro_chitiet` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `pro_chitiet`
+-- Dumping data for table `pro_chitiet`
 --
 
-
 INSERT INTO `pro_chitiet` (`ctiet_pro_id`, `pro_id`, `color_id`, `size_id`, `soluong`) VALUES
--- Product ID: 41 - Fleece Hoodies
-(14, 41, 1, 1, 70),  -- Xanh, M
-(15, 41, 1, 2, 80),  -- Xanh, L
-(16, 41, 2, 2, 80),  -- Vàng, L
+(14, 41, 1, 1, 70),
+(15, 41, 1, 2, 80),
+(16, 41, 2, 2, 80),
+(17, 43, 2, 1, 75),
+(18, 43, 2, 3, 80),
+(19, 43, 3, 2, 75),
+(20, 44, 1, 1, 40),
+(21, 44, 1, 2, 50),
+(22, 44, 3, 1, 40),
+(23, 45, 2, 2, 75),
+(24, 45, 3, 1, 80),
+(25, 45, 3, 3, 75),
+(26, 46, 1, 1, 100),
+(27, 46, 2, 1, 100),
+(28, 46, 3, 1, 100),
+(29, 47, 1, 1, 40),
+(30, 47, 1, 2, 45),
+(31, 47, 3, 2, 45),
+(32, 48, 1, 2, 130),
+(33, 48, 1, 3, 135),
+(34, 48, 3, 3, 135),
+(35, 49, 1, 1, 150),
+(36, 49, 2, 2, 150),
+(37, 49, 3, 3, 150),
+(38, 51, 1, 1, 75),
+(39, 51, 2, 1, 75),
+(40, 51, 3, 1, 80),
+(41, 52, 1, 1, 100),
+(42, 52, 1, 2, 100),
+(43, 52, 2, 2, 100),
+(44, 53, 1, 2, 100),
+(45, 53, 2, 1, 100),
+(46, 53, 3, 3, 100),
+(47, 54, 1, 1, 100),
+(48, 54, 2, 1, 100),
+(49, 54, 3, 1, 100),
+(50, 55, 1, 1, 40),
+(51, 55, 1, 2, 45),
+(52, 55, 3, 3, 45),
+(53, 56, 1, 1, 75),
+(54, 56, 1, 2, 80),
+(55, 56, 3, 2, 75),
+(56, 57, 1, 1, 100),
+(57, 57, 2, 1, 100),
+(58, 57, 3, 1, 100),
+(59, 58, 1, 1, 105),
+(60, 58, 1, 2, 110),
+(61, 58, 2, 3, 105),
+(62, 59, 1, 1, 75),
+(63, 59, 2, 1, 80),
+(64, 59, 3, 1, 75),
+(65, 60, 1, 2, 75),
+(66, 60, 1, 3, 80),
+(67, 60, 3, 2, 75),
+(68, 61, 1, 2, 60),
+(69, 61, 3, 1, 59),
+(70, 62, 1, 1, 100),
+(71, 62, 1, 2, 100),
+(72, 62, 2, 3, 100),
+(73, 63, 2, 2, 40),
+(74, 63, 3, 3, 41),
+(75, 64, 1, 1, 100),
+(76, 64, 1, 2, 100),
+(77, 64, 2, 3, 100),
+(78, 65, 1, 2, 75),
+(79, 65, 2, 1, 80),
+(80, 65, 3, 3, 75),
+(81, 66, 2, 3, 100),
+(82, 66, 3, 2, 100);
 
--- Product ID: 43 - School Leavers Hoodie
-(17, 43, 2, 1, 75),  -- Vàng, M
-(18, 43, 2, 3, 80),  -- Vàng, XL
-(19, 43, 3, 2, 75),  -- Trắng, L
-
--- Product ID: 44 - Branded Premium Basic Mesh Shorts
-(20, 44, 1, 1, 40),  -- Xanh, M
-(21, 44, 1, 2, 50),  -- Xanh, L
-(22, 44, 3, 1, 40),  -- Trắng, M
-
--- Product ID: 45 - High Waist Trousers
-(23, 45, 2, 2, 75),  -- Vàng, L
-(24, 45, 3, 1, 80),  -- Trắng, M
-(25, 45, 3, 3, 75),  -- Trắng, XL
-
--- Product ID: 46 - Wizard Frog Corduroy Hat
-(26, 46, 1, 1, 100), -- Xanh, M
-(27, 46, 2, 1, 100), -- Vàng, M
-(28, 46, 3, 1, 100), -- Trắng, M
-
--- Product ID: 47 - Women Linen Blazer
-(29, 47, 1, 1, 40),  -- Xanh, M
-(30, 47, 1, 2, 45),  -- Xanh, L
-(31, 47, 3, 2, 45),  -- Trắng, L
-
--- Product ID: 48 - Masculine-cut Blazer
-(32, 48, 1, 2, 130), -- Xanh, L
-(33, 48, 1, 3, 135), -- Xanh, XL
-(34, 48, 3, 3, 135), -- Trắng, XL
-
--- Product ID: 49 - Sorrows Tshirt
-(35, 49, 1, 1, 150), -- Xanh, M
-(36, 49, 2, 2, 150), -- Vàng, L
-(37, 49, 3, 3, 150), -- Trắng, XL
-
--- Product ID: 51 - Hat Embroidered Hat
-(38, 51, 1, 1, 75),  -- Xanh, M
-(39, 51, 2, 1, 75),  -- Vàng, M
-(40, 51, 3, 1, 80),  -- Trắng, M
-
--- Product ID: 52 - Chicken Sweatshirt
-(41, 52, 1, 1, 100), -- Xanh, M
-(42, 52, 1, 2, 100), -- Xanh, L
-(43, 52, 2, 2, 100), -- Vàng, L
-
--- Product ID: 53 - Have A Good Day Hoodie
-(44, 53, 1, 2, 100), -- Xanh, L
-(45, 53, 2, 1, 100), -- Vàng, M
-(46, 53, 3, 3, 100), -- Trắng, XL
-
--- Product ID: 54 - Floral Embroidered Cap
-(47, 54, 1, 1, 100), -- Xanh, M
-(48, 54, 2, 1, 100), -- Vàng, M
-(49, 54, 3, 1, 100), -- Trắng, M
-
--- Product ID: 55 - Drawstring Pants
-(50, 55, 1, 1, 40),  -- Xanh, M
-(51, 55, 1, 2, 45),  -- Xanh, L
-(52, 55, 3, 3, 45),  -- Trắng, XL
-
--- Product ID: 56 - Loose linen blazer
-(53, 56, 1, 1, 75),  -- Xanh, M
-(54, 56, 1, 2, 80),  -- Xanh, L
-(55, 56, 3, 2, 75),  -- Trắng, L
-
--- Product ID: 57 - Baseball Hat with Embroidery
-(56, 57, 1, 1, 100), -- Xanh, M
-(57, 57, 2, 1, 100), -- Vàng, M
-(58, 57, 3, 1, 100), -- Trắng, M
-
--- Product ID: 58 - Embroidered Silly Goose Sweatshirt
-(59, 58, 1, 1, 105), -- Xanh, M
-(60, 58, 1, 2, 110), -- Xanh, L
-(61, 58, 2, 3, 105), -- Vàng, XL
-
--- Product ID: 59 - Embroidered Hat Initial cap
-(62, 59, 1, 1, 75),  -- Xanh, M
-(63, 59, 2, 1, 80),  -- Vàng, M
-(64, 59, 3, 1, 75),  -- Trắng, M
-
--- Product ID: 60 - Thin Cotton Blazer
-(65, 60, 1, 2, 75),  -- Xanh, L
-(66, 60, 1, 3, 80),  -- Xanh, XL
-(67, 60, 3, 2, 75),  -- Trắng, L
-
--- Product ID: 61 đã có trong dữ liệu ban đầu
--- thêm một màu và kích thước khác
-(68, 61, 1, 2, 60),  -- Xanh, L
-(69, 61, 3, 1, 59),  -- Trắng, M
-
--- Product ID: 62 - portrait from photo to shirt
-(70, 62, 1, 1, 100), -- Xanh, M
-(71, 62, 1, 2, 100), -- Xanh, L
-(72, 62, 2, 3, 100), -- Vàng, XL
-
--- Product ID: 63 đã có trong dữ liệu ban đầu
--- thêm một màu và kích thước khác
-(73, 63, 2, 2, 40),  -- Vàng, L
-(74, 63, 3, 3, 41),  -- Trắng, XL
-
--- Product ID: 64 - Knitted Sweater Little Dinosaur
-(75, 64, 1, 1, 100), -- Xanh, M
-(76, 64, 1, 2, 100), -- Xanh, L
-(77, 64, 2, 3, 100), -- Vàng, XL
-
--- Product ID: 65 - Japanese Harajuku Style Hoodies
-(78, 65, 1, 2, 75),  -- Xanh, L
-(79, 65, 2, 1, 80),  -- Vàng, M
-(80, 65, 3, 3, 75),  -- Trắng, XL
-
--- Product ID: 66 đã có trong dữ liệu ban đầu
--- thêm một màu và kích thước khác
-(81, 66, 2, 3, 100), -- Vàng, XL
-(82, 66, 3, 2, 100); -- Trắng, L
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `ql_nhom_quyen`
+-- Table structure for table `ql_nhom_quyen`
 --
 
 CREATE TABLE `ql_nhom_quyen` (
@@ -668,7 +851,7 @@ CREATE TABLE `ql_nhom_quyen` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `quyen`
+-- Table structure for table `quyen`
 --
 
 CREATE TABLE `quyen` (
@@ -678,7 +861,7 @@ CREATE TABLE `quyen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `quyen`
+-- Dumping data for table `quyen`
 --
 
 INSERT INTO `quyen` (`permission_id`, `permission_name`, `trang_thai`) VALUES
@@ -701,7 +884,7 @@ INSERT INTO `quyen` (`permission_id`, `permission_name`, `trang_thai`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `size`
+-- Table structure for table `size`
 --
 
 CREATE TABLE `size` (
@@ -710,7 +893,7 @@ CREATE TABLE `size` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `size`
+-- Dumping data for table `size`
 --
 
 INSERT INTO `size` (`size_id`, `size_name`) VALUES
@@ -721,7 +904,7 @@ INSERT INTO `size` (`size_id`, `size_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `thuong_hieu`
+-- Table structure for table `thuong_hieu`
 --
 
 CREATE TABLE `thuong_hieu` (
@@ -731,7 +914,7 @@ CREATE TABLE `thuong_hieu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `thuong_hieu`
+-- Dumping data for table `thuong_hieu`
 --
 
 INSERT INTO `thuong_hieu` (`id`, `ten_thuong_hieu`, `mo_ta`) VALUES
@@ -744,7 +927,7 @@ INSERT INTO `thuong_hieu` (`id`, `ten_thuong_hieu`, `mo_ta`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `ton_kho`
+-- Table structure for table `ton_kho`
 --
 
 CREATE TABLE `ton_kho` (
@@ -759,7 +942,7 @@ CREATE TABLE `ton_kho` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `vaitro`
+-- Table structure for table `vaitro`
 --
 
 CREATE TABLE `vaitro` (
@@ -768,7 +951,7 @@ CREATE TABLE `vaitro` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `vaitro`
+-- Dumping data for table `vaitro`
 --
 
 INSERT INTO `vaitro` (`vaitro_id`, `vaitro_name`) VALUES
@@ -779,18 +962,18 @@ INSERT INTO `vaitro` (`vaitro_id`, `vaitro_name`) VALUES
 (9, 'a');
 
 --
--- Chỉ mục cho các bảng đã đổ
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `cart`
+-- Indexes for table `cart`
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`cart_id`),
   ADD KEY `lk_cart_kh` (`kh_id`);
 
 --
--- Chỉ mục cho bảng `cart_chitiet`
+-- Indexes for table `cart_chitiet`
 --
 ALTER TABLE `cart_chitiet`
   ADD PRIMARY KEY (`cart_chitiet_id`),
@@ -800,13 +983,13 @@ ALTER TABLE `cart_chitiet`
   ADD KEY `lk_cartchitiet_pro` (`pro_id`);
 
 --
--- Chỉ mục cho bảng `category`
+-- Indexes for table `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`cate_id`);
 
 --
--- Chỉ mục cho bảng `chi_tiet_kiem_ke`
+-- Indexes for table `chi_tiet_kiem_ke`
 --
 ALTER TABLE `chi_tiet_kiem_ke`
   ADD PRIMARY KEY (`id`),
@@ -814,20 +997,20 @@ ALTER TABLE `chi_tiet_kiem_ke`
   ADD KEY `pro_id` (`pro_id`);
 
 --
--- Chỉ mục cho bảng `chi_tiet_nhom_quyen`
+-- Indexes for table `chi_tiet_nhom_quyen`
 --
 ALTER TABLE `chi_tiet_nhom_quyen`
   ADD PRIMARY KEY (`role_id`,`permission_id`),
   ADD KEY `permission_id` (`permission_id`);
 
 --
--- Chỉ mục cho bảng `color`
+-- Indexes for table `color`
 --
 ALTER TABLE `color`
   ADD PRIMARY KEY (`color_id`);
 
 --
--- Chỉ mục cho bảng `coment`
+-- Indexes for table `coment`
 --
 ALTER TABLE `coment`
   ADD PRIMARY KEY (`cmt_id`),
@@ -835,7 +1018,7 @@ ALTER TABLE `coment`
   ADD KEY `lk_cmt_pro` (`pro_id`);
 
 --
--- Chỉ mục cho bảng `import_receipts`
+-- Indexes for table `import_receipts`
 --
 ALTER TABLE `import_receipts`
   ADD PRIMARY KEY (`id`),
@@ -843,68 +1026,36 @@ ALTER TABLE `import_receipts`
   ADD KEY `created_by` (`created_by`);
 
 --
--- Chỉ mục cho bảng `import_receipt_details`
+-- Indexes for table `import_receipt_details`
 --
 ALTER TABLE `import_receipt_details`
-  -- ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `receipt_id` (`receipt_id`),
   ADD KEY `pro_id` (`pro_id`),
   ADD KEY `color_id` (`color_id`),
   ADD KEY `size_id` (`size_id`);
 
-
-INSERT INTO `import_receipt_details` (`receipt_id`, `pro_id`, `color_id`, `size_id`, `quantity`, `unit_price`, `total_price`) VALUES
--- Phiếu nhập 1 (ID: 1 - Công ty Dệt may Đà Nẵng)
-(1, 66, 2, 1, 10, 200.00, 2000.00),
-(1, 66, 3, 2, 5, 200.00, 1000.00),
-(1, 65, 1, 2, 8, 180.00, 1440.00),
-
--- Phiếu nhập 3 (ID: 3 - Công ty Thời trang Việt Nam)
-(3, 41, 1, 1, 15, 80.00, 1200.00),
-(3, 43, 2, 3, 10, 250.00, 2500.00),
-(3, 53, 3, 3, 12, 220.00, 2640.00),
-
--- Phiếu nhập 4 (ID: 4 - Công ty Thời trang Việt Nam)
-(4, 52, 1, 2, 20, 90.00, 1800.00),
-(4, 49, 2, 1, 15, 70.00, 1050.00),
-(4, 61, 1, 2, 10, 100.00, 1000.00),
-
--- Phiếu nhập 5 (ID: 5 - Công ty Thời trang Việt Nam)
-(5, 63, 1, 1, 8, 90.00, 720.00),
-(5, 64, 2, 3, 10, 120.00, 1200.00),
-
--- Phiếu nhập 6 (ID: 6 - Công ty Thời trang Việt Nam)
-(6, 56, 1, 2, 6, 180.00, 1080.00),
-(6, 47, 3, 2, 5, 250.00, 1250.00),
-
--- Phiếu nhập 7 (ID: 7 - Công ty Thời trang Việt Nam)
-(7, 58, 2, 3, 12, 85.00, 1020.00),
-(7, 54, 1, 1, 15, 35.00, 525.00),
-
--- Phiếu nhập 8 (ID: 8 - Công ty Thời trang Việt Nam)
-(8, 44, 3, 1, 10, 150.00, 1500.00),
-(8, 45, 2, 2, 8, 40.00, 320.00);
 --
--- Chỉ mục cho bảng `khachhang`
+-- Indexes for table `khachhang`
 --
 ALTER TABLE `khachhang`
   ADD PRIMARY KEY (`kh_id`);
 
 --
--- Chỉ mục cho bảng `nhacungcap`
+-- Indexes for table `nhacungcap`
 --
 ALTER TABLE `nhacungcap`
   ADD PRIMARY KEY (`ncc_id`);
 
 --
--- Chỉ mục cho bảng `order`
+-- Indexes for table `order`
 --
 ALTER TABLE `order`
   ADD PRIMARY KEY (`order_id`),
   ADD KEY `lk_order_khs` (`kh_id`);
 
 --
--- Chỉ mục cho bảng `order_chitiet`
+-- Indexes for table `order_chitiet`
 --
 ALTER TABLE `order_chitiet`
   ADD PRIMARY KEY (`order_chitiet_id`),
@@ -914,7 +1065,7 @@ ALTER TABLE `order_chitiet`
   ADD KEY `lk_orderchitiet_pro` (`pro_id`);
 
 --
--- Chỉ mục cho bảng `phieu_bao_hanh`
+-- Indexes for table `phieu_bao_hanh`
 --
 ALTER TABLE `phieu_bao_hanh`
   ADD PRIMARY KEY (`id`),
@@ -923,7 +1074,7 @@ ALTER TABLE `phieu_bao_hanh`
   ADD KEY `fk_baohanh_nhanvien` (`nhan_vien_id`);
 
 --
--- Chỉ mục cho bảng `phieu_doi`
+-- Indexes for table `phieu_doi`
 --
 ALTER TABLE `phieu_doi`
   ADD PRIMARY KEY (`id`),
@@ -935,14 +1086,14 @@ ALTER TABLE `phieu_doi`
   ADD KEY `fk_phieudoi_khachhang` (`kh_id`);
 
 --
--- Chỉ mục cho bảng `phieu_kiem_ke`
+-- Indexes for table `phieu_kiem_ke`
 --
 ALTER TABLE `phieu_kiem_ke`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_kiemke_nhanvien` (`nhan_vien_id`);
 
 --
--- Chỉ mục cho bảng `products`
+-- Indexes for table `products`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`pro_id`),
@@ -950,7 +1101,7 @@ ALTER TABLE `products`
   ADD KEY `ncc_id` (`ncc_id`);
 
 --
--- Chỉ mục cho bảng `products_favourite`
+-- Indexes for table `products_favourite`
 --
 ALTER TABLE `products_favourite`
   ADD PRIMARY KEY (`pro_favourite_id`),
@@ -958,7 +1109,7 @@ ALTER TABLE `products_favourite`
   ADD KEY `Fk_pro` (`pro_id`);
 
 --
--- Chỉ mục cho bảng `pro_chitiet`
+-- Indexes for table `pro_chitiet`
 --
 ALTER TABLE `pro_chitiet`
   ADD PRIMARY KEY (`ctiet_pro_id`),
@@ -967,31 +1118,31 @@ ALTER TABLE `pro_chitiet`
   ADD KEY `lk_proctiet_pro` (`pro_id`);
 
 --
--- Chỉ mục cho bảng `ql_nhom_quyen`
+-- Indexes for table `ql_nhom_quyen`
 --
 ALTER TABLE `ql_nhom_quyen`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `quyen`
+-- Indexes for table `quyen`
 --
 ALTER TABLE `quyen`
   ADD PRIMARY KEY (`permission_id`);
 
 --
--- Chỉ mục cho bảng `size`
+-- Indexes for table `size`
 --
 ALTER TABLE `size`
   ADD PRIMARY KEY (`size_id`);
 
 --
--- Chỉ mục cho bảng `thuong_hieu`
+-- Indexes for table `thuong_hieu`
 --
 ALTER TABLE `thuong_hieu`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `ton_kho`
+-- Indexes for table `ton_kho`
 --
 ALTER TABLE `ton_kho`
   ADD PRIMARY KEY (`id`),
@@ -1000,165 +1151,165 @@ ALTER TABLE `ton_kho`
   ADD KEY `size_id` (`size_id`);
 
 --
--- Chỉ mục cho bảng `vaitro`
+-- Indexes for table `vaitro`
 --
 ALTER TABLE `vaitro`
   ADD PRIMARY KEY (`vaitro_id`);
 
 --
--- AUTO_INCREMENT cho các bảng đã đổ
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT cho bảng `cart`
+-- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
   MODIFY `cart_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'Id giỏ hàng', AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT cho bảng `cart_chitiet`
+-- AUTO_INCREMENT for table `cart_chitiet`
 --
 ALTER TABLE `cart_chitiet`
   MODIFY `cart_chitiet_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'Chi tiết giỏ hàng', AUTO_INCREMENT=83;
 
 --
--- AUTO_INCREMENT cho bảng `category`
+-- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
   MODIFY `cate_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT cho bảng `chi_tiet_kiem_ke`
+-- AUTO_INCREMENT for table `chi_tiet_kiem_ke`
 --
 ALTER TABLE `chi_tiet_kiem_ke`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `color`
+-- AUTO_INCREMENT for table `color`
 --
 ALTER TABLE `color`
   MODIFY `color_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'ID màu', AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT cho bảng `coment`
+-- AUTO_INCREMENT for table `coment`
 --
 ALTER TABLE `coment`
   MODIFY `cmt_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'ID bình luận', AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT cho bảng `import_receipts`
+-- AUTO_INCREMENT for table `import_receipts`
 --
 ALTER TABLE `import_receipts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT cho bảng `import_receipt_details`
+-- AUTO_INCREMENT for table `import_receipt_details`
 --
 ALTER TABLE `import_receipt_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT cho bảng `khachhang`
+-- AUTO_INCREMENT for table `khachhang`
 --
 ALTER TABLE `khachhang`
   MODIFY `kh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
--- AUTO_INCREMENT cho bảng `nhacungcap`
+-- AUTO_INCREMENT for table `nhacungcap`
 --
 ALTER TABLE `nhacungcap`
   MODIFY `ncc_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'ID nhà cung cấp', AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT cho bảng `order`
+-- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'ID hóa đơn', AUTO_INCREMENT=137;
+  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'ID hóa đơn', AUTO_INCREMENT=233;
 
 --
--- AUTO_INCREMENT cho bảng `order_chitiet`
+-- AUTO_INCREMENT for table `order_chitiet`
 --
 ALTER TABLE `order_chitiet`
-  MODIFY `order_chitiet_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'ID chi tiết hóa đơn', AUTO_INCREMENT=112;
+  MODIFY `order_chitiet_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'ID chi tiết hóa đơn', AUTO_INCREMENT=206;
 
 --
--- AUTO_INCREMENT cho bảng `phieu_bao_hanh`
+-- AUTO_INCREMENT for table `phieu_bao_hanh`
 --
 ALTER TABLE `phieu_bao_hanh`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT cho bảng `phieu_doi`
+-- AUTO_INCREMENT for table `phieu_doi`
 --
 ALTER TABLE `phieu_doi`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT cho bảng `phieu_kiem_ke`
+-- AUTO_INCREMENT for table `phieu_kiem_ke`
 --
 ALTER TABLE `phieu_kiem_ke`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `products`
+-- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
   MODIFY `pro_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
--- AUTO_INCREMENT cho bảng `products_favourite`
+-- AUTO_INCREMENT for table `products_favourite`
 --
 ALTER TABLE `products_favourite`
   MODIFY `pro_favourite_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
 
 --
--- AUTO_INCREMENT cho bảng `pro_chitiet`
+-- AUTO_INCREMENT for table `pro_chitiet`
 --
 ALTER TABLE `pro_chitiet`
-  MODIFY `ctiet_pro_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'Id chi tiết sản phẩm', AUTO_INCREMENT=14;
+  MODIFY `ctiet_pro_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'Id chi tiết sản phẩm', AUTO_INCREMENT=83;
 
 --
--- AUTO_INCREMENT cho bảng `ql_nhom_quyen`
+-- AUTO_INCREMENT for table `ql_nhom_quyen`
 --
 ALTER TABLE `ql_nhom_quyen`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `size`
+-- AUTO_INCREMENT for table `size`
 --
 ALTER TABLE `size`
   MODIFY `size_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'ID size', AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT cho bảng `thuong_hieu`
+-- AUTO_INCREMENT for table `thuong_hieu`
 --
 ALTER TABLE `thuong_hieu`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT cho bảng `ton_kho`
+-- AUTO_INCREMENT for table `ton_kho`
 --
 ALTER TABLE `ton_kho`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `vaitro`
+-- AUTO_INCREMENT for table `vaitro`
 --
 ALTER TABLE `vaitro`
   MODIFY `vaitro_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'ID vai trò', AUTO_INCREMENT=10;
 
 --
--- Các ràng buộc cho các bảng đã đổ
+-- Constraints for dumped tables
 --
 
 --
--- Các ràng buộc cho bảng `cart`
+-- Constraints for table `cart`
 --
 ALTER TABLE `cart`
   ADD CONSTRAINT `lk_cart_kh` FOREIGN KEY (`kh_id`) REFERENCES `khachhang` (`kh_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `cart_chitiet`
+-- Constraints for table `cart_chitiet`
 --
 ALTER TABLE `cart_chitiet`
   ADD CONSTRAINT `lk_cartchitiet_pro` FOREIGN KEY (`pro_id`) REFERENCES `products` (`pro_id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -1167,35 +1318,35 @@ ALTER TABLE `cart_chitiet`
   ADD CONSTRAINT `lk_chitetcart_size` FOREIGN KEY (`size_id`) REFERENCES `size` (`size_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `chi_tiet_kiem_ke`
+-- Constraints for table `chi_tiet_kiem_ke`
 --
 ALTER TABLE `chi_tiet_kiem_ke`
   ADD CONSTRAINT `chi_tiet_kiem_ke_ibfk_1` FOREIGN KEY (`phieu_kiem_ke_id`) REFERENCES `phieu_kiem_ke` (`id`),
   ADD CONSTRAINT `chi_tiet_kiem_ke_ibfk_2` FOREIGN KEY (`pro_id`) REFERENCES `products` (`pro_id`);
 
 --
--- Các ràng buộc cho bảng `chi_tiet_nhom_quyen`
+-- Constraints for table `chi_tiet_nhom_quyen`
 --
 ALTER TABLE `chi_tiet_nhom_quyen`
   ADD CONSTRAINT `chi_tiet_nhom_quyen_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `vaitro` (`vaitro_id`),
   ADD CONSTRAINT `chi_tiet_nhom_quyen_ibfk_2` FOREIGN KEY (`permission_id`) REFERENCES `quyen` (`permission_id`);
 
 --
--- Các ràng buộc cho bảng `coment`
+-- Constraints for table `coment`
 --
 ALTER TABLE `coment`
   ADD CONSTRAINT `lk_cmt_kh` FOREIGN KEY (`kh_id`) REFERENCES `khachhang` (`kh_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `lk_cmt_pro` FOREIGN KEY (`pro_id`) REFERENCES `products` (`pro_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `import_receipts`
+-- Constraints for table `import_receipts`
 --
 ALTER TABLE `import_receipts`
   ADD CONSTRAINT `import_receipts_ibfk_1` FOREIGN KEY (`ncc_id`) REFERENCES `nhacungcap` (`ncc_id`),
   ADD CONSTRAINT `import_receipts_ibfk_2` FOREIGN KEY (`created_by`) REFERENCES `khachhang` (`kh_id`);
 
 --
--- Các ràng buộc cho bảng `import_receipt_details`
+-- Constraints for table `import_receipt_details`
 --
 ALTER TABLE `import_receipt_details`
   ADD CONSTRAINT `fk_receipt` FOREIGN KEY (`receipt_id`) REFERENCES `import_receipts` (`id`) ON DELETE CASCADE,
@@ -1205,13 +1356,13 @@ ALTER TABLE `import_receipt_details`
   ADD CONSTRAINT `import_receipt_details_ibfk_4` FOREIGN KEY (`size_id`) REFERENCES `size` (`size_id`);
 
 --
--- Các ràng buộc cho bảng `order`
+-- Constraints for table `order`
 --
 ALTER TABLE `order`
   ADD CONSTRAINT `lk_order_khs` FOREIGN KEY (`kh_id`) REFERENCES `khachhang` (`kh_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `order_chitiet`
+-- Constraints for table `order_chitiet`
 --
 ALTER TABLE `order_chitiet`
   ADD CONSTRAINT `lk_orderchitiet_color` FOREIGN KEY (`color_id`) REFERENCES `color` (`color_id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -1220,7 +1371,7 @@ ALTER TABLE `order_chitiet`
   ADD CONSTRAINT `lk_orderchitiet_size` FOREIGN KEY (`size_id`) REFERENCES `size` (`size_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `phieu_bao_hanh`
+-- Constraints for table `phieu_bao_hanh`
 --
 ALTER TABLE `phieu_bao_hanh`
   ADD CONSTRAINT `fk_baohanh_khachhang` FOREIGN KEY (`kh_id`) REFERENCES `khachhang` (`kh_id`),
@@ -1230,7 +1381,7 @@ ALTER TABLE `phieu_bao_hanh`
   ADD CONSTRAINT `phieu_bao_hanh_ibfk_3` FOREIGN KEY (`nhan_vien_id`) REFERENCES `khachhang` (`kh_id`);
 
 --
--- Các ràng buộc cho bảng `phieu_doi`
+-- Constraints for table `phieu_doi`
 --
 ALTER TABLE `phieu_doi`
   ADD CONSTRAINT `fk_phieudoi_color` FOREIGN KEY (`color_id`) REFERENCES `color` (`color_id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -1241,20 +1392,20 @@ ALTER TABLE `phieu_doi`
   ADD CONSTRAINT `fk_phieudoi_size` FOREIGN KEY (`size_id`) REFERENCES `size` (`size_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `phieu_kiem_ke`
+-- Constraints for table `phieu_kiem_ke`
 --
 ALTER TABLE `phieu_kiem_ke`
   ADD CONSTRAINT `fk_kiemke_nhanvien` FOREIGN KEY (`nhan_vien_id`) REFERENCES `khachhang` (`kh_id`);
 
 --
--- Các ràng buộc cho bảng `products`
+-- Constraints for table `products`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `fk_products_nhacungcap` FOREIGN KEY (`ncc_id`) REFERENCES `nhacungcap` (`ncc_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`cate_id`) REFERENCES `category` (`cate_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `pro_chitiet`
+-- Constraints for table `pro_chitiet`
 --
 ALTER TABLE `pro_chitiet`
   ADD CONSTRAINT `lk_pro_color` FOREIGN KEY (`color_id`) REFERENCES `color` (`color_id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -1262,7 +1413,7 @@ ALTER TABLE `pro_chitiet`
   ADD CONSTRAINT `lk_proctiet_pro` FOREIGN KEY (`pro_id`) REFERENCES `products` (`pro_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `ton_kho`
+-- Constraints for table `ton_kho`
 --
 ALTER TABLE `ton_kho`
   ADD CONSTRAINT `ton_kho_ibfk_1` FOREIGN KEY (`pro_id`) REFERENCES `products` (`pro_id`),
@@ -1270,288 +1421,6 @@ ALTER TABLE `ton_kho`
   ADD CONSTRAINT `ton_kho_ibfk_3` FOREIGN KEY (`size_id`) REFERENCES `size` (`size_id`);
 COMMIT;
 
--- --------------------------------------------------------
--- Add auto-assignment of permissions to roles
--- --------------------------------------------------------
-
--- Clear existing permissions assignments
-DELETE FROM `chi_tiet_nhom_quyen`;
-
--- Admin role (vaitro_id = 1) - Gets all permissions
-INSERT INTO `chi_tiet_nhom_quyen` (`role_id`, `permission_id`) VALUES
-(1, 'Q1'),  -- Truy cập quản lý
-(1, 'Q2'),  -- Quản lý danh mục
-(1, 'Q3'),  -- Quản lí sản phẩm
-(1, 'Q4'),  -- Quản lí người dùng
-(1, 'Q5'),  -- Quản lí bình luận
-(1, 'Q6'),  -- Quản lí thống kê
-(1, 'Q7'),  -- Quản lí đơn hàng
-(1, 'Q8'),  -- Quản lí nhà cung cấp
-(1, 'Q9'),  -- Quản lí màu
-(1, 'Q10'), -- Quản lý thương hiệu
-(1, 'Q11'), -- Quản lý phiếu nhập
-(1, 'Q12'), -- Quản lý phiếu bảo hành
-(1, 'Q13'), -- Quản lý phiếu đổi/trả
-(1, 'Q14'), -- Quản lý phân quyền
-(1, 'Q15'); -- Quản lý vai trò
-
--- Staff role (vaitro_id = 3) - Gets selected permissions
-INSERT INTO `chi_tiet_nhom_quyen` (`role_id`, `permission_id`) VALUES
-(3, 'Q1'),  -- Truy cập quản lý
-(3, 'Q2'),  -- Quản lý danh mục
-(3, 'Q3'),  -- Quản lí sản phẩm
-(3, 'Q5'),  -- Quản lí bình luận
-(3, 'Q7'),  -- Quản lí đơn hàng
-(3, 'Q9'),  -- Quản lí màu
-(3, 'Q12'), -- Quản lý phiếu bảo hành
-(3, 'Q13'); -- Quản lý phiếu đổi/trả
-
--- Warehouse Staff role (vaitro_id = 4) - Gets inventory-related permissions
-INSERT INTO `chi_tiet_nhom_quyen` (`role_id`, `permission_id`) VALUES
-(4, 'Q1'),  -- Truy cập quản lý
-(4, 'Q3'),  -- Quản lí sản phẩm (read-only)
-(4, 'Q8'),  -- Quản lí nhà cung cấp
-(4, 'Q11'); -- Quản lý phiếu nhập
-
--- --------------------------------------------------------
--- Additional order data for visualization
--- --------------------------------------------------------
-
--- For additional order data to enable visualization of sales trends across 
--- different time periods (months, quarters, years), please run the 
--- 'order_data_update.sql' script after this main database setup.
---
--- The additional data includes orders from 2022-2025 with varied products and quantities
--- to enable meaningful chart visualization in the admin dashboard.
--- SQL script to add order data at different time periods for visualization
-
--- Insert orders for 2022
-INSERT INTO `order` (`kh_id`, `order_date`, `order_trangthai`, `order_adress`, `order_totalprice`) VALUES
-(42, '15-01-22', 'Đã giao hàng', 'Hà Nội', 430),
-(39, '22-02-22', 'Đã giao hàng', 'Hà Nội', 650),
-(43, '10-03-22', 'Đã giao hàng', 'Hồ Chí Minh', 300),
-(42, '05-04-22', 'Đã giao hàng', 'Hà Nội', 490),
-(39, '18-05-22', 'Đã giao hàng', 'Hà Nội', 260),
-(43, '23-06-22', 'Đã giao hàng', 'Hồ Chí Minh', 450),
-(42, '09-07-22', 'Đã giao hàng', 'Hà Nội', 350),
-(39, '14-08-22', 'Đã giao hàng', 'Hà Nội', 500),
-(43, '28-09-22', 'Đã giao hàng', 'Hồ Chí Minh', 430),
-(42, '07-10-22', 'Đã giao hàng', 'Hà Nội', 600),
-(39, '19-11-22', 'Đã giao hàng', 'Hà Nội', 380),
-(43, '24-12-22', 'Đã hủy', 'Hồ Chí Minh', 720);
-
--- Insert orders for 2023 (first half - lower sales)
-INSERT INTO `order` (`kh_id`, `order_date`, `order_trangthai`, `order_adress`, `order_totalprice`) VALUES
-(42, '08-01-23', 'Đã giao hàng', 'Hà Nội', 280),
-(39, '17-01-23', 'Đã giao hàng', 'Hà Nội', 310),
-(43, '25-01-23', 'Đã hủy', 'Hồ Chí Minh', 250),
-(42, '05-02-23', 'Đã giao hàng', 'Hà Nội', 360),
-(39, '14-02-23', 'Đã giao hàng', 'Hà Nội', 420),
-(43, '23-02-23', 'Đã hủy', 'Hồ Chí Minh', 180),
-(42, '08-03-23', 'Đã giao hàng', 'Hà Nội', 390),
-(39, '17-03-23', 'Đã giao hàng', 'Hà Nội', 280),
-(43, '26-03-23', 'Đã hủy', 'Hồ Chí Minh', 430),
-(42, '05-04-23', 'Đã giao hàng', 'Hà Nội', 350),
-(39, '15-04-23', 'Đã giao hàng', 'Hà Nội', 310),
-(43, '22-04-23', 'Đã hủy', 'Hồ Chí Minh', 270),
-(42, '07-05-23', 'Đã giao hàng', 'Hà Nội', 400),
-(39, '16-05-23', 'Đã giao hàng', 'Hà Nội', 320),
-(43, '25-05-23', 'Đã hủy', 'Hồ Chí Minh', 380),
-(42, '08-06-23', 'Đã giao hàng', 'Hà Nội', 290),
-(39, '19-06-23', 'Đã giao hàng', 'Hà Nội', 350),
-(43, '28-06-23', 'Đã hủy', 'Hồ Chí Minh', 430);
-
--- Insert orders for 2023 (second half - higher sales, growth period)
-INSERT INTO `order` (`kh_id`, `order_date`, `order_trangthai`, `order_adress`, `order_totalprice`) VALUES
-(42, '10-07-23', 'Đã giao hàng', 'Hà Nội', 520),
-(39, '17-07-23', 'Đã giao hàng', 'Hà Nội', 480),
-(43, '24-07-23', 'Đã hủy', 'Hồ Chí Minh', 610),
-(42, '06-08-23', 'Đã giao hàng', 'Hà Nội', 590),
-(39, '13-08-23', 'Đã giao hàng', 'Hà Nội', 650),
-(43, '21-08-23', 'Đã hủy', 'Hồ Chí Minh', 570),
-(42, '05-09-23', 'Đã giao hàng', 'Hà Nội', 630),
-(39, '14-09-23', 'Đã giao hàng', 'Hà Nội', 590),
-(43, '22-09-23', 'Đã hủy', 'Hồ Chí Minh', 680),
-(42, '07-10-23', 'Đã giao hàng', 'Hà Nội', 750),
-(39, '16-10-23', 'Đã giao hàng', 'Hà Nội', 820),
-(43, '23-10-23', 'Đã hủy', 'Hồ Chí Minh', 790),
-(42, '08-11-23', 'Đã giao hàng', 'Hà Nội', 910),
-(39, '15-11-23', 'Đã giao hàng', 'Hà Nội', 860),
-(43, '22-11-23', 'Đã hủy', 'Hồ Chí Minh', 900),
-(42, '04-12-23', 'Đã giao hàng', 'Hà Nội', 1050),
-(39, '11-12-23', 'Đã giao hàng', 'Hà Nội', 980),
-(43, '18-12-23', 'Đã hủy', 'Hồ Chí Minh', 1120);
-
--- Insert orders for 2024 (continued growth and seasonal patterns)
-INSERT INTO `order` (`kh_id`, `order_date`, `order_trangthai`, `order_adress`, `order_totalprice`) VALUES
-(42, '07-01-24', 'Đã giao hàng', 'Hà Nội', 780),
-(39, '14-01-24', 'Đã giao hàng', 'Hà Nội', 720),
-(43, '22-01-24', 'Đã hủy', 'Hồ Chí Minh', 800),
-(42, '05-02-24', 'Đã giao hàng', 'Hà Nội', 920),
-(39, '12-02-24', 'Đã giao hàng', 'Hà Nội', 1090),
-(43, '20-02-24', 'Đã hủy', 'Hồ Chí Minh', 1150),
-(42, '04-03-24', 'Đã giao hàng', 'Hà Nội', 890),
-(39, '11-03-24', 'Đã giao hàng', 'Hà Nội', 750),
-(43, '18-03-24', 'Đã hủy', 'Hồ Chí Minh', 810),
-(42, '03-04-24', 'Đã giao hàng', 'Hà Nội', 680),
-(39, '10-04-24', 'Đã giao hàng', 'Hà Nội', 730),
-(43, '17-04-24', 'Đã hủy', 'Hồ Chí Minh', 690),
-(42, '01-05-24', 'Đã giao hàng', 'Hà Nội', 620),
-(39, '08-05-24', 'Đã giao hàng', 'Hà Nội', 580),
-(43, '15-05-24', 'Đã hủy', 'Hồ Chí Minh', 640),
-(42, '03-06-24', 'Đã giao hàng', 'Hà Nội', 540),
-(39, '10-06-24', 'Đã giao hàng', 'Hà Nội', 600),
-(43, '17-06-24', 'Đã hủy', 'Hồ Chí Minh', 560),
-(42, '01-07-24', 'Đang giao hàng', 'Hà Nội', 590),
-(39, '08-07-24', 'Đang giao hàng', 'Hà Nội', 630),
-(43, '15-07-24', 'Đã hủy', 'Hồ Chí Minh', 540),
-(42, '05-08-24', 'Đang giao hàng', 'Hà Nội', 700),
-(39, '12-08-24', 'Đang giao hàng', 'Hà Nội', 750),
-(43, '19-08-24', 'Đã hủy', 'Hồ Chí Minh', 800);
-
--- Insert orders for 2025 Q1 (current year in the data)
-INSERT INTO `order` (`kh_id`, `order_date`, `order_trangthai`, `order_adress`, `order_totalprice`) VALUES
-(42, '06-01-25', 'Đã giao hàng', 'Hà Nội', 870),
-(39, '13-01-25', 'Đã giao hàng', 'Hà Nội', 920),
-(43, '20-01-25', 'Đã hủy', 'Hồ Chí Minh', 860),
-(42, '03-02-25', 'Đã giao hàng', 'Hà Nội', 950),
-(39, '10-02-25', 'Đã giao hàng', 'Hà Nội', 1020),
-(43, '17-02-25', 'Đã hủy', 'Hồ Chí Minh', 980),
-(42, '05-03-25', 'Đã giao hàng', 'Hà Nội', 910),
-(39, '12-03-25', 'Đã giao hàng', 'Hà Nội', 890),
-(43, '19-03-25', 'Đã hủy', 'Hồ Chí Minh', 940),
-(42, '02-04-25', 'Đang giao hàng', 'Hà Nội', 1100),
-(39, '09-04-25', 'Đang giao hàng', 'Hà Nội', 1050),
-(43, '16-04-25', 'Đang giao hàng', 'Hồ Chí Minh', 1150);
-
--- Adding extra cancelled orders for better statistics
-INSERT INTO `order` (`kh_id`, `order_date`, `order_trangthai`, `order_adress`, `order_totalprice`) VALUES
-(42, '14-03-22', 'Đã hủy', 'Hà Nội', 480),
-(39, '25-06-22', 'Đã hủy', 'Hà Nội', 550),
-(43, '18-09-22', 'Đã hủy', 'Hồ Chí Minh', 470),
-(42, '21-02-23', 'Đã hủy', 'Hà Nội', 330),
-(39, '05-05-23', 'Đã hủy', 'Hà Nội', 450),
-(43, '14-08-23', 'Đã hủy', 'Hồ Chí Minh', 620),
-(42, '09-10-23', 'Đã hủy', 'Hà Nội', 780),
-(39, '28-11-23', 'Đã hủy', 'Hà Nội', 840),
-(43, '03-01-24', 'Đã hủy', 'Hồ Chí Minh', 750),
-(42, '17-03-24', 'Đã hủy', 'Hà Nội', 870),
-(39, '22-05-24', 'Đã hủy', 'Hà Nội', 600),
-(43, '08-07-24', 'Đã hủy', 'Hồ Chí Minh', 680);
-
--- Now, create the corresponding order_chitiet records
--- We'll use a script to generate these after we know the order IDs generated above
--- For now, we'll prepare a placeholder for the next step
-
--- The following SET variable will be used to store the starting ID for new orders
-SET @start_order_id = (SELECT MAX(order_id) FROM `order` WHERE order_id < 137);
-
--- Creating order_chitiet records for the orders we just inserted
--- Using commonly purchased products from the existing data
-
--- Function to select random products with appropriate quantities and calculate correct totals
--- This would typically be done with a stored procedure, but we'll use INSERT statements directly here
-
--- Order details for 2022 orders (12 orders, start_order_id + 1 to start_order_id + 12)
-INSERT INTO `order_chitiet` (`order_id`, `pro_id`, `color_id`, `size_id`, `pro_price`, `soluong`, `total_price`) VALUES
-(@start_order_id + 1, 66, 2, 1, 300, 1, 300),
-(@start_order_id + 1, 63, 1, 1, 130, 1, 130),
-(@start_order_id + 2, 65, 1, 2, 300, 2, 600),
-(@start_order_id + 2, 54, 1, 1, 50, 1, 50),
-(@start_order_id + 3, 66, 2, 1, 300, 1, 300),
-(@start_order_id + 4, 61, 2, 3, 145, 2, 290),
-(@start_order_id + 4, 49, 1, 1, 100, 2, 200),
-(@start_order_id + 5, 63, 1, 1, 130, 2, 260),
-(@start_order_id + 6, 66, 2, 1, 300, 1, 300),
-(@start_order_id + 6, 58, 1, 1, 120, 1, 120),
-(@start_order_id + 6, 54, 2, 1, 50, 1, 50),
-(@start_order_id + 7, 65, 2, 1, 300, 1, 300),
-(@start_order_id + 7, 55, 3, 3, 300, 1, 300),
-(@start_order_id + 8, 64, 1, 1, 160, 1, 160),
-(@start_order_id + 8, 62, 1, 2, 130, 1, 130),
-(@start_order_id + 8, 53, 3, 3, 300, 1, 300),
-(@start_order_id + 9, 63, 3, 3, 130, 2, 260),
-(@start_order_id + 9, 58, 1, 2, 120, 1, 120),
-(@start_order_id + 9, 54, 1, 1, 50, 1, 50),
-(@start_order_id + 10, 66, 2, 1, 300, 1, 300),
-(@start_order_id + 10, 60, 1, 2, 300, 1, 300),
-(@start_order_id + 11, 63, 1, 1, 130, 2, 260),
-(@start_order_id + 11, 58, 1, 1, 120, 1, 120),
-(@start_order_id + 12, 65, 2, 1, 300, 2, 600),
-(@start_order_id + 12, 58, 1, 1, 120, 1, 120);
-
--- Adding order details for additional cancelled orders
-INSERT INTO `order_chitiet` (`order_id`, `pro_id`, `color_id`, `size_id`, `pro_price`, `soluong`, `total_price`) VALUES
-(@start_order_id + 85, 66, 2, 1, 300, 1, 300),
-(@start_order_id + 85, 63, 1, 1, 130, 1, 130),
-(@start_order_id + 85, 54, 2, 1, 50, 1, 50),
-(@start_order_id + 86, 65, 1, 2, 300, 1, 300),
-(@start_order_id + 86, 63, 1, 1, 130, 2, 260),
-(@start_order_id + 87, 66, 2, 1, 300, 1, 300),
-(@start_order_id + 87, 58, 1, 1, 120, 1, 120),
-(@start_order_id + 87, 54, 2, 1, 50, 1, 50),
-(@start_order_id + 88, 66, 2, 1, 300, 1, 300),
-(@start_order_id + 88, 54, 2, 1, 50, 1, 50),
-(@start_order_id + 89, 65, 2, 1, 300, 1, 300),
-(@start_order_id + 89, 58, 1, 1, 120, 1, 120),
-(@start_order_id + 89, 54, 2, 1, 50, 1, 50),
-(@start_order_id + 90, 66, 2, 1, 300, 2, 600),
-(@start_order_id + 90, 54, 2, 1, 50, 1, 50),
-(@start_order_id + 91, 65, 2, 1, 300, 2, 600),
-(@start_order_id + 91, 63, 1, 1, 130, 1, 130),
-(@start_order_id + 91, 54, 2, 1, 50, 1, 50),
-(@start_order_id + 92, 66, 2, 1, 300, 2, 600),
-(@start_order_id + 92, 63, 1, 1, 130, 2, 260),
-(@start_order_id + 93, 66, 2, 1, 300, 2, 600),
-(@start_order_id + 93, 58, 1, 1, 120, 1, 120),
-(@start_order_id + 93, 54, 2, 1, 50, 1, 50),
-(@start_order_id + 94, 65, 2, 1, 300, 2, 600),
-(@start_order_id + 94, 63, 1, 1, 130, 2, 260),
-(@start_order_id + 95, 66, 2, 1, 300, 1, 300),
-(@start_order_id + 95, 63, 1, 1, 130, 2, 260),
-(@start_order_id + 95, 49, 1, 1, 100, 1, 100),
-(@start_order_id + 96, 65, 2, 1, 300, 2, 600),
-(@start_order_id + 96, 58, 1, 1, 120, 1, 120);
-
--- Continue with the remaining original order_chitiet data
--- Order details for 2023 first half (18 orders, start_order_id + 13 to start_order_id + 30)
-INSERT INTO `order_chitiet` (`order_id`, `pro_id`, `color_id`, `size_id`, `pro_price`, `soluong`, `total_price`) VALUES
-(@start_order_id + 13, 63, 1, 1, 130, 1, 130),
-(@start_order_id + 13, 58, 1, 1, 120, 1, 120),
-(@start_order_id + 13, 54, 2, 1, 50, 1, 50),
-(@start_order_id + 14, 65, 2, 1, 300, 1, 300),
-(@start_order_id + 14, 49, 1, 1, 100, 1, 100),
-(@start_order_id + 15, 63, 1, 1, 130, 1, 130),
-(@start_order_id + 15, 58, 1, 1, 120, 1, 120),
-(@start_order_id + 16, 66, 2, 1, 300, 1, 300),
-(@start_order_id + 16, 61, 2, 3, 145, 1, 145),
-(@start_order_id + 17, 65, 2, 1, 300, 1, 300),
-(@start_order_id + 17, 58, 1, 1, 120, 1, 120),
-(@start_order_id + 18, 63, 1, 1, 130, 1, 130),
-(@start_order_id + 18, 54, 2, 1, 50, 1, 50),
-(@start_order_id + 19, 66, 2, 1, 300, 1, 300),
-(@start_order_id + 19, 58, 1, 1, 120, 1, 120),
-(@start_order_id + 20, 63, 1, 1, 130, 1, 130),
-(@start_order_id + 20, 58, 1, 1, 120, 1, 120),
-(@start_order_id + 20, 54, 2, 1, 50, 1, 50),
-(@start_order_id + 21, 66, 2, 1, 300, 1, 300),
-(@start_order_id + 21, 58, 1, 1, 120, 1, 120),
-(@start_order_id + 22, 65, 2, 1, 300, 1, 300),
-(@start_order_id + 22, 54, 2, 1, 50, 1, 50),
-(@start_order_id + 23, 63, 1, 1, 130, 1, 130),
-(@start_order_id + 23, 58, 1, 1, 120, 1, 120),
-(@start_order_id + 24, 66, 2, 1, 300, 1, 300),
-(@start_order_id + 24, 58, 1, 1, 120, 1, 120),
-(@start_order_id + 25, 63, 1, 1, 130, 1, 130),
-(@start_order_id + 25, 61, 1, 2, 145, 1, 145),
-(@start_order_id + 25, 54, 2, 1, 50, 1, 50),
-(@start_order_id + 26, 66, 2, 1, 300, 1, 300),
-(@start_order_id + 26, 58, 1, 1, 120, 1, 120),
-(@start_order_id + 27, 65, 2, 1, 300, 1, 300),
-(@start_order_id + 27, 54, 2, 1, 50, 1, 50),
-(@start_order_id + 28, 63, 1, 1, 130, 1, 130),
-(@start_order_id + 28, 65, 2, 1, 300, 1, 300),
-(@start_order_id + 29, 66, 2, 1, 300, 1, 300),
-(@start_order_id + 29, 49, 3, 3, 100, 1, 100),
-(@start_order_id + 30, 63, 1, 1, 130, 1, 130),
-(@start_order_id + 30, 65, 2, 1, 300, 1, 300); 
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
