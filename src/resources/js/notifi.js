@@ -58,3 +58,17 @@ function showErrorToast() {
     duration: 1500,
   });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetch('https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1')
+        .then((response) => response.json())
+        .then((data) => {
+            const province = document.querySelector("#province");
+            province.innerHTML = `<option value="">Tất cả tỉnh thành</option>`; // Thêm dòng mặc định
+
+            data.data.data.forEach((item) => {
+                province.innerHTML += `<option value="${item.name}">${item.name}</option>`;
+            });
+        })
+        .catch((error) => console.log("Lỗi tải tỉnh/thành:", error));
+});

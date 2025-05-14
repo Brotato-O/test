@@ -1,54 +1,64 @@
     <?php
-    function loadall_donhang($kyw = "", $start_date = "", $end_date = "", $offset = 0, $limit = 0)
-    {
-        $sql = "
-                SELECT 
-                    `order`.`order_id`,
-                    `order`.`order_totalprice`,
-                    `order`.`order_trangthai`,
-                    `order`.`order_adress`,
-                    `order`.`order_date`,
-                    `khachhang`.`kh_name`,
-                    `khachhang`.`kh_tel`,
-                    `khachhang`.`kh_mail`,
-                    `order_chitiet`.`order_id` as `sl`
-                FROM 
-                    `order`
-                LEFT JOIN 
-                    `khachhang` ON `order`.`kh_id` = `khachhang`.`kh_id`
-                LEFT JOIN 
-                    `order_chitiet` ON `order`.`order_id` = `order_chitiet`.`order_id`
-                WHERE 
-                    1
-            ";
+    function loadall_donhang($kyw = "", $start_date = "", $end_date = "", $offset = 0, $limit = 0, $city = "")
+{
+    $sql = "
+            SELECT 
+                `order`.`order_id`,
+                `order`.`order_totalprice`,
+                `order`.`order_trangthai`,
+                `order`.`order_adress`,
+                `order`.`order_date`,
+                `khachhang`.`kh_name`,
+                `khachhang`.`kh_tel`,
+                `khachhang`.`kh_mail`,
+                `order_chitiet`.`order_id` as `sl`
+            FROM 
+                `order`
+            LEFT JOIN 
+                `khachhang` ON `order`.`kh_id` = `khachhang`.`kh_id`
+            LEFT JOIN 
+                `order_chitiet` ON `order`.`order_id` = `order_chitiet`.`order_id`
+            WHERE 
+                1
+        ";
 
-        if ($kyw !== '') {
-            $sql .= " AND `order`.`order_id` LIKE '%$kyw%'";
-        }
-
-        if ($start_date !== '') {
-            // đổi format ngày từ YYYY-MM-DD sang DD-MM-YY
-            $start_date = date('d-m-y', strtotime($start_date));
-            $sql .= " AND STR_TO_DATE(`order`.`order_date`, '%d-%m-%y') >= STR_TO_DATE('$start_date', '%d-%m-%y')";
-        }
-
-        if ($end_date !== '') {
-            // đổi format ngày từ YYYY-MM-DD sang DD-MM-YY
-            $end_date = date('d-m-y', strtotime($end_date));
-            $sql .= " AND STR_TO_DATE(`order`.`order_date`, '%d-%m-%y') <= STR_TO_DATE('$end_date', '%d-%m-%y')";
-        }
-
-        $sql .= " GROUP BY order.order_id";
-        $sql .= " ORDER BY `order`.`order_id` DESC";
-
-        // Thêm phân trang nếu có yêu cầu
-        if ($limit > 0) {
-            $sql .= " LIMIT $offset, $limit";
-        }
-
-        $result = pdo_queryall($sql);
-        return $result;
+    // Tìm kiếm theo mã đơn hàng (order_id)
+    if ($kyw !== '') {
+        $sql .= " AND `order`.`order_id` LIKE '%$kyw%'";
     }
+
+    // Tìm kiếm theo ngày bắt đầu
+    if ($start_date !== '') {
+        // Đổi format ngày từ YYYY-MM-DD sang DD-MM-YY
+        $start_date = date('d-m-y', strtotime($start_date));
+        $sql .= " AND STR_TO_DATE(`order`.`order_date`, '%d-%m-%y') >= STR_TO_DATE('$start_date', '%d-%m-%y')";
+    }
+
+    // Tìm kiếm theo ngày kết thúc
+    if ($end_date !== '') {
+        // Đổi format ngày từ YYYY-MM-DD sang DD-MM-YY
+        $end_date = date('d-m-y', strtotime($end_date));
+        $sql .= " AND STR_TO_DATE(`order`.`order_date`, '%d-%m-%y') <= STR_TO_DATE('$end_date', '%d-%m-%y')";
+    }
+
+    // Tìm kiếm theo thành phố trong địa chỉ
+    if ($city !== '') {
+        $sql .= " AND `order`.`order_adress` LIKE '%$city%'";
+    }
+
+    $sql .= " GROUP BY `order`.`order_id`";
+    $sql .= " ORDER BY `order`.`order_id` DESC";
+
+    // Thêm phân trang nếu có yêu cầu
+    if ($limit > 0) {
+        $sql .= " LIMIT $offset, $limit";
+    }
+
+    // Thực thi truy vấn và trả về kết quả
+    $result = pdo_queryall($sql);
+    return $result;
+}
+
     function load_cart_count($order_id)
     {
         $sql = "select * from order_chitiet where order_id = '$order_id'";
@@ -209,39 +219,44 @@
         return $result;
     }
 
-    function count_all_donhang($kyw = "", $start_date = "", $end_date = "")
-    {
-        $sql = "
-                SELECT 
-                    COUNT(DISTINCT `order`.`order_id`) as total
-                FROM 
-                    `order`
-                LEFT JOIN 
-                    `khachhang` ON `order`.`kh_id` = `khachhang`.`kh_id`
-                LEFT JOIN 
-                    `order_chitiet` ON `order`.`order_id` = `order_chitiet`.`order_id`
-                WHERE 
-                    1
-            ";
+    function count_all_donhang($kyw = "", $start_date = "", $end_date = "", $city = "")
+{
+    $sql = "
+        SELECT 
+            COUNT(DISTINCT `order`.`order_id`) as total
+        FROM 
+            `order`
+        LEFT JOIN 
+            `khachhang` ON `order`.`kh_id` = `khachhang`.`kh_id`
+        LEFT JOIN 
+            `order_chitiet` ON `order`.`order_id` = `order_chitiet`.`order_id`
+        WHERE 
+            1
+    ";
 
-        if ($kyw !== '') {
-            $sql .= " AND `order`.`order_id` LIKE '%$kyw%'";
-        }
-
-        if ($start_date !== '') {
-            // đổi format ngày từ YYYY-MM-DD sang DD-MM-YY
-            $start_date = date('d-m-y', strtotime($start_date));
-            $sql .= " AND STR_TO_DATE(`order`.`order_date`, '%d-%m-%y') >= STR_TO_DATE('$start_date', '%d-%m-%y')";
-        }
-
-        if ($end_date !== '') {
-            // đổi format ngày từ YYYY-MM-DD sang DD-MM-YY
-            $end_date = date('d-m-y', strtotime($end_date));
-            $sql .= " AND STR_TO_DATE(`order`.`order_date`, '%d-%m-%y') <= STR_TO_DATE('$end_date', '%d-%m-%y')";
-        }
-
-        $result = pdo_query_one($sql);
-        return $result['total'];
+    if ($kyw !== '') {
+        $sql .= " AND `order`.`order_id` LIKE '%$kyw%'";
     }
+
+    if ($start_date !== '') {
+        // đổi format ngày từ YYYY-MM-DD sang DD-MM-YY
+        $start_date = date('d-m-y', strtotime($start_date));
+        $sql .= " AND STR_TO_DATE(`order`.`order_date`, '%d-%m-%y') >= STR_TO_DATE('$start_date', '%d-%m-%y')";
+    }
+
+    if ($end_date !== '') {
+        // đổi format ngày từ YYYY-MM-DD sang DD-MM-YY
+        $end_date = date('d-m-y', strtotime($end_date));
+        $sql .= " AND STR_TO_DATE(`order`.`order_date`, '%d-%m-%y') <= STR_TO_DATE('$end_date', '%d-%m-%y')";
+    }
+
+    // if ($city !== '') {
+    //     $sql .= " AND `khachhang`.`address` LIKE '%$city%'";
+    // }
+
+    $result = pdo_query_one($sql);
+    return $result['total'];
+}
+
 
     ?>

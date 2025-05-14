@@ -8,6 +8,11 @@
     <h2 class="border border-4 mb-4 text-bg-secondary p-3 text-center rounded">Danh sách đơn hàng</h2>
     <form action="" class="mb-4" method="post" enctype="multipart/form-data">
         <div class="row">
+            <div class="col-sm-2">
+                <select class="w-100 p-1" name="address" id="province">
+                    
+                </select>
+            </div>
             <div class="col-sm-4">
                 <input class="w-100 p-1" type="text" placeholder="Nhập mã đơn hàng" name="kyw"
                     value="<?= isset($_POST['kyw']) ? $_POST['kyw'] : '' ?>">
@@ -52,11 +57,12 @@
                     $kyw = $_POST['kyw'] ?? '';
                     $start_date = $_POST['start_date'] ?? '';
                     $end_date = $_POST['end_date'] ?? '';
-                    $listdh = loadall_donhang($kyw, $start_date, $end_date, $offset, $items_per_page);
-                    $total_orders = count_all_donhang($kyw, $start_date, $end_date);
+                    $address = $_POST['address'] ?? '';
+                    $listdh = loadall_donhang($kyw, $start_date, $end_date, $offset, $items_per_page, $address);
+                    $total_orders = count_all_donhang($kyw, $start_date, $end_date, $address); // bạn cần chỉnh sửa count_all_donhang tương tự
                 } else {
-                    $listdh = loadall_donhang('', '', '', $offset, $items_per_page);
-                    $total_orders = count_all_donhang('', '', '');
+                    $listdh = loadall_donhang('', '', '', $offset, $items_per_page, '');
+                    $total_orders = count_all_donhang('', '', '', '');
                 }
 
                 $total_pages = ceil($total_orders / $items_per_page);
@@ -129,3 +135,17 @@
         <button type="button" class="btn btn-secondary btn-sm">Xoá các mục đã chọn</button>
     </div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    fetch('https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1')
+        .then((response) => response.json())
+        .then((data) => {
+            const province = document.querySelector("#province");
+            province.innerHTML = `<option value="">Tất cả tỉnh thành</option>`;
+            data.data.data.forEach((item) => {
+                province.innerHTML += `<option value="${item.name}">${item.name}</option>`;
+            });
+        })
+        .catch((error) => console.log("Lỗi tải tỉnh/thành:", error));
+});
+</script>
