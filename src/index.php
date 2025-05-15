@@ -187,6 +187,188 @@ if (isset($_GET['act']) && $_GET['act'] == 'filterByPrice') {
     }
     exit;
 }
+
+// Handle AJAX search requests
+if (isset($_GET['act']) && $_GET['act'] == 'searchAjax') {
+    header('Content-Type: application/json');
+    
+    $searchTerm = isset($_GET['term']) ? trim($_GET['term']) : '';
+    
+    if (empty($searchTerm)) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Vui lòng nhập từ khóa tìm kiếm!'
+        ]);
+        exit;
+    }
+
+    try {
+        // Sử dụng hàm loadAll_products có sẵn để tìm kiếm
+        $products = loadAll_products($searchTerm, 0);
+        
+        if ($products && count($products) > 0) {
+            echo json_encode([
+                'success' => true,
+                'products' => $products
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Không tìm thấy sản phẩm nào phù hợp với từ khóa "' . htmlspecialchars($searchTerm) . '"'
+            ]);
+        }
+    } catch (Exception $e) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Lỗi khi tìm kiếm sản phẩm: ' . $e->getMessage()
+        ]);
+    }
+    exit;
+}
+
+// Handle AJAX login requests
+if (isset($_GET['act']) && $_GET['act'] == 'loginAjax') {
+    header('Content-Type: application/json');
+    
+    $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+    $password = isset($_POST['password']) ? trim($_POST['password']) : '';
+    
+    if (empty($email)) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Vui lòng nhập email!'
+        ]);
+        exit;
+    }
+    
+    if (empty($password)) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Vui lòng nhập mật khẩu!'
+        ]);
+        exit;
+    }
+
+    try {
+        $checkuser = check_user($email, $password);
+        
+        if (is_array($checkuser)) {
+            if ($checkuser['vaitro_id'] == 2 && $checkuser['trangthai'] == 0) {
+                $_SESSION['acount'] = $checkuser;
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Đăng nhập thành công!',
+                    'redirect' => 'index.php?act=home'
+                ]);
+            } else {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Tài khoản không có quyền truy cập!'
+                ]);
+            }
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Email hoặc mật khẩu không chính xác!'
+            ]);
+        }
+    } catch (Exception $e) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Lỗi khi đăng nhập: ' . $e->getMessage()
+        ]);
+    }
+    exit;
+}
+
+// Handle AJAX register requests
+if (isset($_GET['act']) && $_GET['act'] == 'registerAjax') {
+    header('Content-Type: application/json');
+    
+    $username = isset($_POST['username']) ? trim($_POST['username']) : '';
+    $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+    $phone = isset($_POST['phone']) ? trim($_POST['phone']) : '';
+    $password = isset($_POST['password']) ? trim($_POST['password']) : '';
+    $rePassword = isset($_POST['re-password']) ? trim($_POST['re-password']) : '';
+    $address = isset($_POST['address']) ? trim($_POST['address']) : '';
+    
+    $errors = [];
+    
+    // Validate username
+    if (empty($username)) {
+        $errors['username'] = 'Vui lòng nhập tên đăng nhập!';
+    } elseif (!preg_match('/^[a-zA-Z ]+$/', $username)) {
+        $errors['username'] = 'Tên đăng nhập chỉ được chứa chữ cái và khoảng trắng!';
+    }
+    
+    // Validate email
+    if (empty($email)) {
+        $errors['email'] = 'Vui lòng nhập email!';
+    } elseif (!preg_match('/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $email)) {
+        $errors['email'] = 'Email không hợp lệ!';
+    } else {
+        $checkmail = check_email($email);
+        if (is_array($checkmail)) {
+            $errors['email'] = 'Email đã được sử dụng!';
+        }
+    }
+    
+    // Validate phone
+    if (empty($phone)) {
+        $errors['phone'] = 'Vui lòng nhập số điện thoại!';
+    } elseif (!preg_match('/^(0|\+84)(3[2-9]|5[2689]|7[06789]|8[1-689]|9[0-9])[0-9]{7}$/', $phone)) {
+        $errors['phone'] = 'Số điện thoại không hợp lệ!';
+    }
+    
+    // Validate address
+    if (empty($address)) {
+        $errors['address'] = 'Vui lòng nhập địa chỉ!';
+    }
+    
+    // Validate password
+    if (empty($password)) {
+        $errors['password'] = 'Vui lòng nhập mật khẩu!';
+    } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{6,}$/', $password)) {
+        $errors['password'] = 'Mật khẩu phải chứa chữ hoa, chữ thường, số và ký tự đặc biệt, tối thiểu 6 ký tự!';
+    }
+    
+    // Validate re-password
+    if (empty($rePassword)) {
+        $errors['re-password'] = 'Vui lòng nhập lại mật khẩu!';
+    } elseif ($rePassword !== $password) {
+        $errors['re-password'] = 'Mật khẩu nhập lại không khớp!';
+    }
+    
+    if (empty($errors)) {
+        try {
+            addkh($password, $username, $email, $phone, $address);
+            
+            // Lấy thông tin khách hàng vừa đăng ký
+            $sql = "SELECT * FROM khachhang WHERE kh_id = (SELECT MAX(kh_id) FROM khachhang)";
+            $khachhang = pdo_query_one($sql);
+            
+            // Tạo giỏ hàng cho khách hàng mới
+            addcart_kh($khachhang['kh_id'], 0);
+            
+            echo json_encode([
+                'success' => true,
+                'message' => 'Đăng ký thành công! Vui lòng đăng nhập.',
+                'redirect' => 'index.php?act=login'
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Lỗi khi đăng ký: ' . $e->getMessage()
+            ]);
+        }
+    } else {
+        echo json_encode([
+            'success' => false,
+            'errors' => $errors
+        ]);
+    }
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

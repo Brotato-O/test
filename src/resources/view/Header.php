@@ -25,9 +25,9 @@
                         <a class="btn btn-info active me-2" href="index.php?act=myAccount">Tài khoản của tôi</a>
                     </li>
                     <?php if ($roles['vaitro_id'] == 1 || $roles['vaitro_id'] == 3 || $roles['vaitro_id'] == 4) { ?>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="btn btn-info active" href="./Admin/indexadmin.php?act=home">Quản Lý</a>
-                    </li>
+                    </li> -->
                     <?php } ?>
 
                     <?php
@@ -46,12 +46,12 @@
                     ?>
                 </ul>
                 <div class="d-flex">
-                    <form class="d-flex me-4" method="POST">
+                    <form class="d-flex me-4" id="searchForm" onsubmit="return false;">
                         <div class="form-group me-2">
-                            <input type="text" class="form-control" name="searchProduct" placeholder="Tìm kiếm sản phẩm"
+                            <input type="text" class="form-control" id="searchProduct" name="searchProduct" placeholder="Tìm kiếm sản phẩm"
                                 required>
                         </div>
-                        <button type="submit" class="btn btn-outline-dark" name="searchSubmit">
+                        <button type="submit" class="btn btn-outline-dark" id="searchSubmit">
                             <i class="bi bi-search"></i>
                         </button>
                     </form>
@@ -101,3 +101,73 @@
         </div>
     </nav>
 </div>
+
+<script>
+document.getElementById('searchForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const searchTerm = document.getElementById('searchProduct').value.trim();
+    
+    if (searchTerm === '') {
+        alert('Vui lòng nhập từ khóa tìm kiếm!');
+        return;
+    }
+
+    // Gửi request AJAX
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `index.php?act=searchAjax&term=${encodeURIComponent(searchTerm)}`, true);
+
+    xhr.onload = function() {
+        if (this.status === 200) {
+            try {
+                const response = JSON.parse(this.responseText);
+                if (response.success) {
+                    const productsContainer = document.getElementById('products-container');
+                    let productsHTML = '';
+
+                    response.products.forEach(product => {
+                        productsHTML += `
+                            <div class="col-12 col-lg-4 col-md-6 user-select-none animate__animated animate__zoomIn">
+                                <div class="product-image">
+                                    <a href="index.php?act=productinformation&pro_id=${product.pro_id}">
+                                        <img class="card-img-top rounded-4" src="./Admin/sanpham/img/${product.pro_img}" alt="${product.pro_name}">
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <a class="card-title two-line-clamp my-3 fs-6 text-dark text-decoration-none" 
+                                       href="index.php?act=productinformation&pro_id=${product.pro_id}">
+                                        ${product.pro_name}
+                                    </a>
+                                    <div class="d-flex align-items-center justify-content-between px-2">
+                                        <p class="card-text fw-bold fs-2 mb-0">$${product.pro_price}</p>
+                                        <p class="text-secondary ps-2 mt-3">by ${product.pro_brand}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    productsContainer.innerHTML = productsHTML || 
+                        '<div class="col-12 text-center p-5"><p class="text-danger">Không tìm thấy sản phẩm nào!</p></div>';
+                } else {
+                    document.getElementById('products-container').innerHTML = 
+                        '<div class="col-12 text-center p-5"><p class="text-danger">' + 
+                        (response.message || 'Không tìm thấy sản phẩm nào!') + '</p></div>';
+                }
+            } catch (e) {
+                console.error('Error parsing JSON:', e);
+                alert('Đã xảy ra lỗi khi xử lý dữ liệu, vui lòng thử lại.');
+            }
+        } else {
+            console.error('AJAX Error:', this.status);
+            alert('Đã xảy ra lỗi khi tải dữ liệu, vui lòng thử lại.');
+        }
+    };
+
+    xhr.onerror = function() {
+        console.error('AJAX Network Error');
+        alert('Đã xảy ra lỗi mạng, vui lòng thử lại.');
+    };
+
+    xhr.send();
+});
+</script>

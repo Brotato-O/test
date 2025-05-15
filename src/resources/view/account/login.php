@@ -1,51 +1,82 @@
 <?php
-if (isset($_POST['login'])) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    if (empty($email)) {
-        $emailMess = "*Please enter your email";
-    }
-    if (empty($password)) {
-        $passlMess = "*Please enter your password";
-    }
-
-    //check username and password
-    $checkuser = check_user($email, $password);
-
-    if (is_array($checkuser)) {
-        // Kiểm tra vai trò người dùng
-        if ($checkuser['vaitro_id'] == 2 && $checkuser['trangthai'] == 0) { // Chỉ cho phép User đăng nhập
-            $_SESSION['acount'] = $checkuser;
-            header("Location:index.php?act=home");
-            exit();
-        } else {
-            // Nếu là admin hoặc nhân viên, báo lỗi đăng nhập sai
-            $loginMess = "Incorrect email address or password!";
-        }
-    } else {
-        $loginMess = "Incorrect email address or password!";
-    }
+// Chỉ giữ lại phần kiểm tra session và các biến cần thiết
+if (isset($_SESSION['acount']) && $_SESSION['acount']) {
+    header("Location:index.php?act=home");
+    exit();
 }
 ?>
 <div class="form-wrapper d-flex align-items-center justify-content-center flex-column">
     <h2 class="fw-bold">Login</h2>
-    <form class="form" method="post" action="">
+    <div id="login-message" class="alert d-none mb-3"></div>
+    <form id="loginForm" class="form" method="post" onsubmit="return false;">
         <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="email" name="email"
-                value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>">
-            <p class="text-danger form-message mt-1"><?php echo !empty($emailMess) ? $emailMess : ""  ?></p>
+            <input type="email" class="form-control" id="email" name="email" required>
+            <p id="email-error" class="text-danger form-message mt-1"></p>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password">
-            <p class="text-danger form-message mt-1"><?php echo !empty($passlMess) ? $passlMess : ""  ?></p>
+            <input type="password" class="form-control" id="password" name="password" required>
+            <p id="password-error" class="text-danger form-message mt-1"></p>
         </div>
-        <?php if (!empty($loginMess)): ?>
-            <div class="alert alert-danger"><?php echo $loginMess; ?></div>
-        <?php endif; ?>
-        <button type="submit" class="btn btn-dark w-100 text-uppercase" name="login">Login</button>
+        <button type="submit" class="btn btn-dark w-100 text-uppercase">Login</button>
     </form>
     <p class="mt-4">You don't have account? <a href="index.php?act=register">Sign up</a></p>
 </div>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Reset error messages
+    document.getElementById('email-error').textContent = '';
+    document.getElementById('password-error').textContent = '';
+    const messageDiv = document.getElementById('login-message');
+    messageDiv.className = 'alert d-none mb-3';
+    
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    
+    // Basic validation
+    let hasError = false;
+    if (!email) {
+        document.getElementById('email-error').textContent = 'Vui lòng nhập email!';
+        hasError = true;
+    }
+    if (!password) {
+        document.getElementById('password-error').textContent = 'Vui lòng nhập mật khẩu!';
+        hasError = true;
+    }
+    
+    if (hasError) return;
+    
+    // Send AJAX request
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('password', password);
+    
+    fetch('index.php?act=loginAjax', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            messageDiv.className = 'alert alert-success mb-3';
+            messageDiv.textContent = data.message;
+            // Redirect after successful login
+            setTimeout(() => {
+                window.location.href = data.redirect;
+            }, 1000);
+        } else {
+            messageDiv.className = 'alert alert-danger mb-3';
+            messageDiv.textContent = data.message;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        messageDiv.className = 'alert alert-danger mb-3';
+        messageDiv.textContent = 'Đã xảy ra lỗi khi đăng nhập, vui lòng thử lại!';
+    });
+});
+</script>
