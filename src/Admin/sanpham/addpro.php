@@ -61,8 +61,15 @@
             </div>
             <div class="mb-3 mt-3">
                 <label for="anh" class="form-label text-danger">Ảnh:</label>
-                <input type="file" class="form-control" id="anh" name="pro_img">
+                <input type="file" class="form-control" id="anh" name="pro_img" onchange="previewImage();">
+                <img id="preview" src="#" alt="Ảnh xem trước" style="max-width: 200px; margin-top: 10px; display: none;" />
+                <!-- <input type="file" class="form-control" id="anh" name="pro_img"> -->
             </div>
+            <!-- <div class="mb-3 mt-3">
+                <label for="anh" class="form-label text-danger">Ảnh:</label>
+                
+            </div> -->
+
 
             <div class="">
                 <button type="submit" class="btn btn-secondary btn-sm" name="addsp">Thêm sản phẩm</button>
@@ -76,6 +83,26 @@
 </div>
 
 <script>
+    function previewImage() {
+    const input = document.getElementById("anh");
+    const preview = document.getElementById("preview");
+
+    const file = input.files[0];
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = "block";
+        }
+
+        reader.readAsDataURL(file);
+    } else {
+        preview.src = "#";
+        preview.style.display = "none";
+    }
+}
+
 function validateForm() {
     const name = document.getElementById("tensp").value.trim();
 
