@@ -64,8 +64,8 @@
             </div>
             <div class="mb-3 mt-3">
                 <label for="anh" class="form-label text-danger">Ảnh:</label>
-                <img src="./sanpham/img/<?php echo $pro_one['pro_img'] ?>" alt="" class="w-25">
-                <input type="file" class="form-control" id="anh" name="pro_img">
+                <img id="preview" src="./sanpham/img/<?php echo $pro_one['pro_img'] ?>" alt="" class="w-25">
+                <input type="file" class="form-control" id="anh" name="pro_img" onchange="previewImage();">
             </div>
 
             <div class="">
@@ -80,6 +80,25 @@
 </div>
 
 <script>
+    
+function previewImage() {
+    const input = document.getElementById("anh");
+    const preview = document.getElementById("preview");
+
+    const file = input.files[0];
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = "block";
+        }
+
+        reader.readAsDataURL(file);
+    }
+}
+
+
     function validateForm() {
         const name = document.getElementById("tensp").value.trim();
 
