@@ -284,15 +284,9 @@ function  getAllChitietSp($id)
 
 function kiemtra_sp_dangtrongdonhang($pro_id_canxoa) {
     $sql = "
-        SELECT order_chitiet.order_id 
+        SELECT order_id
         FROM order_chitiet
-        INNER JOIN `order` ON order_chitiet.order_id = `order`.order_id
-        WHERE 
-            order_chitiet.pro_id = ?
-            AND (
-                `order`.order_trangthai = 'Chờ xác nhận'
-                OR `order`.order_trangthai = 'Đang giao hàng'
-            )
+        WHERE pro_id = ?
         LIMIT 1
     ";
     $result = pdo_query_one($sql, $pro_id_canxoa);
