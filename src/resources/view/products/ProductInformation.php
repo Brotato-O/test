@@ -55,10 +55,10 @@ if (isset($_GET['pro_id'])) {
                     <p class="fs-6 text-dark text-decoration-underline">By <?php echo $pro_brand; ?></p>
                     <h2 class="fw-bold fs-2">$<?php echo number_format($pro_price, 2, '.'); ?></h2>
                     <div class="d-flex mt-4">
-                        <span class="me-4">
+                        <!-- <span class="me-4">
                             <i class="bi bi-check"></i>
                             Instock: <span class="fw-bold"> <?php echo $pro_stock; ?></span> items
-                        </span>
+                        </span> -->
                         <span class="ms-4">
                             <i class="fa fa-eye" aria-hidden="true"></i>
                             Amount of people: <span class="fw-bold">

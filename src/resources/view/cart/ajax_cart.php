@@ -18,39 +18,61 @@ if ($size <= 0 || $color <= 0 || $soluong <= 0 || $pro_id <= 0 || $kh_id <= 0) {
     $response['message'] = 'Vui lòng nhập đầy đủ thông tin sản phẩm';
 } else {
     try {
-        $pro_cart = queryonepro($pro_id);
-        if (!$pro_cart) {
-            $response['message'] = 'Không tìm thấy sản phẩm';
+        // Kiểm tra số lượng tồn kho
+        $pro_chitiet = query_pro_soluong($pro_id, $color, $size);
+        if (!$pro_chitiet) {
+            error_log("Không tìm thấy sản phẩm trong kho: pro_id=$pro_id, color_id=$color, size_id=$size");
+            $response['message'] = 'Sản phẩm không tồn tại trong kho';
         } else {
-            $cart_kh = querycart_kh($kh_id);
-            if (!$cart_kh) {
-                // Nếu giỏ hàng chưa tồn tại, tạo mới giỏ hàng
-                addcart_kh($kh_id, 0);
-                $cart_kh = querycart_kh($kh_id);
-            }
-
-            if (!$cart_kh) {
-                throw new Exception("Không thể tạo giỏ hàng");
-            }
-
-            $check_cart = check_cart($size, $pro_id, $color, $cart_kh['cart_id']);
-
-            if (is_array($check_cart)) {
-                update_soluong_cart($soluong, $pro_cart['pro_price'], $check_cart['cart_chitiet_id'], $check_cart['soluong']);
+            $current_stock = $pro_chitiet['soluong'];
+            
+            // Kiểm tra nếu số lượng yêu cầu vượt quá tồn kho
+            if ($soluong > $current_stock) {
+                $response['message'] = "Số lượng sản phẩm trong kho không đủ. Chỉ còn {$current_stock} sản phẩm.";
             } else {
-                add_cartchitiet($cart_kh['cart_id'], $pro_id, $color, $size, $pro_cart['pro_price'], $soluong);
+                $pro_cart = queryonepro($pro_id);
+                if (!$pro_cart) {
+                    $response['message'] = 'Không tìm thấy sản phẩm';
+                } else {
+                    $cart_kh = querycart_kh($kh_id);
+                    if (!$cart_kh) {
+                        // Nếu giỏ hàng chưa tồn tại, tạo mới giỏ hàng
+                        addcart_kh($kh_id, 0);
+                        $cart_kh = querycart_kh($kh_id);
+                    }
+
+                    if (!$cart_kh) {
+                        throw new Exception("Không thể tạo giỏ hàng");
+                    }
+
+                    $check_cart = check_cart($size, $pro_id, $color, $cart_kh['cart_id']);
+
+                    if (is_array($check_cart)) {
+                        // Kiểm tra tổng số lượng sau khi cập nhật
+                        $new_quantity = $check_cart['soluong'] + $soluong;
+                        if ($new_quantity > $current_stock) {
+                            $response['message'] = "Số lượng sản phẩm trong kho không đủ. Chỉ còn {$current_stock} sản phẩm.";
+                        } else {
+                            update_soluong_cart($soluong, $pro_cart['pro_price'], $check_cart['cart_chitiet_id'], $check_cart['soluong']);
+                            $response['success'] = true;
+                            $response['message'] = 'Đã cập nhật giỏ hàng thành công!';
+                        }
+                    } else {
+                        add_cartchitiet($cart_kh['cart_id'], $pro_id, $color, $size, $pro_cart['pro_price'], $soluong);
+                        $response['success'] = true;
+                        $response['message'] = 'Đã thêm sản phẩm vào giỏ hàng thành công!';
+                    }
+
+                    // Lấy tổng số lượng sản phẩm trong giỏ hàng để cập nhật badge
+                    $sql = "SELECT SUM(soluong) as total_quantity FROM cart_chitiet WHERE cart_id = {$cart_kh['cart_id']}";
+                    $result = pdo_query_one($sql);
+                    $total_quantity = isset($result['total_quantity']) ? $result['total_quantity'] : 0;
+                    $response['cartQuantity'] = $total_quantity;
+                }
             }
-
-            $response['success'] = true;
-            $response['message'] = 'Đã thêm sản phẩm vào giỏ hàng thành công!';
-
-            // Lấy tổng số lượng sản phẩm trong giỏ hàng để cập nhật badge
-            $sql = "SELECT SUM(soluong) as total_quantity FROM cart_chitiet WHERE cart_id = {$cart_kh['cart_id']}";
-            $result = pdo_query_one($sql);
-            $total_quantity = isset($result['total_quantity']) ? $result['total_quantity'] : 0;
-            $response['cartQuantity'] = $total_quantity;
         }
     } catch (Exception $e) {
+        error_log("Lỗi khi kiểm tra tồn kho: " . $e->getMessage());
         $response['message'] = 'Lỗi xử lý: ' . $e->getMessage();
     }
 }
