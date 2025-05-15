@@ -11,6 +11,35 @@ include './app/model/color.php';
 include './app/model/size.php';
 include './app/model/donhang.php';
 
+//Xử lí danh mục ajax
+if (isset($_GET['act']) && $_GET['act'] === 'filterByCategory') {
+    header('Content-Type: application/json');
+
+    $categoryId = isset($_GET['category']) ? (int)$_GET['category'] : 0;
+
+    // Lấy danh sách sản phẩm theo danh mục
+    if ($categoryId === 0) {
+        // Lấy tất cả sản phẩm nếu categoryId = 0
+        $products = queryallpro("", 0, 0, 100); // Giới hạn 100 sản phẩm
+    } else {
+        $products = queryallpro("", $categoryId, 0, 100); // Giới hạn 100 sản phẩm
+    }
+
+    if ($products) {
+        echo json_encode([
+            'success' => true,
+            'products' => $products
+        ]);
+    } else {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Không tìm thấy sản phẩm nào.'
+        ]);
+    }
+
+    exit;
+}
+
 // Handle AJAX requests for combined filtering (sort + price range)
 if (isset($_GET['act']) && $_GET['act'] == 'combinedFilter') {
     header('Content-Type: application/json');

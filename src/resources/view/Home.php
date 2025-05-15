@@ -1,25 +1,20 @@
 <div class="row justify-content-center g-3">
     <div class="col-3 d-none d-md-block ">
         <div class="list-group">
-            <?php
-            // Get currently selected category ID if any
-            $current_category_id = isset($_GET['category']) ? (int)$_GET['category'] : 0;
-            ?>
             <div class="list-group-item text-capitalize bg-dark text-white">
                 Danh mục
             </div>
-            <a href="index.php?act=home"
-                class="list-group-item text-capitalize <?php echo (!isset($_GET['category'])) ? 'active bg-info' : 'text-dark'; ?>">
+            <a href="javascript:void(0);" class="list-group-item text-capitalize category-link active bg-info" data-category-id="0">
                 Tất cả sản phẩm
             </a>
             <?php
             $categories = query_allcate();
             if (count($categories)) {
                 foreach ($categories as $category) {
-                    $isActive = (isset($_GET['category']) && $_GET['category'] == $category['cate_id']) ? 'active bg-info' : 'text-dark';
             ?>
-            <a href="index.php?act=home&category=<?php echo $category['cate_id'] ?>"
-                class="list-group-item text-capitalize <?php echo $isActive; ?>"><?php echo $category['cate_name']; ?></a>
+                <a href="javascript:void(0);" class="list-group-item text-capitalize category-link text-dark" data-category-id="<?php echo $category['cate_id']; ?>">
+                    <?php echo $category['cate_name']; ?>
+                </a>
             <?php
                 }
             }
@@ -295,6 +290,77 @@ let currentFilters = {
     startPrice: '',
     endPrice: ''
 };
+
+// Xử lý ajax cho danh mục
+document.addEventListener('DOMContentLoaded', function () {
+        const categoryLinks = document.querySelectorAll('.category-link');
+        const productsContainer = document.getElementById('products-container');
+
+        categoryLinks.forEach(link => {
+            link.addEventListener('click', function () {
+                // Lấy ID danh mục từ thuộc tính data-category-id
+                const categoryId = this.getAttribute('data-category-id');
+
+                // Xóa class active khỏi tất cả các liên kết danh mục
+                categoryLinks.forEach(link => link.classList.remove('active', 'bg-info'));
+                // Thêm class active cho danh mục được chọn
+                this.classList.add('active', 'bg-info');
+
+                // Gửi yêu cầu AJAX
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', `index.php?act=filterByCategory&category=${categoryId}`, true);
+
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        try {
+                            const response = JSON.parse(xhr.responseText);
+                            if (response.success) {
+                                let productsHTML = '';
+
+                                response.products.forEach(product => {
+                                    productsHTML += `
+                                        <div class="col-12 col-lg-4 col-md-6 user-select-none animate__animated animate__zoomIn">
+                                            <div class="product-image">
+                                                <a href="index.php?act=productinformation&pro_id=${product.pro_id}">
+                                                    <img class="card-img-top rounded-4" src="./Admin/sanpham/img/${product.pro_img}" alt="${product.pro_name}">
+                                                </a>
+                                            </div>
+                                            <div class="card-body">
+                                                <a class="card-title two-line-clamp my-3 fs-6 text-dark text-decoration-none" href="index.php?act=productinformation&pro_id=${product.pro_id}">
+                                                    ${product.pro_name}
+                                                </a>
+                                                <div class="d-flex align-items-center justify-content-between px-2">
+                                                    <p class="card-text fw-bold fs-2 mb-0">$${product.pro_price}</p>
+                                                    <p class="text-secondary ps-2 mt-3">by ${product.pro_brand}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `;
+                                });
+
+                                productsContainer.innerHTML = productsHTML || '<div class="col-12"><p>Không có sản phẩm nào trong danh mục này.</p></div>';
+                            } else {
+                                productsContainer.innerHTML = '<div class="col-12 text-center p-5"><p class="text-danger">Không tìm thấy sản phẩm nào!</p></div>';
+                            }
+                        } catch (e) {
+                            console.error('Error parsing JSON:', e);
+                            alert('Đã xảy ra lỗi khi xử lý dữ liệu.');
+                        }
+                    } else {
+                        console.error('AJAX Error:', xhr.status);
+                        alert('Đã xảy ra lỗi khi tải dữ liệu.');
+                    }
+                };
+
+                xhr.onerror = function () {
+                    console.error('AJAX Network Error');
+                    alert('Đã xảy ra lỗi mạng.');
+                };
+
+                xhr.send();
+            });
+        });
+    });
 
 // Function to render product HTML
 function renderProductHTML(product) {
