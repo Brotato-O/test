@@ -3,6 +3,34 @@ $size = $_POST['size'];
 $color = $_POST['color'];
 $soluong = $_POST['cart_qty'];
 if (isset($_SESSION['acount']) && $_SESSION['acount']) {
+    // Kiểm tra sản phẩm
+    if (!isset($_GET['pro_id'])) {
+        echo '<div class="alert alert-warning text-center" role="alert">
+                <h4 class="alert-heading">Không tìm thấy sản phẩm!</h4>
+                <p>Vui lòng chọn sản phẩm trước khi đặt hàng.</p>
+                <hr>
+                <p class="mb-0">
+                    <a href="index.php?act=home" class="btn btn-primary">Tiếp tục mua sắm</a>
+                </p>
+              </div>';
+        // Vô hiệu hóa nút đặt hàng
+        echo '<script>
+            document.getElementById("placeOrderBtn").disabled = true;
+            document.getElementById("placeOrderBtn").innerHTML = "Không thể đặt hàng - Chưa chọn sản phẩm";
+            document.getElementById("placeOrderBtn").classList.add("btn-secondary");
+        </script>';
+        exit();
+    }
+
+    // Kiểm tra thông tin sản phẩm
+    if ($size == 'null' || $color == null || $soluong == null) {
+        $tb = '&thongbao=';
+        $space = '  ';
+        $thongbao = "Xin$space" . "mời$space" . "nhập$space" . "đầy$space" . "đủ$space" . "trường$space" . "dữ$space" . "liệu";
+        header("location:index.php?act=productinformation&pro_id=" . $_GET['pro_id'] . $tb . $thongbao);
+        exit();
+    }
+
     // echo $_SESSION['acount']['kh_id'];
     if ($size == 'null' || $color == null || $soluong == null && isset($_GET['pro_id'])) {
 ?>
@@ -130,8 +158,17 @@ if (isset($_SESSION['acount']) && $_SESSION['acount']) {
                         <input type="text" name="tongtien" id="" value="<?php echo $totalPrice + $shipingPrice; ?>" hidden>
                     </div>
 
-                    <button type="submit" name="placeordered" id="placeOrderBtn" class="btn btn-dark w-100 ">Place
-                        Order</button>
+                    <button type="submit" name="placeordered" id="placeOrderBtn" class="btn btn-dark w-100" <?php echo (!isset($_GET['pro_id']) || $size == 'null' || $color == null || $soluong == null) ? 'disabled' : ''; ?>>
+                        <?php 
+                            if (!isset($_GET['pro_id'])) {
+                                echo 'Không thể đặt hàng - Chưa chọn sản phẩm';
+                            } else if ($size == 'null' || $color == null || $soluong == null) {
+                                echo 'Không thể đặt hàng - Thiếu thông tin sản phẩm';
+                            } else {
+                                echo 'Place Order';
+                            }
+                        ?>
+                    </button>
 
                 </div>
             </div>

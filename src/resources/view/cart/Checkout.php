@@ -1,5 +1,27 @@
 <?php
 if (isset($_SESSION['acount']) && $_SESSION['acount']) {
+    // Kiểm tra giỏ hàng
+    $kh_id = $_SESSION['acount']['kh_id'];
+    $cart_kh = querycart_kh($kh_id);
+    $my_cart = querycart_chitiet($cart_kh['cart_id']);
+    
+    if (empty($my_cart)) {
+        // Nếu giỏ hàng trống, hiển thị thông báo và vô hiệu hóa nút đặt hàng
+        echo '<div class="alert alert-warning text-center" role="alert">
+                <h4 class="alert-heading">Giỏ hàng trống!</h4>
+                <p>Vui lòng thêm sản phẩm vào giỏ hàng trước khi đặt hàng.</p>
+                <hr>
+                <p class="mb-0">
+                    <a href="index.php?act=home" class="btn btn-primary">Tiếp tục mua sắm</a>
+                </p>
+              </div>';
+        // Vô hiệu hóa nút đặt hàng
+        echo '<script>
+            document.getElementById("placeOrderBtn").disabled = true;
+            document.getElementById("placeOrderBtn").innerHTML = "Không thể đặt hàng - Giỏ hàng trống";
+            document.getElementById("placeOrderBtn").classList.add("btn-secondary");
+        </script>';
+    }
 
 ?>
 <form action="index.php?act=order" method="post">
@@ -123,8 +145,9 @@ if (isset($_SESSION['acount']) && $_SESSION['acount']) {
                 <input type="text" name="tongtien" id="" value="<?php echo $totalPrice + $shipingPrice; ?>" hidden>
             </div>
 
-            <button type="submit" name="placeordered" id="placeOrderBtn" class="btn btn-dark w-100 ">Place
-                Order</button>
+            <button type="submit" name="placeordered" id="placeOrderBtn" class="btn btn-dark w-100" <?php echo empty($my_cart) ? 'disabled' : ''; ?>>
+                <?php echo empty($my_cart) ? 'Không thể đặt hàng - Giỏ hàng trống' : 'Place Order'; ?>
+            </button>
 
         </div>
     </div>
