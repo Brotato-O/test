@@ -181,13 +181,12 @@
                                     ?>
                                             <div class="col-md-4 col-sm-6 mb-4 pb-2">
                                                 <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
-                                                    <a href="DeleteFavourite.php?pro_id=<?php echo $pro_favourite_id ?>">
+                                                    <a href="index.php?act=deleteFavourite&pro_id=<?php echo $pro_id ?>">
                                                         <div class="star position-absolute">
-                                                            <span class="badge text-bg-danger"><i class="icofont-star"></i> 3.1
-                                                                Cancel</span>
+                                                            <span class="badge text-bg-danger"><i class="icofont-star"></i> Cancel</span>
                                                         </div>
                                                     </a>
-                                                    <a href="DeleteFavourite.php?pro_id=<?php echo $pro_favourite_id ?>">
+                                                    <a href="index.php?act=deleteFavourite&pro_id=<?php echo $pro_id ?>">
                                                         <div class="member-plan position-absolute">
                                                             <span class="badge text-bg-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
                                                         </div>

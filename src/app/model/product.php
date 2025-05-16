@@ -322,6 +322,13 @@ function proFrAdded($kh_id, $pro_id)
     $proFrAdded = pdo_query_one($sql);
     return $proFrAdded;
 }
+
+function deleteProductFromFavourite($kh_id, $pro_id) 
+{
+    $sql = "DELETE FROM products_favourite WHERE kh_id = $kh_id AND pro_id = $pro_id";
+    pdo_execute($sql);
+}
+
 // function query_one_probienthe($id){
 //     $sql = "select * from pro_chitiet "
 // }
