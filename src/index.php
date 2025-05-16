@@ -11,6 +11,46 @@ include './app/model/color.php';
 include './app/model/size.php';
 include './app/model/donhang.php';
 
+
+//Xử lí phân trang ajax
+if (isset($_GET['act']) && $_GET['act'] === 'filterByCategory') {
+    header('Content-Type: application/json');
+
+    $categoryId = isset($_GET['category']) ? (int)$_GET['category'] : 0;
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $productsPerPage = isset($_GET['productsPerPage']) ? (int)$_GET['productsPerPage'] : 9;
+
+    if ($page < 1) $page = 1;
+    $offset = ($page - 1) * $productsPerPage;
+
+    // Lấy danh sách sản phẩm theo danh mục
+    if ($categoryId === 0) {
+        $products = queryallpro("", 0, $offset, $productsPerPage);
+        $totalProducts = count_products("", 0);
+    } else {
+        $products = queryallpro("", $categoryId, $offset, $productsPerPage);
+        $totalProducts = count_products("", $categoryId);
+    }
+
+    $totalPages = ceil($totalProducts / $productsPerPage);
+
+    if ($products) {
+        echo json_encode([
+            'success' => true,
+            'products' => $products,
+            'totalPages' => $totalPages
+        ]);
+    } else {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Không tìm thấy sản phẩm nào.'
+        ]);
+    }
+
+    exit;
+}
+
+
 //Xử lí danh mục ajax
 if (isset($_GET['act']) && $_GET['act'] === 'filterByCategory') {
     header('Content-Type: application/json');

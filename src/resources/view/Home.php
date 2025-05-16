@@ -55,7 +55,7 @@
     </div>
 
     <div class="col-12 col-md-9">
-        <div class="row gx-3 gy-5" id="products-container">
+         <!-- <div class="row gx-3 gy-5" id="products-container">
             <?php
             // Pagination configuration
             $products_per_page = 9; // Number of products per page
@@ -277,7 +277,25 @@
                 }
             }
             ?>
+                    </div> -->
+        <div class="row justify-content-between align-items-center mb-4">
+            <div class="col-md-12"">
 
+                <div class="row gx-3 gy-5" id="products-container">
+                    <!-- Sản phẩm sẽ được hiển thị ở đây -->
+                </div>
+
+                <label for="products-per-page" class="form-label">Số sản phẩm mỗi trang:</label>
+                <select id="products-per-page" class="form-select" style="width: auto; display: inline-block;">
+                    <option value="6">6</option>
+                    <option value="9" selected>9</option>
+                    <option value="12">12</option>
+                    <option value="15">15</option>
+                </select>
+            </div>
+            <div class="col-md-12 text-end">
+                <div id="pagination-container"></div>
+            </div>
         </div>
     </div>
 </div>
@@ -290,6 +308,153 @@ let currentFilters = {
     startPrice: '',
     endPrice: ''
 };
+document.addEventListener('DOMContentLoaded', function () {
+    const categoryLinks = document.querySelectorAll('.category-link');
+    const productsContainer = document.getElementById('products-container');
+    const paginationContainer = document.getElementById('pagination-container');
+    const productsPerPageSelect = document.getElementById('products-per-page');
+
+    let currentPage = 1;
+    let productsPerPage = parseInt(productsPerPageSelect.value);
+    let currentCategory = 0; // Mặc định là "Tất cả sản phẩm"
+
+    // Hàm tải sản phẩm
+    function loadProducts(page = 1, category = 0) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', `index.php?act=filterByCategory&category=${category}&page=${page}&productsPerPage=${productsPerPage}`, true);
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        let productsHTML = '';
+
+                        response.products.forEach(product => {
+                            productsHTML += `
+                                <div class="col-12 col-lg-4 col-md-6 user-select-none animate__animated animate__zoomIn">
+                                    <div class="product-image">
+                                        <a href="index.php?act=productinformation&pro_id=${product.pro_id}">
+                                            <img class="card-img-top rounded-4" src="./Admin/sanpham/img/${product.pro_img}" alt="${product.pro_name}">
+                                        </a>
+                                    </div>
+                                    <div class="card-body">
+                                        <a class="card-title two-line-clamp my-3 fs-6 text-dark text-decoration-none" href="index.php?act=productinformation&pro_id=${product.pro_id}">
+                                            ${product.pro_name}
+                                        </a>
+                                        <div class="d-flex align-items-center justify-content-between px-2">
+                                            <p class="card-text fw-bold fs-2 mb-0">$${product.pro_price}</p>
+                                            <p class="text-secondary ps-2 mt-3">by ${product.pro_brand}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+
+                        productsContainer.innerHTML = productsHTML || '<div class="col-12"><p>Không có sản phẩm nào trong danh mục này.</p></div>';
+
+                        // Hiển thị phân trang
+                        renderPagination(response.totalPages, page);
+                    } else {
+                        productsContainer.innerHTML = '<div class="col-12 text-center p-5"><p class="text-danger">Không tìm thấy sản phẩm nào!</p></div>';
+                        paginationContainer.innerHTML = ''; // Ẩn phân trang nếu không có sản phẩm
+                    }
+                } catch (e) {
+                    console.error('Error parsing JSON:', e);
+                    alert('Đã xảy ra lỗi khi xử lý dữ liệu.');
+                }
+            } else {
+                console.error('AJAX Error:', xhr.status);
+                alert('Đã xảy ra lỗi khi tải dữ liệu.');
+            }
+        };
+
+        xhr.onerror = function () {
+            console.error('AJAX Network Error');
+            alert('Đã xảy ra lỗi mạng.');
+        };
+
+        xhr.send();
+    }
+
+    // Hàm hiển thị phân trang
+    function renderPagination(totalPages, currentPage) {
+        if (totalPages <= 1) {
+            paginationContainer.innerHTML = '';
+            return;
+        }
+
+        let paginationHTML = '<ul class="pagination justify-content-center">';
+
+        if (currentPage > 1) {
+            paginationHTML += `
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);" data-page="${currentPage - 1}">&laquo;</a>
+                </li>
+            `;
+        }
+
+        for (let i = 1; i <= totalPages; i++) {
+            paginationHTML += `
+                <li class="page-item ${i === currentPage ? 'active' : ''}">
+                    <a class="page-link" href="javascript:void(0);" data-page="${i}">${i}</a>
+                </li>
+            `;
+        }
+
+        if (currentPage < totalPages) {
+            paginationHTML += `
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);" data-page="${currentPage + 1}">&raquo;</a>
+                </li>
+            `;
+        }
+
+        paginationHTML += '</ul>';
+        paginationContainer.innerHTML = paginationHTML;
+
+        // Thêm sự kiện click cho các nút phân trang
+        const pageLinks = paginationContainer.querySelectorAll('.page-link');
+        pageLinks.forEach(link => {
+            link.addEventListener('click', function () {
+                const page = parseInt(this.getAttribute('data-page'));
+                if (page) {
+                    currentPage = page;
+                    loadProducts(page, currentCategory);
+                }
+            });
+        });
+    }
+
+    // Sự kiện thay đổi danh mục
+    categoryLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            // Lấy ID danh mục từ thuộc tính data-category-id
+            const categoryId = parseInt(this.getAttribute('data-category-id'));
+
+            // Xóa class active khỏi tất cả các liên kết danh mục
+            categoryLinks.forEach(link => link.classList.remove('active', 'bg-info'));
+            // Thêm class active cho danh mục được chọn
+            this.classList.add('active', 'bg-info');
+
+            // Cập nhật danh mục hiện tại và tải sản phẩm
+            currentCategory = categoryId;
+            currentPage = 1; // Reset về trang đầu tiên
+            loadProducts(currentPage, currentCategory);
+        });
+    });
+
+    // Sự kiện thay đổi số sản phẩm mỗi trang
+    productsPerPageSelect.addEventListener('change', function () {
+        productsPerPage = parseInt(this.value);
+        currentPage = 1; // Reset về trang đầu tiên
+        loadProducts(currentPage, currentCategory);
+    });
+
+    // Tải sản phẩm lần đầu
+    loadProducts(currentPage, currentCategory);
+});
+
 
 // Xử lý ajax cho danh mục
 document.addEventListener('DOMContentLoaded', function () {
