@@ -6,7 +6,7 @@
         <form action="indexadmin.php?act=addbh" method="post">
             <div class="mb-3 mt-3">
                 <label class="form-label text-danger">Sản phẩm</label>
-                <?php $pro = queryallpro('', 0); ?>
+                <?php $pro = queryallpro_admin('', 0); ?>
                 <select class="form-select" name="pro_id">
                     <?php foreach ($pro as $p): ?>
                         <option value="<?= $p['pro_id'] ?>"><?= $p['pro_name'] ?> - ID: <?= $p['pro_id'] ?></option>

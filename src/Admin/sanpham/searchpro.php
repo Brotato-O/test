@@ -45,7 +45,7 @@
         if (isset($_POST['searchprocate'])) {
           $search_name = $_POST['search_name'];
           $search_cate = $_POST['search_cate'];
-          $result_pro = queryallpro($search_name, $search_cate);
+          $result_pro = queryallpro_admin($search_name, $search_cate);
           if (empty($result_pro)) {
             echo "Danh Mục Này Chưa Có Sản Phẩm Xin Mời Bạn Thực Hiện Tùy Chọn Khác";
           } else {

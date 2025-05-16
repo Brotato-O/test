@@ -501,7 +501,7 @@ function hasPermission($action, $permissions)
                     break;
                 case 'pro':
 
-                    $result_pro = queryallpro('', 0);
+                    $result_pro = queryallpro_admin('', 0);
                     include './sanpham/listproduct.php';
                     break;
                 case 'thungrac_product':
@@ -807,7 +807,7 @@ function hasPermission($action, $permissions)
                         addpro($pro_name, $img_name, $pro_price, $pro_mota, $cate_id, $pro_stock, $pro_brand);
                     }
 
-                    $result_pro = queryallpro('', 0);
+                    $result_pro = queryallpro_admin('', 0);
                     include './sanpham/listproduct.php';
                     break;
                 case 'suapro':
@@ -837,7 +837,7 @@ function hasPermission($action, $permissions)
                         updatepro($pro_name, $pro_price, $pro_brand, $img_name, $pro_mota, $cate_id, $pro_id);
                     }
 
-                    $result_pro = queryallpro('', 0);
+                    $result_pro = queryallpro_admin('', 0);
                     include './sanpham/listproduct.php';
                     break;
                 case 'delpro':
@@ -851,7 +851,7 @@ function hasPermission($action, $permissions)
                             echo "<script>alert('Xóa cứng sản phẩm thành công.');</script>";
                         }
                     }
-                    $result_pro = queryallpro('', 0);
+                    $result_pro = queryallpro_admin('', 0);
                     include './sanpham/listproduct.php';
                     break;
                 case "soft_delpro":
@@ -861,7 +861,7 @@ function hasPermission($action, $permissions)
 
                         soft_deletepro($pro_id);
                     }
-                    $result_pro = queryallpro('', 0);
+                    $result_pro = queryallpro_admin('', 0);
                     include './sanpham/listproduct.php';
                     break;
                 case "khoiphuc_product":

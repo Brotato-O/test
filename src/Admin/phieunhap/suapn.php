@@ -140,7 +140,7 @@
                 <!-- Mã sản phẩm -->
                 <div class="col-md-6">
                     <label class="form-label">Sản phẩm</label>
-                    <?php $products = queryallpro('', 0); ?>
+                    <?php $products = queryallpro_admin('', 0); ?>
                     <select class="form-select" name="pro_id" required>
                         <option value="">-- Chọn sản phẩm --</option>
                         <?php foreach ($products as $product): ?>

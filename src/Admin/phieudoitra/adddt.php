@@ -19,7 +19,7 @@
             <div class="mb-3 mt-3">
                 <label class="form-label text-danger">Mã sản phẩm</label>
                 <?php 
-                     $result_pro = queryallpro('', 0); ?>
+                     $result_pro = queryallpro_admin('', 0); ?>
                 <select class="form-select" name="pro_id" required>
                     <?php foreach (  $result_pro as $ncc1): ?>
                         <option value="<?= $ncc1['pro_id'] ?>"><?= $ncc1['pro_id'] ?></option>
@@ -29,7 +29,7 @@
             <div class="mb-3 mt-3">
                 <label class="form-label text-danger">Mã sản phẩm mới</label>
                 <?php 
-                     $result_pro = queryallpro('', 0); ?>
+                     $result_pro = queryallpro_admin('', 0); ?>
                 <select class="form-select" name="pro_moi_id" >
                 <option value="">-- Không chọn  --</option>
                     <?php foreach (  $result_pro as $ncc1): ?>

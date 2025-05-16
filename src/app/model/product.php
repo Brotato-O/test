@@ -2,21 +2,52 @@
 
 
 
-function queryallpro($key, $idcate, $offset = null, $limit = null)
+function queryallpro_admin($key, $idcate, $offset = null, $limit = null)
 {
     $sql = "select * from products where trangthai = 0";
     if ($key != '') {
-        $sql .= " and pro_name like '%$key%'";
+        $sql .= " AND pro_name LIKE '%$key%'";
     }
+
     if ($idcate > 0) {
-        $sql .= " and cate_id = $idcate";
+        $sql .= " AND cate_id = $idcate";
     }
 
-    $sql .= " order by pro_id desc";
+    $sql .= " ORDER BY pro_id DESC";
 
-    // Add pagination if offset and limit are provided
     if ($offset !== null && $limit !== null) {
-        $sql .= " limit $offset, $limit";
+        $sql .= " LIMIT $offset, $limit";
+    }
+
+    $result = pdo_queryall($sql);
+    return $result;
+}
+function queryallpro($key, $idcate, $offset = null, $limit = null)
+{
+    $sql = "
+        SELECT * 
+        FROM products 
+        WHERE trangthai = 0
+          AND pro_id IN (
+              SELECT pro_id 
+              FROM pro_chitiet 
+              GROUP BY pro_id 
+              HAVING SUM(soluong) > 0
+          )
+    ";
+
+    if ($key != '') {
+        $sql .= " AND pro_name LIKE '%$key%'";
+    }
+
+    if ($idcate > 0) {
+        $sql .= " AND cate_id = $idcate";
+    }
+
+    $sql .= " ORDER BY pro_id DESC";
+
+    if ($offset !== null && $limit !== null) {
+        $sql .= " LIMIT $offset, $limit";
     }
 
     $result = pdo_queryall($sql);
@@ -148,6 +179,32 @@ function loadall_sanpham_top5()
 }
 function loadAll_products($searchProduct = "", $id = 0)
 {
+    $sql = "
+        SELECT * 
+        FROM products 
+        WHERE pro_id IN (
+            SELECT pro_id 
+            FROM pro_chitiet 
+            GROUP BY pro_id 
+            HAVING SUM(soluong) > 0
+        )
+    ";
+
+    if ($searchProduct != "") {
+        $sql .= " AND pro_name LIKE '%" . $searchProduct . "%'";
+    }
+
+    if ($id > 0) {
+        $sql .= " AND cate_id = '" . $id . "'";
+    }
+
+    $sql .= " ORDER BY pro_id DESC";
+
+    $listsp = pdo_queryall($sql);
+    return $listsp;
+}
+function loadAll_products_admin($searchProduct = "", $id = 0)
+{
     $sql = "SELECT * FROM products WHERE 1";
     if ($searchProduct != "") {
         $sql .= " AND pro_name LIKE '%" . $searchProduct . "%'";
@@ -160,6 +217,7 @@ function loadAll_products($searchProduct = "", $id = 0)
 
     return $listsp;
 }
+
 
 function updateProductViews($pro_id)
 {
