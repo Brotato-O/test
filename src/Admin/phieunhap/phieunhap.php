@@ -21,7 +21,7 @@
                         extract($phieunhap);
                 ?>
                 <tr>
-                    <td><input type="checkbox" name="checkbox" id=""></td>
+                    
                     <td><?= $id ?></td>
                     <td><?= $supplier_name ?></td>
                     <td><?= $created_by_name ?></td>
@@ -46,9 +46,9 @@
         </table>
     </div>
     <div class="">
-        <button type="button" class="btn btn-secondary btn-sm ">Chọn tất cả</button>
+                <!-- <button type="button" class="btn btn-secondary btn-sm ">Chọn tất cả</button>
         <button type="button" class="btn btn-secondary btn-sm">Bỏ chọn tất cả</button>
-        <button type="button" class="btn btn-secondary btn-sm">Xoá các mục đã chọn</button>
+        <button type="button" class="btn btn-secondary btn-sm">Xoá các mục đã chọn</button> -->
         <a href="indexadmin.php?act=addpn1">
             <button type="button" class="btn btn-primary btn-sm">Thêm phiếu nhập</button>
         </a>

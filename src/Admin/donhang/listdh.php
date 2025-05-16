@@ -72,7 +72,7 @@
                     $countsp = load_cart_count($sl);
                 ?>
                     <tr>
-                        <td><input type="checkbox" name="checkbox" id=""></td>
+                        
                         <td><?= $order_id ?></td>
                         <td>
                             <?= $kh_name . '<br>' . $kh_mail . '<br>' . $order_adress . '<br>' . $kh_tel ?>
@@ -130,9 +130,9 @@
     <?php endif; ?>
 
     <div class="">
-        <button type="button" class="btn btn-secondary btn-sm ">Chọn tất cả</button>
+                <!-- <button type="button" class="btn btn-secondary btn-sm ">Chọn tất cả</button>
         <button type="button" class="btn btn-secondary btn-sm">Bỏ chọn tất cả</button>
-        <button type="button" class="btn btn-secondary btn-sm">Xoá các mục đã chọn</button>
+        <button type="button" class="btn btn-secondary btn-sm">Xoá các mục đã chọn</button> -->
     </div>
 </div>
 <script>

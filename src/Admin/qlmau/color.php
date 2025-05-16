@@ -20,7 +20,7 @@
                               extract($itemcolor);
                               ?>
                                 <tr>
-                                  <td><input type="checkbox" name="checkbox" id=""></td>
+                                  
                                   <td><?= $color_id  ?></td>
                                   <td><?= $color_name ?></td>
                                   <td><?= $color_ma ?></td>
@@ -35,9 +35,9 @@
                             </table>
                         </div>
                         <div class="">
-                          <button type="button" class="btn btn-secondary btn-sm ">Chọn tất cả</button>
+                          <!-- <button type="button" class="btn btn-secondary btn-sm ">Chọn tất cả</button>
                           <button type="button" class="btn btn-secondary btn-sm">Bỏ chọn tất cả</button>
-                          <button type="button" class="btn btn-secondary btn-sm">Xoá các mục đã chọn</button>
+                          <button type="button" class="btn btn-secondary btn-sm">Xoá các mục đã chọn</button> -->
                           <a href="indexadmin.php?act=addcolor1">
                             <button type="button" class="btn btn-secondary btn-sm">Thêm màu</button>
                         </a>

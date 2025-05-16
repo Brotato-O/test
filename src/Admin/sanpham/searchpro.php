@@ -84,9 +84,9 @@
             </table>
         </div>
         <div class="">
-            <button type="button" class="btn btn-primary btn-sm ">Chọn tất cả</button>
+            <!-- <button type="button" class="btn btn-primary btn-sm ">Chọn tất cả</button>
             <button type="button" class="btn btn-primary btn-sm">Bỏ chọn tất cả</button>
-            <button type="button" class="btn btn-primary btn-sm">Xoá các mục đã chọn</button>
+            <button type="button" class="btn btn-primary btn-sm">Xoá các mục đã chọn</button> -->
             <a href="indexadmin.php?act=thempro">
                 <button type="button" class="btn btn-primary btn-sm">Thêm sản phẩm</button>
             </a>
