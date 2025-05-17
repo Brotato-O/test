@@ -63,10 +63,14 @@
                 <textarea class="form-control" rows="3" id="mota" name="pro_mota" value=""><?php echo $pro_one['pro_desc'] ?></textarea>
             </div>
             <div class="mb-3 mt-3">
-                <label for="anh" class="form-label text-danger">Ảnh:</label>
-                <img src="./sanpham/img/<?php echo $pro_one['pro_img'] ?>" alt="" class="w-25">
-                <input type="file" class="form-control" id="anh" name="pro_img">
+                <label for="anh" class="form-label text-danger">Ảnh:</label><br>
+                <!-- Ảnh hiện tại -->
+                <img id="preview" src="./sanpham/img/<?php echo $pro_one['pro_img'] ?>" alt="Ảnh sản phẩm hiện tại" class="w-25 mb-2" style="max-height: 200px;"><br>
+                
+                <!-- Input chọn ảnh mới -->
+                <input type="file" class="form-control" id="anh" name="pro_img" accept="image/*" onchange="previewImage();">
             </div>
+
 
             <div class="">
                 <button type="submit" class="btn btn-secondary btn-sm" name="updatesp">Cập nhật sản phẩm</button>
@@ -80,6 +84,23 @@
 </div>
 
 <script>
+    function previewImage() {
+    const preview = document.getElementById('preview');
+    const fileInput = document.getElementById('anh');
+    const file = fileInput.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+    }
+}
+
+
     function validateForm() {
         const name = document.getElementById("tensp").value.trim();
 
