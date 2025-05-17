@@ -61,7 +61,8 @@
             </div>
             <div class="mb-3 mt-3">
                 <label for="anh" class="form-label text-danger">Ảnh:</label>
-                <input type="file" class="form-control" id="anh" name="pro_img">
+    <input type="file" class="form-control" id="anh" name="pro_img" accept="image/*" onchange="previewImage();">
+                 <img id="preview" src="" alt="Ảnh xem trước" style="max-width: 200px; margin-top: 10px; display: none;" />
             </div>
 
             <div class="">
@@ -76,6 +77,26 @@
 </div>
 
 <script>
+    function previewImage() {
+    const preview = document.getElementById('preview');
+    const fileInput = document.getElementById('anh');
+    const file = fileInput.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        };
+
+        reader.readAsDataURL(file);
+    } else {
+        preview.src = '';
+        preview.style.display = 'none';
+    }
+}
+
 function validateForm() {
     const name = document.getElementById("tensp").value.trim();
 
