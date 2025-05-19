@@ -68,14 +68,41 @@
             if ($page < 1) $page = 1;
             $offset = ($page - 1) * $products_per_page;
 
-            if (isset($_GET['category'])) {
+            // Ưu tiên tìm kiếm nếu có searchProduct
+            if (isset($_GET['searchSubmit']) && isset($_GET['searchProduct'])) {
+                $searchProduct = $_GET["searchProduct"];
+                $searchCategory = isset($_GET['category']) ? (int)$_GET['category'] : 0;
+                $searchProducts = loadAll_products($searchProduct, $searchCategory);
+                if ($searchProducts && count($searchProducts) > 0) {
+                    foreach ($searchProducts as $searchPro) : ?>
+            <div class="col-12 col-lg-4 col-md-6 user-select-none animate__animated animate__zoomIn">
+                <div class="product-image">
+                    <a href="index.php?act=productinformation&pro_id=<?php echo $searchPro['pro_id'] ?>">
+                        <img class="card-img-top rounded-4 "
+                            src="./Admin/sanpham/img/<?php echo $searchPro['pro_img'] ?>" alt="Card image cap">
+                    </a>
+                </div>
+                <div class="card-body">
+                    <a class="card-title two-line-clamp my-3 fs-6 text-dark text-decoration-none "
+                        href="index.php?act=productinformation&pro_id=<?php echo $searchPro['pro_id'] ?>"><?php echo $searchPro['pro_name'] ?></a>
+                    <div class="d-flex align-items-center justify-content-between px-2">
+                        <p class="card-text fw-bold fs-2 mb-0">$<?php echo $searchPro['pro_price'] ?></p>
+                        <p class="text-secondary ps-2 mt-3">by <?php echo $searchPro['pro_brand'] ?></p>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach;
+                } else {
+                    echo '<div class="col-12"><p class="text-danger">Không tìm thấy sản phẩm phù hợp!</p></div>';
+                }
+            } elseif (isset($_GET['category'])) {
                 $cate_id = $_GET['category'];
                 $products = queryallpro("", $cate_id, $offset, $products_per_page);
                 $total_products = count_products("", $cate_id);
 
                 foreach ($products as $product) {
                     extract($product)
-            ?>
+                    ?>
             <div class="col-12 col-lg-4 col-md-6 user-select-none animate__animated animate__zoomIn">
                 <div class="product-image">
                     <a href="index.php?act=productinformation&pro_id=<?php echo $pro_id ?>">
@@ -179,44 +206,6 @@
                 </div>
             </div>
             <?php
-            } elseif (isset($_POST['searchSubmit'])) {
-                if (isset($_POST["searchSubmit"])) {
-                    $searchProduct = $_POST["searchProduct"];
-                    $searchProducts = loadAll_products($searchProduct, $id = 0);
-                    // var_dump($searchProducts);
-                    if (isset($searchProducts) && !is_null($searchProducts)) {
-                        foreach ($searchProducts as $searchPro) : ?>
-            <?php
-                            if (isset($_POST['searchProduct']) && ($_POST['searchProduct'] != "")) { ?>
-            <div class="col-12 col-lg-4 col-md-6 user-select-none animate__animated animate__zoomIn">
-                <div class="product-image">
-                    <a href="index.php?act=productinformation&pro_id=<?php echo $searchPro['pro_id'] ?>">
-                        <img class="card-img-top rounded-4 "
-                            src="./Admin/sanpham/img/<?php echo $searchPro['pro_img'] ?>" alt="Card image cap">
-                    </a>
-
-                </div>
-                <div class="card-body">
-                    <a class="card-title two-line-clamp my-3 fs-6 text-dark text-decoration-none "
-                        href="index.php?act=productinformation&pro_id=<?php echo $searchPro['pro_id'] ?>"><?php echo $searchPro['pro_name'] ?></a>
-                    <div class="d-flex align-items-center justify-content-between px-2">
-                        <p class="card-text fw-bold fs-2 mb-0">$<?php echo $searchPro['pro_price'] ?></p>
-                        <p class="text-secondary ps-2 mt-3">by <?php echo $searchPro['pro_brand'] ?></p>
-                    </div>
-                </div>
-            </div>
-            <?php
-                            } else { ?>
-            <p class="card-text fw-bold fs-2 mb-0">Sản phẩm không tồn tại</p>
-            <?php
-                            }
-                            ?>
-            <?php endforeach;
-                    } ?>
-            <?php
-                } else {
-                    echo 'Product does not exist';
-                }
             } else {
                 // Default product listing with pagination
                 $products = queryallpro("", 0, $offset, $products_per_page);

@@ -46,11 +46,15 @@
                     ?>
                 </ul>
                 <div class="d-flex">
-                    <form class="d-flex me-4" method="POST">
+                    <form class="d-flex me-4" method="GET">
+                        <input type="hidden" name="act" value="home">
                         <div class="form-group me-2">
                             <input type="text" class="form-control" name="searchProduct" placeholder="Tìm kiếm sản phẩm"
                                 required>
                         </div>
+                        <?php if (isset($_GET['category'])): ?>
+                        <input type="hidden" name="category" value="<?php echo htmlspecialchars($_GET['category']); ?>">
+                        <?php endif; ?>
                         <button type="submit" class="btn btn-outline-dark" name="searchSubmit">
                             <i class="bi bi-search"></i>
                         </button>

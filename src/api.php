@@ -1,4 +1,4 @@
-<?php 
+<?php
 //     function getOrderProUser($idOrder) {
 //     // hàm sql gọi btn
 //     $result = "trung".$idOrder;
@@ -9,10 +9,8 @@
 //         getOrderProUser($idOrder);
 //     }
 
-    header("Access-Control-Allow-Origin: *");
-    header("Access-Control-Allow-Headers: *");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
 
-    $result = ["trung1","trung2","trung3","trung4","trung5"];
-    echo json_encode($result);
-    
-?>
+$result = ["trung1", "trung2", "trung3", "trung4", "trung5"];
+echo json_encode($result);
