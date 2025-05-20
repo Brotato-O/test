@@ -49,11 +49,6 @@
                 <label for="giasp" class="form-label text-danger">Giá sản phẩm:</label>
                 <input type="text" class="form-control" id="giasp" placeholder="Giá sản phẩm" name="pro_price">
             </div>
-            <div class="mb-3 mt-3">
-                <label for="giasp" class="form-label text-danger">Tồn kho:</label>
-                <input type="text" class="form-control" id="giasp" placeholder="Tồn kho" name="pro_stock">
-            </div>
-
 
             <div class="mb-3 mt-3">
                 <label for="mota" class="text-danger">Mô tả:</label>
@@ -62,14 +57,9 @@
             <div class="mb-3 mt-3">
                 <label for="anh" class="form-label text-danger">Ảnh:</label>
                 <input type="file" class="form-control" id="anh" name="pro_img" onchange="previewImage();">
-                <img id="preview" src="#" alt="Ảnh xem trước" style="max-width: 200px; margin-top: 10px; display: none;" />
-                <!-- <input type="file" class="form-control" id="anh" name="pro_img"> -->
+                <img id="preview" src="#" alt="Ảnh xem trước"
+                    style="max-width: 200px; margin-top: 10px; display: none;" />
             </div>
-            <!-- <div class="mb-3 mt-3">
-                <label for="anh" class="form-label text-danger">Ảnh:</label>
-                
-            </div> -->
-
 
             <div class="">
                 <button type="submit" class="btn btn-secondary btn-sm" name="addsp">Thêm sản phẩm</button>
@@ -83,7 +73,7 @@
 </div>
 
 <script>
-    function previewImage() {
+function previewImage() {
     const input = document.getElementById("anh");
     const preview = document.getElementById("preview");
 
@@ -105,28 +95,16 @@
 
 function validateForm() {
     const name = document.getElementById("tensp").value.trim();
-
-    const brand = document.getElementById("giasp").value.trim();
     const price = document.getElementsByName("pro_price")[0].value.trim();
-    const stock = document.getElementsByName("pro_stock")[0].value.trim();
     const image = document.getElementById("anh").value;
 
     if (name === "") {
         alert("Vui lòng nhập tên sản phẩm.");
         return false;
     }
-    if (brand === "") {
-        alert("Vui lòng nhập thương hiệu.");
-        return false;
-    }
 
     if (price === "" || isNaN(price) || parseFloat(price) <= 0) {
         alert("Giá sản phẩm phải là số dương.");
-        return false;
-    }
-
-    if (stock === "" || isNaN(stock) || parseInt(stock) < 0) {
-        alert("Tồn kho phải là số không âm.");
         return false;
     }
 

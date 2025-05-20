@@ -26,8 +26,26 @@ function queryallpro($key, $idcate, $offset = null, $limit = null)
 
 function addpro($ten, $img, $price, $ct, $cate, $inventory, $brand)
 {
-    $sql = "insert into products(pro_name,pro_img,pro_price,pro_desc,pro_brand,pro_stock,cate_id) values('$ten','$img',$price,'$ct','$brand','$inventory',$cate)";
-    pdo_execute($sql);
+    try {
+        // Get connection first so we can use it for both operations
+        $conn = get_connect();
+
+        // Insert the product
+        $sql = "INSERT INTO products(pro_name, pro_img, pro_price, pro_desc, pro_brand, cate_id, ncc_id, trangthai, pro_viewer) 
+                VALUES(?, ?, ?, ?, ?, ?, 1, 0, 0)";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$ten, $img, $price, $ct, $brand, $cate]);
+
+        // Get the ID of the newly inserted product
+        $pro_id = $conn->lastInsertId();
+
+        return $pro_id;
+    } catch (PDOException $e) {
+        // Log the error for debugging
+        error_log("Error in addpro: " . $e->getMessage());
+        return 0;
+    }
 }
 function queryonepro($id)
 {
@@ -282,7 +300,8 @@ function  getAllChitietSp($id)
     return $result;
 }
 
-function kiemtra_sp_dangtrongdonhang($pro_id_canxoa) {
+function kiemtra_sp_dangtrongdonhang($pro_id_canxoa)
+{
     $sql = "
         SELECT order_chitiet.order_id 
         FROM order_chitiet
@@ -296,6 +315,15 @@ function kiemtra_sp_dangtrongdonhang($pro_id_canxoa) {
         LIMIT 1
     ";
     $result = pdo_query_one($sql, $pro_id_canxoa);
-    
+
     return $result !== false && $result !== null;
+}
+
+// Hàm kiểm tra sản phẩm có trong phiếu nhập hay không
+function kiemtra_sp_trongphieunhap($pro_id)
+{
+    $sql = "SELECT COUNT(*) as count FROM import_receipt_details WHERE pro_id = ?";
+    $result = pdo_query_one($sql, $pro_id);
+
+    return ($result && $result['count'] > 0);
 }

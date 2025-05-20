@@ -815,17 +815,51 @@ function hasPermission($action, $permissions)
                         $pro_name = $_POST['pro_name'];
                         $cate_id = $_POST['cate_id'];
                         $pro_price = $_POST['pro_price'];
-                        $pro_stock = $_POST['pro_stock'];
                         $pro_brand = $_POST['pro_brand'];
                         $pro_mota = $_POST['pro_mota'];
-                        $img_name = $_FILES['pro_img']['name'];
-                        $img_tmp = $_FILES['pro_img']['tmp_name'];
-                        move_uploaded_file($img_tmp, "./sanpham/img/" . $img_name);
-                        addpro($pro_name, $img_name, $pro_price, $pro_mota, $cate_id, $pro_stock, $pro_brand);
+
+                        // Handle image upload
+                        $img_name = '';
+                        if ($_FILES['pro_img']['error'] == 0) {
+                            $img_name = $_FILES['pro_img']['name'];
+                            $img_tmp = $_FILES['pro_img']['tmp_name'];
+                            $upload_result = move_uploaded_file($img_tmp, "./sanpham/img/" . $img_name);
+
+                            if (!$upload_result) {
+                                echo "<script>alert('Lỗi khi tải hình ảnh lên!');</script>";
+                                include './sanpham/addpro.php';
+                                break;
+                            }
+                        } else {
+                            echo "<script>alert('Vui lòng chọn hình ảnh cho sản phẩm!');</script>";
+                            include './sanpham/addpro.php';
+                            break;
+                        }
+
+                        // Validate product price
+                        if (!is_numeric($pro_price) || $pro_price <= 0) {
+                            echo "<script>alert('Giá sản phẩm không hợp lệ!');</script>";
+                            include './sanpham/addpro.php';
+                            break;
+                        }
+
+                        // Add the product and get back the new product ID
+                        $new_product_id = addpro($pro_name, $img_name, $pro_price, $pro_mota, $cate_id, 0, $pro_brand);
+
+                        if ($new_product_id > 0) {
+                            echo "<script>alert('Thêm sản phẩm thành công!');</script>";
+                            $result_pro = queryallpro('', 0);
+                            include './sanpham/listproduct.php';
+                        } else {
+                            // If product addition failed, show an error and stay on the add form
+                            echo "<script>alert('Có lỗi xảy ra khi thêm sản phẩm! Vui lòng kiểm tra lại thông tin.');</script>";
+                            include './sanpham/addpro.php';
+                        }
+                        break;
                     }
 
-                    $result_pro = queryallpro('', 0);
-                    include './sanpham/listproduct.php';
+                    // If not submitting the form, show the add form
+                    include './sanpham/addpro.php';
                     break;
                 case 'suapro':
                     if (isset($_GET['pro_idsua'])) {
@@ -863,13 +897,15 @@ function hasPermission($action, $permissions)
 
                         if (kiemtra_sp_dangtrongdonhang($pro_id)) {
                             echo "<script>alert('Sản phẩm đang có trong đơn hàng chưa hoàn tất. Vui lòng thực hiện xóa mềm thay vì xóa cứng!');</script>";
+                        } else if (kiemtra_sp_trongphieunhap($pro_id)) {
+                            echo "<script>alert('Sản phẩm đang có trong phiếu nhập. Không thể xóa cứng sản phẩm này!');</script>";
                         } else {
                             deletepro($pro_id);
                             echo "<script>alert('Xóa cứng sản phẩm thành công.');</script>";
                         }
                     }
-                    $result_pro = queryallpro('', 0);
-                    include './sanpham/listproduct.php';
+                    $result_pro = queryallpros();
+                    include './sanpham/thungrac.php';
                     break;
                 case "soft_delpro":
                     if (isset($_GET['pro_idxoa'])) {
