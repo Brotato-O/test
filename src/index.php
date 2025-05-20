@@ -87,25 +87,41 @@ if (isset($_GET['act']) && $_GET['act'] == 'combinedFilter') {
     $startPrice = isset($_GET['start_price']) && $_GET['start_price'] !== '' ? (float)$_GET['start_price'] : null;
     $endPrice = isset($_GET['end_price']) && $_GET['end_price'] !== '' ? (float)$_GET['end_price'] : null;
     $category = isset($_GET['category']) ? (int)$_GET['category'] : 0;
+    $searchProduct = isset($_GET['searchProduct']) ? $_GET['searchProduct'] : '';
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $productsPerPage = isset($_GET['productsPerPage']) ? (int)$_GET['productsPerPage'] : 9;
+    $offset = ($page - 1) * $productsPerPage;
 
     try {
+        // Xây dựng câu truy vấn cơ bản
+        $countSql = "SELECT COUNT(*) as total FROM products WHERE trangthai = 0";
         $sql = "SELECT * FROM products WHERE trangthai = 0";
 
-        // Add category filter
+        // Lọc theo category
         if ($category > 0) {
+            $countSql .= " AND cate_id = $category";
             $sql .= " AND cate_id = $category";
         }
 
-        // Add price range filter if either or both prices are provided
+        // Lọc theo từ khóa tìm kiếm
+        if (!empty($searchProduct)) {
+            $countSql .= " AND pro_name LIKE '%" . $searchProduct . "%'";
+            $sql .= " AND pro_name LIKE '%" . $searchProduct . "%'";
+        }
+
+        // Lọc theo giá
         if ($startPrice !== null && $endPrice !== null) {
+            $countSql .= " AND pro_price BETWEEN $startPrice AND $endPrice";
             $sql .= " AND pro_price BETWEEN $startPrice AND $endPrice";
         } elseif ($startPrice !== null) {
+            $countSql .= " AND pro_price >= $startPrice";
             $sql .= " AND pro_price >= $startPrice";
         } elseif ($endPrice !== null) {
+            $countSql .= " AND pro_price <= $endPrice";
             $sql .= " AND pro_price <= $endPrice";
         }
 
-        // Add sorting
+        // Sắp xếp kết quả
         if ($sort == 'asc') {
             $sql .= " ORDER BY pro_name ASC";
         } elseif ($sort == 'desc') {
@@ -118,12 +134,23 @@ if (isset($_GET['act']) && $_GET['act'] == 'combinedFilter') {
             $sql .= " ORDER BY pro_id DESC";
         }
 
+        // Lấy tổng số sản phẩm
+        $countResult = pdo_query_one($countSql);
+        $totalProducts = $countResult['total'];
+        $totalPages = ceil($totalProducts / $productsPerPage);
+
+        // Thêm phân trang vào câu truy vấn
+        $sql .= " LIMIT $offset, $productsPerPage";
+
+        // Lấy danh sách sản phẩm
         $products = pdo_queryall($sql);
 
         if ($products && count($products) > 0) {
             echo json_encode([
                 'success' => true,
-                'products' => $products
+                'products' => $products,
+                'totalPages' => $totalPages,
+                'currentPage' => $page
             ]);
         } else {
             echo json_encode([
@@ -344,8 +371,9 @@ if (isset($_GET['act']) && $_GET['act'] == 'filterByPrice') {
     </div>
 
     <!-- Load jQuery before Bootstrap -->
-      <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> <!-- Keep this -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
         integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
