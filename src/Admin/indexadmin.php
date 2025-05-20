@@ -1341,6 +1341,44 @@ function hasPermission($action, $permissions)
                     include "./Thongke/bieudobl.php";
                     break;
 
+                case 'thongke_nhapkho_chitiet':
+                    if (isset($_GET['id']) && $_GET['id'] > 0) {
+                        $phieunhap_id = (int)$_GET['id'];
+                        $chitiet = thongke_nhapkho_chitiet($phieunhap_id);
+
+                        // Get receipt info
+                        $sql = "SELECT 
+                                    ir.id, 
+                                    ir.receipt_date, 
+                                    ir.status,
+                                    ir.note,
+                                    ncc.ncc_name, 
+                                    kh.kh_name as nguoi_tao,
+                                    DATE_FORMAT(ir.created_at, '%d/%m/%Y %H:%i') as created_time
+                                FROM 
+                                    import_receipts ir
+                                LEFT JOIN 
+                                    nhacungcap ncc ON ir.supplier_id = ncc.ncc_id
+                                LEFT JOIN 
+                                    khachhang kh ON ir.created_by = kh.kh_id
+                                WHERE 
+                                    ir.id = $phieunhap_id";
+                        $receipt_info = pdo_query_one($sql);
+
+                        // Output HTML content
+                        include "./Thongke/thongke_nhapkho_chitiet.php";
+                    } else {
+                        echo '<div class="alert alert-danger">Không tìm thấy thông tin phiếu nhập</div>';
+                    }
+                    // Don't include any other view or code after this
+                    exit(); // Need to exit to ensure only the HTML content is returned for AJAX
+                    break;
+
+                // Tự động cài đặt FPDF
+                case 'install_fpdf':
+                    include "./donhang/install_fpdf.php";
+                    break;
+
                 case "in_hoadon":
                     if (isset($_GET['order_id']) && $_GET['order_id'] != "") {
                         $order_id = $_GET['order_id'];
@@ -1351,6 +1389,12 @@ function hasPermission($action, $permissions)
                                 JOIN khachhang k ON o.kh_id = k.kh_id 
                                 WHERE order_id = $order_id";
                         $thongtindh = pdo_query_one($sql);
+
+                        // Lấy chi tiết đơn hàng
+                        $chitietdh = loadall_chitietdh($order_id);
+
+                        // Bao gồm file in_hoadon.php để tạo PDF
+                        include "./donhang/in_hoadon.php";
                     }
                     break;
 
@@ -1364,55 +1408,6 @@ function hasPermission($action, $permissions)
                     $nhapkho = thongke_nhapkho($thang, $nam);
 
                     include "./Thongke/thongke_nhapkho.php";
-                    break;
-
-                case 'thongke_nhapkho_chitiet':
-                    if (isset($_GET['id']) && $_GET['id'] > 0) {
-                        $phieunhap_id = (int)$_GET['id'];
-                        $chitiet = thongke_nhapkho_chitiet($phieunhap_id);
-
-                        // Chỉ trả về HTML để hiển thị trong modal
-                        echo '<div class="table-responsive">';
-                        echo '<table class="table table-bordered table-striped">';
-                        echo '<thead><tr><th>Sản phẩm</th><th>Màu</th><th>Size</th><th>Số lượng</th><th>Đơn giá</th><th>Thành tiền</th></tr></thead>';
-                        echo '<tbody>';
-
-                        $tong_soluong = 0;
-                        $tong_giatri = 0;
-
-                        if (!empty($chitiet)) {
-                            foreach ($chitiet as $item) {
-                                echo '<tr>';
-                                echo '<td><img src="./sanpham/img/' . $item['pro_img'] . '" class="img-thumbnail" width="50" height="50"> ' . $item['pro_name'] . '</td>';
-                                echo '<td><span class="color-box" style="background-color:' . $item['color_ma'] . '"></span> ' . $item['color_name'] . '</td>';
-                                echo '<td>' . $item['size_name'] . '</td>';
-                                echo '<td class="text-end">' . number_format($item['quantity']) . '</td>';
-                                echo '<td class="text-end">' . number_format($item['unit_price']) . ' VNĐ</td>';
-                                echo '<td class="text-end">' . number_format($item['total_price']) . ' VNĐ</td>';
-                                echo '</tr>';
-
-                                $tong_soluong += $item['quantity'];
-                                $tong_giatri += $item['total_price'];
-                            }
-                        } else {
-                            echo '<tr><td colspan="6" class="text-center">Không có dữ liệu chi tiết</td></tr>';
-                        }
-
-                        echo '</tbody>';
-                        echo '<tfoot>';
-                        echo '<tr class="table-dark">';
-                        echo '<th colspan="3" class="text-end">Tổng cộng:</th>';
-                        echo '<th class="text-end">' . number_format($tong_soluong) . '</th>';
-                        echo '<th></th>';
-                        echo '<th class="text-end">' . number_format($tong_giatri) . ' VNĐ</th>';
-                        echo '</tr>';
-                        echo '</tfoot>';
-                        echo '</table>';
-                        echo '</div>';
-
-                        // Dừng xử lý để không trả về giao diện admin
-                        exit();
-                    }
                     break;
 
                 default:

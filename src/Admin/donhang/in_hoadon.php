@@ -6,65 +6,44 @@
 // Đảm bảo rằng không có bất kỳ output nào trước khi tạo PDF
 ob_clean();
 
-// Thử nhiều cách khác nhau để xác định vị trí của file FPDF
-$fpdf_paths = [
-    __DIR__ . '/../../vendor/setasign/fpdf/fpdf.php', // FPDF từ Composer
-    __DIR__ . '/../../vendor/fpdf/fpdf.php',         // Thư mục vendor thông thường
-    __DIR__ . '/../../../vendor/fpdf/fpdf.php',      // Thư mục vendor bên ngoài src
-    $_SERVER['DOCUMENT_ROOT'] . '/PTTKHT/PHP_Ecommerce-main/src/vendor/fpdf/fpdf.php' // Đường dẫn tuyệt đối
-];
+// Đường dẫn chuẩn đến thư viện FPDF
+$standard_fpdf_path = __DIR__ . '/../../vendor/fpdf/fpdf.php';
 
-$fpdf_loaded = false;
-foreach ($fpdf_paths as $path) {
-    if (file_exists($path)) {
-        require_once $path;
-        $fpdf_loaded = true;
-        break;
-    }
-}
+// Kiểm tra xem thư viện FPDF có tồn tại không
+if (file_exists($standard_fpdf_path)) {
+    require_once $standard_fpdf_path;
+} else {
+    // Thử nhiều cách khác nhau để xác định vị trí của file FPDF
+    $fpdf_paths = [
+        __DIR__ . '/../../vendor/setasign/fpdf/fpdf.php', // FPDF từ Composer
+        __DIR__ . '/../../vendor/fpdf/fpdf.php',         // Thư mục vendor thông thường
+        __DIR__ . '/../../../vendor/fpdf/fpdf.php',      // Thư mục vendor bên ngoài src
+        $_SERVER['DOCUMENT_ROOT'] . '/vendor/fpdf/fpdf.php' // Đường dẫn tuyệt đối
+    ];
 
-// Nếu không tìm thấy FPDF, tạo lớp giả lập đơn giản
-if (!$fpdf_loaded) {
-    class FPDF
-    {
-        function __construct() {}
-        function AliasNbPages() {}
-        function AddPage() {}
-        function SetFont() {}
-        function Header() {}
-        function Footer() {}
-        function SetY() {}
-        function Cell($w, $h = 0, $txt = '', $border = 0, $ln = 0, $align = '', $fill = false, $link = '')
-        {
-            echo $txt . "<br>";
-        }
-        function Ln()
-        {
-            echo "<br>";
-        }
-        function PageNo()
-        {
-            return 1;
-        }
-        function Output($dest = '', $name = '', $isUTF8 = false)
-        {
-            echo "Không thể tạo PDF: Thư viện FPDF không được tìm thấy.<br>";
-            echo "Vui lòng tải thư viện FPDF từ http://www.fpdf.org/ và cài đặt đúng đường dẫn.<br>";
-            echo "Đường dẫn đã thử:<br>";
-            global $fpdf_paths;
-            foreach ($fpdf_paths as $path) {
-                echo "- $path<br>";
-            }
-            return "";
+    $fpdf_loaded = false;
+    foreach ($fpdf_paths as $path) {
+        if (file_exists($path)) {
+            require_once $path;
+            $fpdf_loaded = true;
+            break;
         }
     }
 
-    echo '<div style="background-color:#FFCCCC; padding:10px; margin:10px; border:1px solid #FF0000;">';
-    echo '<h3>Lỗi: Không tìm thấy thư viện FPDF</h3>';
-    echo '<p>Ứng dụng sẽ hiển thị dữ liệu đơn hàng ở dạng HTML thay vì PDF.</p>';
-    echo '<p>Để khắc phục, vui lòng tải thư viện FPDF từ <a href="http://www.fpdf.org/">http://www.fpdf.org/</a> và cài đặt vào thư mục:</p>';
-    echo '<code>C:\xampp\htdocs\PTTKHT\PHP_Ecommerce-main\src\vendor\fpdf\</code>';
-    echo '</div>';
+    // Nếu không tìm thấy FPDF, hiển thị thông báo lỗi và hướng dẫn
+    if (!$fpdf_loaded) {
+        echo '<div style="background-color:#FFCCCC; padding:20px; margin:20px; border:1px solid #FF0000; font-family:Arial, sans-serif;">';
+        echo '<h2>Lỗi: Không tìm thấy thư viện FPDF</h2>';
+        echo '<p>Để sử dụng chức năng in hóa đơn, bạn cần cài đặt thư viện FPDF.</p>';
+        echo '<p>Bạn có thể cài đặt thư viện này bằng cách:</p>';
+        echo '<ol>';
+        echo '<li><a href="indexadmin.php?act=install_fpdf" target="_blank">Nhấn vào đây để cài đặt tự động</a>, hoặc</li>';
+        echo '<li>Tải thư viện FPDF từ <a href="http://www.fpdf.org/">http://www.fpdf.org/</a> và giải nén vào thư mục: ' . dirname($standard_fpdf_path) . '</li>';
+        echo '</ol>';
+        echo '<p>Sau khi cài đặt, hãy thử lại chức năng in hóa đơn.</p>';
+        echo '</div>';
+        exit;
+    }
 }
 
 class PDF extends FPDF
@@ -79,6 +58,16 @@ class PDF extends FPDF
         // Page number
         $this->Cell(0, 10, 'Trang ' . $this->PageNo() . '/{nb}', 0, 0, 'C');
     }
+}
+
+// Kiểm tra xem biến $thongtindh và $chitietdh đã được truyền vào chưa
+if (!isset($thongtindh) || !isset($chitietdh) || empty($thongtindh) || empty($chitietdh)) {
+    echo '<div style="background-color:#FFCCCC; padding:20px; margin:20px; border:1px solid #FF0000; font-family:Arial, sans-serif;">';
+    echo '<h2>Lỗi: Thiếu thông tin đơn hàng</h2>';
+    echo '<p>Không thể tạo hóa đơn vì thiếu thông tin cần thiết.</p>';
+    echo '<p>Vui lòng quay lại <a href="indexadmin.php?act=donhang">danh sách đơn hàng</a> và thử lại.</p>';
+    echo '</div>';
+    exit;
 }
 
 // Tạo object PDF mới
@@ -98,6 +87,8 @@ $order_totalprice = $thongtindh['order_totalprice'];
 $order_trangthai = $thongtindh['order_trangthai'];
 
 // Thông tin hóa đơn
+$pdf->SetFont('Arial', 'B', 16);
+$pdf->Cell(0, 10, 'HOA DON BAN HANG', 0, 1, 'C');
 $pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(0, 10, 'THÔNG TIN HÓA ĐƠN', 0, 1, 'C');
 $pdf->SetFont('Arial', '', 11);
@@ -142,15 +133,22 @@ $pdf->SetFont('Arial', '', 9);
 $i = 1;
 $total = 0;
 foreach ($chitietdh as $item) {
+    $pro_name = isset($item['pro_name']) ? $item['pro_name'] : 'Sản phẩm #' . $i;
+    $color_name = isset($item['color_name']) ? $item['color_name'] : '';
+    $size_name = isset($item['size_name']) ? $item['size_name'] : '';
+    $pro_price = isset($item['pro_price']) ? $item['pro_price'] : 0;
+    $soluong = isset($item['soluong']) ? $item['soluong'] : 0;
+    $total_price = isset($item['total_price']) ? $item['total_price'] : 0;
+
     $pdf->Cell(10, 8, $i, 1, 0, 'C');
-    $pdf->Cell(65, 8, $item['pro_name'], 1, 0, 'L');
-    $pdf->Cell(20, 8, $item['color_name'], 1, 0, 'C');
-    $pdf->Cell(15, 8, $item['size_name'], 1, 0, 'C');
-    $pdf->Cell(30, 8, '$ ' . number_format($item['pro_price'], 0, ',', '.'), 1, 0, 'R');
-    $pdf->Cell(15, 8, $item['soluong'], 1, 0, 'C');
-    $pdf->Cell(30, 8, '$ ' . number_format($item['total_price'], 0, ',', '.'), 1, 1, 'R');
+    $pdf->Cell(65, 8, $pro_name, 1, 0, 'L');
+    $pdf->Cell(20, 8, $color_name, 1, 0, 'C');
+    $pdf->Cell(15, 8, $size_name, 1, 0, 'C');
+    $pdf->Cell(30, 8, '$ ' . number_format($pro_price, 0, ',', '.'), 1, 0, 'R');
+    $pdf->Cell(15, 8, $soluong, 1, 0, 'C');
+    $pdf->Cell(30, 8, '$ ' . number_format($total_price, 0, ',', '.'), 1, 1, 'R');
     $i++;
-    $total += $item['total_price'];
+    $total += $total_price;
 }
 
 // Tổng tiền

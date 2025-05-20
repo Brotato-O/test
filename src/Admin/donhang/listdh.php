@@ -1,8 +1,8 @@
 <!-- main -->
 <?php if (!empty($message)): ?>
-<script>
-alert("<?= $message ?>");
-</script>
+    <script>
+        alert("<?= $message ?>");
+    </script>
 <?php endif; ?>
 <div class="container">
     <h2 class="border border-4 mb-4 text-bg-secondary p-3 text-center rounded">Danh sách đơn hàng</h2>
@@ -65,26 +65,28 @@ alert("<?= $message ?>");
                     extract($donhang);
                     $countsp = load_cart_count($sl);
                 ?>
-                <tr>
-                    <td><input type="checkbox" name="checkbox" id=""></td>
-                    <td><?= $order_id ?></td>
-                    <td>
-                        <?= $kh_name . '<br>' . $kh_mail . '<br>' . $order_adress . '<br>' . $kh_tel ?>
-                    </td>
-                    <td><?= $countsp ?></td>
-                    <td><?= $order_totalprice ?></td>
-                    <td><?= $order_trangthai ?></td>
-                    <td><?= $order_date ?></td>
-                    <td>
-                        <a href="indexadmin.php?act=suadonhang&order_id=<?php echo $order_id ?>" class="mb-2"><input
-                                class="mb-2 text-bg-secondary rounded" type="button" name="" value="Sửa" id=""></a>
-                        <a href="indexadmin.php?act=chitietdh&order_id=<?php echo $order_id ?>"><input
-                                class="mb-2 text-bg-danger rounded" type="button" name="" value="Chi tiết đh" id=""></a>
-                        <a href="indexadmin.php?act=xoadonhang&order_id=<?php echo $order_id ?>"><input
-                                class="mb-2 text-bg-success rounded" onclick="return confirm('Bạn có chắc muốn xoá ?')"
-                                type="button" name="" value="Xoá" id=""></a>
-                    </td>
-                </tr>
+                    <tr>
+                        <td><input type="checkbox" name="checkbox" id=""></td>
+                        <td><?= $order_id ?></td>
+                        <td>
+                            <?= $kh_name . '<br>' . $kh_mail . '<br>' . $order_adress . '<br>' . $kh_tel ?>
+                        </td>
+                        <td><?= $countsp ?></td>
+                        <td><?= $order_totalprice ?></td>
+                        <td><?= $order_trangthai ?></td>
+                        <td><?= $order_date ?></td>
+                        <td>
+                            <a href="indexadmin.php?act=suadonhang&order_id=<?php echo $order_id ?>" class="mb-2"><input
+                                    class="mb-2 text-bg-secondary rounded" type="button" name="" value="Sửa" id=""></a>
+                            <a href="indexadmin.php?act=chitietdh&order_id=<?php echo $order_id ?>"><input
+                                    class="mb-2 text-bg-danger rounded" type="button" name="" value="Chi tiết đh" id=""></a>
+                            <a href="indexadmin.php?act=in_hoadon&order_id=<?php echo $order_id ?>" target="_blank"><input
+                                    class="mb-2 text-bg-primary rounded" type="button" name="" value="In hóa đơn" id=""></a>
+                            <a href="indexadmin.php?act=xoadonhang&order_id=<?php echo $order_id ?>"><input
+                                    class="mb-2 text-bg-success rounded" onclick="return confirm('Bạn có chắc muốn xoá ?')"
+                                    type="button" name="" value="Xoá" id=""></a>
+                        </td>
+                    </tr>
                 <?php } ?>
             </tbody>
         </table>
@@ -92,35 +94,35 @@ alert("<?= $message ?>");
 
     <!-- Pagination -->
     <?php if ($total_orders > $items_per_page): ?>
-    <div class="d-flex justify-content-center mt-4 mb-4">
-        <nav aria-label="Điều hướng trang">
-            <ul class="pagination">
-                <?php if ($current_page > 1): ?>
-                <li class="page-item">
-                    <a class="page-link" href="indexadmin.php?act=donhang&page=<?php echo $current_page - 1; ?>"
-                        aria-label="Trước">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <?php endif; ?>
+        <div class="d-flex justify-content-center mt-4 mb-4">
+            <nav aria-label="Điều hướng trang">
+                <ul class="pagination">
+                    <?php if ($current_page > 1): ?>
+                        <li class="page-item">
+                            <a class="page-link" href="indexadmin.php?act=donhang&page=<?php echo $current_page - 1; ?>"
+                                aria-label="Trước">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    <?php endif; ?>
 
-                <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                <li class="page-item <?php echo ($i == $current_page) ? 'active' : ''; ?>">
-                    <a class="page-link" href="indexadmin.php?act=donhang&page=<?php echo $i; ?>"><?php echo $i; ?></a>
-                </li>
-                <?php endfor; ?>
+                    <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                        <li class="page-item <?php echo ($i == $current_page) ? 'active' : ''; ?>">
+                            <a class="page-link" href="indexadmin.php?act=donhang&page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                        </li>
+                    <?php endfor; ?>
 
-                <?php if ($current_page < $total_pages): ?>
-                <li class="page-item">
-                    <a class="page-link" href="indexadmin.php?act=donhang&page=<?php echo $current_page + 1; ?>"
-                        aria-label="Tiếp">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-                <?php endif; ?>
-            </ul>
-        </nav>
-    </div>
+                    <?php if ($current_page < $total_pages): ?>
+                        <li class="page-item">
+                            <a class="page-link" href="indexadmin.php?act=donhang&page=<?php echo $current_page + 1; ?>"
+                                aria-label="Tiếp">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </nav>
+        </div>
     <?php endif; ?>
 
     <div class="">
