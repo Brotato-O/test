@@ -182,7 +182,7 @@ function hasPermission($action, $permissions)
                 <li
                     class="sidebar-list-item <?php echo (in_array($current_act, ['thongke', 'thongke_sanpham', 'thongke_doanhthu', 'thongke_donhang'])) ? 'active' : ''; ?>">
                     <a href="indexadmin.php?act=thongke_sanpham">
-                        <span class="material-icons-outlined">poll</span> Thống kê
+                        <span class="material-icons-outlined">poll</span> Thống kê đơn hàng
                     </a>
                 </li>
                 <?php } ?>
@@ -587,23 +587,11 @@ function hasPermission($action, $permissions)
                     break;
                 case 'addpn':
                     if (isset($_POST['addpn'])) {
-                        // Thông tin nhà cung cấp
-                        $ncc_name = $_POST['ncc_name'];
-                        $ncc_email = $_POST['ncc_email'] ?? '';
-                        $ncc_sdt = $_POST['ncc_sdt'] ?? '';
-                        $ncc_diachi = $_POST['ncc_diachi'] ?? '';
-
-                        // Thêm nhà cung cấp mới
-                        $ncc_id = insert_ncc_return_id($ncc_name, $ncc_email, $ncc_sdt, $ncc_diachi);
-
-                        if (!$ncc_id) {
-                            echo "<script>alert('❌ Không thể thêm nhà cung cấp. Vui lòng thử lại!');</script>";
-                            include './phieunhap/addpn.php';
-                            break;
-                        }
+                        // Thông tin nhà cung cấp từ select box
+                        $ncc_id = $_POST['ncc_id'];
 
                         // Thông tin phiếu nhập
-                        $receipt_date = date('Y-m-d H:i:s');
+                        $receipt_date = date('Y-m-d'); // Only store the date without time
                         $created_by = $_SESSION['acount']['kh_id'] ?? 0;
                         $status = 0; // Trạng thái mặc định là nháp
                         $note = $_POST['note'] ?? '';
@@ -612,8 +600,8 @@ function hasPermission($action, $permissions)
                         $last_receipt_id = insert_receipt_return_id($ncc_id, $receipt_date, $created_by, $status, $note);
 
                         if ($last_receipt_id > 0) {
-                            // Chuyển hướng đến trang cập nhật phiếu nhập để thêm sản phẩm
-                            header("Location: indexadmin.php?act=suapn&id=" . $last_receipt_id);
+                            // Chuyển hướng đến trang thêm sản phẩm vào phiếu nhập
+                            header("Location: indexadmin.php?act=themsp_phieunhap&id=" . $last_receipt_id);
                             exit;
                         } else {
                             echo "<script>alert('❌ Không thể tạo phiếu nhập. Vui lòng thử lại!');</script>";
@@ -683,12 +671,39 @@ function hasPermission($action, $permissions)
                             echo "<script>alert('Lỗi cập nhật trạng thái phiếu nhập!');</script>";
                         }
                     }
-                    // Chuyển hướng về trang chi tiết phiếu nhập
-                    header("Location: indexadmin.php?act=chitietpn&id=" . $_POST['receipt_id']);
+                    // Chuyển hướng về trang danh sách phiếu nhập thay vì chi tiết
+                    header("Location: indexadmin.php?act=phieunhap");
                     exit;
                     break;
                 case 'addpnchitiet':
-                    if (isset($_POST['add_detail'])) {
+                    // Vô hiệu hóa chức năng thêm chi tiết phiếu nhập sau khi đã tạo
+                    $_SESSION['error'] = "Không thể thêm chi tiết phiếu nhập sau khi đã tạo để đảm bảo tính toàn vẹn dữ liệu kế toán.";
+                    if (isset($_POST['receipt_id'])) {
+                        header("Location: indexadmin.php?act=suapn&id=" . $_POST['receipt_id']);
+                    } else {
+                        header("Location: indexadmin.php?act=phieunhap");
+                    }
+                    exit;
+                    break;
+                case 'themsp_phieunhap':
+                    if (isset($_GET['id'])) {
+                        $receipt_id = $_GET['id'];
+                        $receipt_details = get_receipt_details($receipt_id);
+
+                        // Lấy danh sách sản phẩm, màu sắc, kích cỡ để hiển thị trong form
+                        $list_products = queryallpro('', 0);
+                        $list_colors = query_allcolor1();
+                        $list_sizes = query_allsize();
+
+                        include './phieunhap/themsp_phieunhap.php';
+                    } else {
+                        header("Location: indexadmin.php?act=phieunhap");
+                        exit;
+                    }
+                    break;
+
+                case 'add_product_to_receipt':
+                    if (isset($_POST['add_product'])) {
                         $receipt_id = $_POST['receipt_id'];
                         $pro_id = $_POST['pro_id'];
                         $color_id = $_POST['color_id'];
@@ -697,37 +712,39 @@ function hasPermission($action, $permissions)
                         $unit_price = $_POST['unit_price'];
                         $total_price = $quantity * $unit_price;
 
-                        // Gọi hàm thêm chi tiết phiếu nhập
+                        // Thêm chi tiết phiếu nhập
                         $result = insert_receipt_detail($receipt_id, $pro_id, $color_id, $size_id, $quantity, $unit_price, $total_price);
-                        if ($result) {
-                            // Thông báo thành công
-                            echo "<script>alert('Thêm chi tiết phiếu nhập thành công!');</script>";
-                        } else {
-                            // Thông báo lỗi
-                            echo "<script>alert('Lỗi thêm chi tiết phiếu nhập!');</script>";
-                        }
-                    }
-                    // Chuyển hướng về trang cập nhật phiếu nhập
-                    header("Location: indexadmin.php?act=suapn&id=" . $_POST['receipt_id']);
-                    exit;
-                    break;
-                case 'xoapnchitiet':
-                    if (isset($_GET['id']) && isset($_GET['receipt_id'])) {
-                        $detail_id = $_GET['id'];
-                        $receipt_id = $_GET['receipt_id'];
 
-                        // Gọi hàm xóa chi tiết phiếu nhập
-                        $result = delete_receipt_detail($detail_id);
                         if ($result) {
-                            // Thông báo thành công
-                            echo "<script>alert('Xóa chi tiết phiếu nhập thành công!');</script>";
+                            echo "<script>alert('Thêm sản phẩm vào phiếu nhập thành công!');</script>";
                         } else {
-                            // Thông báo lỗi
-                            echo "<script>alert('Lỗi xóa chi tiết phiếu nhập!');</script>";
+                            echo "<script>alert('Lỗi khi thêm sản phẩm vào phiếu nhập!');</script>";
                         }
+
+                        // Quay lại trang thêm sản phẩm
+                        header("Location: indexadmin.php?act=themsp_phieunhap&id=" . $receipt_id);
+                        exit;
                     }
-                    // Chuyển hướng về trang cập nhật phiếu nhập
-                    header("Location: indexadmin.php?act=suapn&id=" . $_GET['receipt_id']);
+                    break;
+
+                case 'complete_receipt':
+                    if (isset($_POST['receipt_id'])) {
+                        $receipt_id = $_POST['receipt_id'];
+
+                        // Chuyển hướng đến trang danh sách phiếu nhập
+                        header("Location: indexadmin.php?act=phieunhap");
+                        exit;
+                    }
+                    break;
+
+                case 'xoapnchitiet':
+                    // Vô hiệu hóa chức năng xóa chi tiết phiếu nhập
+                    $_SESSION['error'] = "Không thể xóa chi tiết phiếu nhập để đảm bảo tính toàn vẹn dữ liệu kế toán.";
+                    if (isset($_GET['receipt_id'])) {
+                        header("Location: indexadmin.php?act=suapn&id=" . $_GET['receipt_id']);
+                    } else {
+                        header("Location: indexadmin.php?act=phieunhap");
+                    }
                     exit;
                     break;
                 case 'addcolor1':

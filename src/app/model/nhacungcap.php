@@ -73,3 +73,11 @@ function loadall_ncc($keyword = '', $sapXep = 'id', $thuTu = 'asc')
     $listNCC = pdo_queryall($sql);
     return $listNCC;
 }
+
+// Function to get all active suppliers for the select box
+function get_all_suppliers()
+{
+    $sql = "SELECT * FROM nhacungcap WHERE ncc_trangthai = 0 ORDER BY ncc_name ASC";
+    $result = pdo_queryall($sql);
+    return $result;
+}

@@ -1,6 +1,13 @@
 <!-- main -->
 <div class="container">
     <?php if (isset($receipt_details) && !empty($receipt_details['receipt'])): ?>
+    <!-- Thông báo giới hạn chức năng -->
+    <div class="alert alert-info mb-4">
+        <i class="bi bi-info-circle me-2"></i>
+        <strong>Lưu ý:</strong> Phiếu nhập sau khi tạo chỉ có thể cập nhật trạng thái và ghi chú. Không thể thêm hoặc
+        xóa sản phẩm để đảm bảo tính toàn vẹn dữ liệu kho hàng.
+    </div>
+
     <h2 class="border border-4 mb-4 text-bg-secondary p-3 text-center rounded">Chi tiết phiếu nhập
         #<?= $receipt_details['receipt']['id'] ?></h2>
 
@@ -14,7 +21,8 @@
                 <div class="col-md-6">
                     <h6 class="fw-bold">Thông tin phiếu</h6>
                     <p><strong>Mã phiếu nhập:</strong> <?= $receipt_details['receipt']['id'] ?></p>
-                    <p><strong>Ngày nhập:</strong> <?= $receipt_details['receipt']['receipt_date'] ?></p>
+                    <p><strong>Ngày nhập:</strong>
+                        <?= date('d-m-Y', strtotime($receipt_details['receipt']['receipt_date'])) ?></p>
                     <p><strong>Người tạo:</strong> <?= $receipt_details['receipt']['created_by_name'] ?></p>
                     <p><strong>Trạng thái:</strong>
                         <?php
@@ -118,11 +126,6 @@
     </div>
 
     <div class="mt-4">
-        <?php if ($receipt_details['receipt']['status'] == 0): ?>
-        <a href="indexadmin.php?act=suapn&id=<?= $receipt_details['receipt']['id'] ?>" class="btn btn-primary me-2">
-            <i class="bi bi-pencil"></i> Cập nhật phiếu nhập
-        </a>
-        <?php endif; ?>
         <a href="indexadmin.php?act=in_phieunhap&id=<?= $receipt_details['receipt']['id'] ?>"
             class="btn btn-danger me-2" target="_blank">
             <i class="bi bi-printer"></i> In phiếu nhập

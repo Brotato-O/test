@@ -11,6 +11,7 @@
                     <th class="text-bg-secondary">Nhà cung cấp</th>
                     <th class="text-bg-secondary">Nhân viên</th>
                     <Th class="text-bg-secondary">Ngày đặt</Th>
+                    <Th class="text-bg-secondary">Trạng thái</Th>
                     <Th class="text-bg-secondary">Thao tác</Th>
                 </tr>
             </thead>
@@ -25,7 +26,24 @@
                     <td><?= $id ?></td>
                     <td><?= $supplier_name ?></td>
                     <td><?= $created_by_name ?></td>
-                    <td><?= $receipt_date ?></td>
+                    <td><?= date('d-m-Y', strtotime($receipt_date)) ?></td>
+                    <td>
+                        <?php
+                                switch ($status) {
+                                    case 0:
+                                        echo '<span class="badge bg-warning">Nháp</span>';
+                                        break;
+                                    case 1:
+                                        echo '<span class="badge bg-success">Đã nhập kho</span>';
+                                        break;
+                                    case 2:
+                                        echo '<span class="badge bg-danger">Đã hủy</span>';
+                                        break;
+                                    default:
+                                        echo '<span class="badge bg-secondary">Không xác định</span>';
+                                }
+                                ?>
+                    </td>
                     <td>
                         <a href="indexadmin.php?act=suapn&id=<?php echo $id ?>" class="mb-2"><input
                                 class="mb-2 text-bg-secondary rounded" type="button" name="" value="Sửa" id=""></a>
@@ -39,7 +57,7 @@
                 <?php
                     }
                 } else {
-                    echo "<tr><td colspan='6' class='text-center'>Không có phiếu nhập nào</td></tr>";
+                    echo "<tr><td colspan='7' class='text-center'>Không có phiếu nhập nào</td></tr>";
                 }
                 ?>
             </tbody>
