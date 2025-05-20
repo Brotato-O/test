@@ -500,8 +500,22 @@ function hasPermission($action, $permissions)
                     include './cate/thungrac.php';
                     break;
                 case 'pro':
+                    // Lấy các tham số sắp xếp từ form
+                    $sort_by = isset($_POST['sapXepPro']) ? $_POST['sapXepPro'] : 'id';
+                    $sort_order = isset($_POST['thuTu']) ? $_POST['thuTu'] : 'asc';
+                    $key = isset($_POST['search_name']) ? $_POST['search_name'] : '';
 
-                    $result_pro = queryallpro('', 0);
+                    // Phân trang
+                    $items_per_page = 7; // 7 sản phẩm mỗi trang
+                    $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                    $current_page = max(1, $current_page); // Đảm bảo trang hiện tại ít nhất là 1
+                    $offset = ($current_page - 1) * $items_per_page;
+
+                    // Gọi hàm queryallpro_with_sorting với tham số sắp xếp
+                    $result_pro = queryallpro_with_sorting($key, 0, $sort_by, $sort_order, $offset, $items_per_page);
+                    $total_products = count_products($key, 0);
+                    $total_pages = ceil($total_products / $items_per_page);
+
                     include './sanpham/listproduct.php';
                     break;
                 case 'thungrac_product':
@@ -928,8 +942,23 @@ function hasPermission($action, $permissions)
                     include './sanpham/thungrac.php';
                     break;
                 case 'search':
-                    include './sanpham/listproduct.php';
+                    // Lấy các tham số sắp xếp từ form
+                    $sort_by = isset($_POST['sapXepPro']) ? $_POST['sapXepPro'] : 'id';
+                    $sort_order = isset($_POST['thuTu']) ? $_POST['thuTu'] : 'asc';
+                    $key = isset($_POST['search_name']) ? $_POST['search_name'] : '';
 
+                    // Phân trang
+                    $items_per_page = 7; // 7 sản phẩm mỗi trang
+                    $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                    $current_page = max(1, $current_page); // Đảm bảo trang hiện tại ít nhất là 1
+                    $offset = ($current_page - 1) * $items_per_page;
+
+                    // Gọi hàm queryallpro_with_sorting với tham số sắp xếp
+                    $result_pro = queryallpro_with_sorting($key, 0, $sort_by, $sort_order, $offset, $items_per_page);
+                    $total_products = count_products($key, 0);
+                    $total_pages = ceil($total_products / $items_per_page);
+
+                    include './sanpham/listproduct.php';
                     break;
                 // bình luận 
                 case "listbl":

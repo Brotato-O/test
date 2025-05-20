@@ -23,6 +23,54 @@ function queryallpro($key, $idcate, $offset = null, $limit = null)
     return $result;
 }
 
+// Hàm lấy danh sách sản phẩm với các tùy chọn sắp xếp
+function queryallpro_with_sorting($key, $idcate, $sort_by = 'id', $sort_order = 'asc', $offset = null, $limit = null)
+{
+    try {
+        // Xây dựng câu truy vấn SQL
+        $sql = "SELECT p.*, c.cate_name FROM products p 
+                LEFT JOIN category c ON p.cate_id = c.cate_id 
+                WHERE p.trangthai = 0";
+
+        if ($key != '') {
+            $sql .= " AND p.pro_name LIKE '%$key%'";
+        }
+
+        if ($idcate > 0) {
+            $sql .= " AND p.cate_id = $idcate";
+        }
+
+        // Sắp xếp theo các trường khác nhau
+        switch ($sort_by) {
+            case 'name':
+                $sql .= " ORDER BY p.pro_name " . ($sort_order == 'desc' ? 'DESC' : 'ASC');
+                break;
+            case 'price':
+                $sql .= " ORDER BY p.pro_price " . ($sort_order == 'desc' ? 'DESC' : 'ASC');
+                break;
+            case 'category':
+                $sql .= " ORDER BY c.cate_name " . ($sort_order == 'desc' ? 'DESC' : 'ASC');
+                break;
+            case 'brand':
+                $sql .= " ORDER BY p.pro_brand " . ($sort_order == 'desc' ? 'DESC' : 'ASC');
+                break;
+            default: // mặc định sắp xếp theo ID
+                $sql .= " ORDER BY p.pro_id " . ($sort_order == 'desc' ? 'DESC' : 'ASC');
+        }
+
+        // Add pagination if offset and limit are provided
+        if ($offset !== null && $limit !== null) {
+            $sql .= " LIMIT $offset, $limit";
+        }
+
+        // Thực hiện truy vấn
+        $result = pdo_queryall($sql);
+        return $result;
+    } catch (Exception $e) {
+        error_log("Error in queryallpro_with_sorting: " . $e->getMessage());
+        return [];
+    }
+}
 
 function addpro($ten, $img, $price, $ct, $cate, $inventory, $brand)
 {
