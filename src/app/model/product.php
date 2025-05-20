@@ -208,8 +208,19 @@ function countProId()
 }
 function loadall_sanpham_top5()
 {
-    $sql = "select pro_name,pro_stock from products where 1 order by pro_stock desc limit 0,5";
+    $sql = "SELECT p.pro_id, p.pro_name FROM products p WHERE 1 ORDER BY p.pro_id DESC LIMIT 0,5";
     $listsanpham = pdo_queryall($sql);
+
+    // Add inventory data to each product
+    foreach ($listsanpham as &$product) {
+        $product['pro_stock'] = get_total_inventory($product['pro_id']);
+    }
+
+    // Sort by inventory (total stock) manually
+    usort($listsanpham, function ($a, $b) {
+        return $b['pro_stock'] - $a['pro_stock']; // Sort descending
+    });
+
     return $listsanpham;
 }
 function loadAll_products($searchProduct = "", $id = 0)

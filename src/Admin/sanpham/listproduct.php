@@ -60,7 +60,7 @@
             <thead>
                 <tr>
                     <Th class="text-bg-secondary"></Th>
-                    <th class="text-bg-secondary">Mã sản phẩm</th>
+                    <th class="text-bg-secondary">Mã SP</th>
                     <th class="text-bg-secondary">Ảnh sản phẩm</th>
                     <th class="text-bg-secondary">Tên sản phẩm</th>
                     <Th class="text-bg-secondary">Danh mục</Th>
@@ -115,7 +115,7 @@
                     <td><img src="./sanpham/img/<?php echo $pro_img ?>" class="w-50 mg-thumbnail h-50" alt=""></td>
                     <td><?php echo $pro_name ?></td>
                     <td><?php echo $cate_name ?></td>
-                    <td><?php echo number_format($pro_price) ?> VNĐ</td>
+                    <td><?php echo number_format($pro_price) ?> $</td>
                     <td><?php echo $pro_brand ?></td>
                     <td><?php echo $inventory ?></td>
 

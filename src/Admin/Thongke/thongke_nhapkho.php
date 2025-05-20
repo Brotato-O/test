@@ -55,10 +55,6 @@ function formatStatus($status)
 
 <div class="container-fluid px-4">
     <h1 class="mt-4">Thống kê nhập kho</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="indexadmin.php">Dashboard</a></li>
-        <li class="breadcrumb-item active">Thống kê nhập kho</li>
-    </ol>
 
     <!-- Filter Form -->
     <div class="card mb-4">
@@ -127,7 +123,7 @@ function formatStatus($status)
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h5>Tổng giá trị</h5>
-                            <h2><?= number_format($tong_thongke['tong_gia_tri'] ?? 0) ?> VNĐ</h2>
+                            <h2><?= number_format($tong_thongke['tong_gia_tri'] ?? 0) ?> $</h2>
                         </div>
                         <i class="fas fa-money-bill-wave fa-3x"></i>
                     </div>
@@ -172,7 +168,7 @@ function formatStatus($status)
                             <td><?= $item['ten_nguoitao'] ?></td>
                             <td><?= number_format($item['so_sanpham_nhap']) ?></td>
                             <td><?= number_format($item['tong_so_luong']) ?></td>
-                            <td><?= number_format($item['tong_gia_tri']) ?> VNĐ</td>
+                            <td><?= number_format($item['tong_gia_tri']) ?> $</td>
                             <td><?= formatStatus($item['trang_thai']) ?></td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-info viewDetails"
