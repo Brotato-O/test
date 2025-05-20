@@ -32,6 +32,14 @@ function delete_ncc($ncc_id)
     pdo_execute($sql);
 }
 
+// Thêm nhà cung cấp mới
+function insert_ncc($ncc_name, $ncc_email, $ncc_sdt, $ncc_diachi)
+{
+    $sql = "INSERT INTO nhacungcap (ncc_name, ncc_email, ncc_sdt, ncc_diachi, ncc_trangthai) 
+            VALUES ('$ncc_name', '$ncc_email', '$ncc_sdt', '$ncc_diachi', 0)";
+    pdo_execute($sql);
+}
+
 // Thêm nhà cung cấp mới và trả về ID
 function insert_ncc_return_id($ncc_name, $ncc_email, $ncc_sdt, $ncc_diachi)
 {

@@ -146,142 +146,142 @@ function hasPermission($action, $permissions)
                 </li>
 
                 <?php if (hasPermission('Quản lý danh mục', $permissions)) { ?>
-                    <li class="sidebar-list-item <?php echo ($current_act == 'cate') ? 'active' : ''; ?>">
-                        <a href="indexadmin.php?act=cate">
-                            <span class="material-icons-outlined"><i class="bi bi-card-list"></i></span> Danh mục
-                        </a>
-                    </li>
+                <li class="sidebar-list-item <?php echo ($current_act == 'cate') ? 'active' : ''; ?>">
+                    <a href="indexadmin.php?act=cate">
+                        <span class="material-icons-outlined"><i class="bi bi-card-list"></i></span> Danh mục
+                    </a>
+                </li>
                 <?php } ?>
 
                 <?php if (hasPermission('Quản lí sản phẩm', $permissions)) { ?>
-                    <li
-                        class="sidebar-list-item <?php echo (in_array($current_act, ['pro', 'thempro', 'suapro', 'chitietadmin', 'thungrac_product'])) ? 'active' : ''; ?>">
-                        <a href="indexadmin.php?act=pro">
-                            <span class="material-icons-outlined">fact_check</span> Sản phẩm
-                        </a>
-                    </li>
+                <li
+                    class="sidebar-list-item <?php echo (in_array($current_act, ['pro', 'thempro', 'suapro', 'chitietadmin', 'thungrac_product'])) ? 'active' : ''; ?>">
+                    <a href="indexadmin.php?act=pro">
+                        <span class="material-icons-outlined">fact_check</span> Sản phẩm
+                    </a>
+                </li>
                 <?php } ?>
 
                 <?php if (hasPermission('Quản lí người dùng', $permissions)) { ?>
-                    <li class="sidebar-list-item <?php echo ($current_act == 'listtk') ? 'active' : ''; ?>">
-                        <a href="indexadmin.php?act=listtk">
-                            <span class="material-icons-outlined"><i class="bi bi-person-vcard-fill"></i></span> Người dùng
-                        </a>
-                    </li>
+                <li class="sidebar-list-item <?php echo ($current_act == 'listtk') ? 'active' : ''; ?>">
+                    <a href="indexadmin.php?act=listtk">
+                        <span class="material-icons-outlined"><i class="bi bi-person-vcard-fill"></i></span> Người dùng
+                    </a>
+                </li>
                 <?php } ?>
 
                 <?php if (hasPermission('Quản lí bình luận', $permissions)) { ?>
-                    <li class="sidebar-list-item <?php echo ($current_act == 'listbl') ? 'active' : ''; ?>">
-                        <a href="indexadmin.php?act=listbl">
-                            <span class="material-icons-outlined"><i class="bi bi-chat-text-fill"></i></span> Bình luận
-                        </a>
-                    </li>
+                <li class="sidebar-list-item <?php echo ($current_act == 'listbl') ? 'active' : ''; ?>">
+                    <a href="indexadmin.php?act=listbl">
+                        <span class="material-icons-outlined"><i class="bi bi-chat-text-fill"></i></span> Bình luận
+                    </a>
+                </li>
                 <?php } ?>
 
                 <?php if (hasPermission('Quản lí thống kê', $permissions)) { ?>
-                    <li
-                        class="sidebar-list-item <?php echo (in_array($current_act, ['thongke', 'thongke_sanpham', 'thongke_doanhthu', 'thongke_donhang'])) ? 'active' : ''; ?>">
-                        <a href="indexadmin.php?act=thongke_sanpham">
-                            <span class="material-icons-outlined">poll</span> Thống kê đơn hàng
-                        </a>
-                    </li>
+                <li
+                    class="sidebar-list-item <?php echo (in_array($current_act, ['thongke', 'thongke_sanpham', 'thongke_doanhthu', 'thongke_donhang'])) ? 'active' : ''; ?>">
+                    <a href="indexadmin.php?act=thongke_sanpham">
+                        <span class="material-icons-outlined">poll</span> Thống kê đơn hàng
+                    </a>
+                </li>
                 <?php } ?>
 
                 <?php if (hasPermission('Quản lí đơn hàng', $permissions)) { ?>
-                    <li
-                        class="sidebar-list-item <?php echo (in_array($current_act, ['donhang', 'chitietdh', 'suadonhang', 'in_hoadon'])) ? 'active' : ''; ?>">
-                        <a href="indexadmin.php?act=donhang">
-                            <span class="material-icons-outlined"><i class="bi bi-cart-check-fill"></i></span> Danh sách đơn
-                            hàng
-                        </a>
-                    </li>
+                <li
+                    class="sidebar-list-item <?php echo (in_array($current_act, ['donhang', 'chitietdh', 'suadonhang', 'in_hoadon'])) ? 'active' : ''; ?>">
+                    <a href="indexadmin.php?act=donhang">
+                        <span class="material-icons-outlined"><i class="bi bi-cart-check-fill"></i></span> Danh sách đơn
+                        hàng
+                    </a>
+                </li>
                 <?php } ?>
 
                 <?php if (hasPermission('Quản lí nhà cung cấp', $permissions)) { ?>
-                    <li
-                        class="sidebar-list-item <?php echo (in_array($current_act, ['ncc', 'themNCC', 'suaNCC'])) ? 'active' : ''; ?>">
-                        <a href="indexadmin.php?act=ncc">
-                            <span class="material-icons-outlined"><i class="bi bi-person-vcard-fill"></i></span> Nhà cung
-                            cấp
-                        </a>
-                    </li>
+                <li
+                    class="sidebar-list-item <?php echo (in_array($current_act, ['ncc', 'themNCC', 'suaNCC'])) ? 'active' : ''; ?>">
+                    <a href="indexadmin.php?act=ncc">
+                        <span class="material-icons-outlined"><i class="bi bi-person-vcard-fill"></i></span> Nhà cung
+                        cấp
+                    </a>
+                </li>
                 <?php } ?>
 
                 <?php if (hasPermission('Quản lí màu', $permissions)) { ?>
-                    <li
-                        class="sidebar-list-item <?php echo (in_array($current_act, ['color', 'addcolor', 'updatecolor'])) ? 'active' : ''; ?>">
-                        <a href="indexadmin.php?act=color">
-                            <span class="material-icons-outlined"><i class="bi bi-person-vcard-fill"></i></span> Quản lý màu
-                        </a>
-                    </li>
+                <li
+                    class="sidebar-list-item <?php echo (in_array($current_act, ['color', 'addcolor', 'updatecolor'])) ? 'active' : ''; ?>">
+                    <a href="indexadmin.php?act=color">
+                        <span class="material-icons-outlined"><i class="bi bi-person-vcard-fill"></i></span> Quản lý màu
+                    </a>
+                </li>
                 <?php } ?>
 
                 <?php if (hasPermission('Quản lý thương hiệu', $permissions)) { ?>
-                    <li
-                        class="sidebar-list-item <?php echo (in_array($current_act, ['thuonghieu', 'addbrand', 'suabrand'])) ? 'active' : ''; ?>">
-                        <a href="indexadmin.php?act=thuonghieu">
-                            <span class="material-icons-outlined"><i class="bi bi-person-vcard-fill"></i></span> Quản lý
-                            thương hiệu
-                        </a>
-                    </li>
+                <li
+                    class="sidebar-list-item <?php echo (in_array($current_act, ['thuonghieu', 'addbrand', 'suabrand'])) ? 'active' : ''; ?>">
+                    <a href="indexadmin.php?act=thuonghieu">
+                        <span class="material-icons-outlined"><i class="bi bi-person-vcard-fill"></i></span> Quản lý
+                        thương hiệu
+                    </a>
+                </li>
                 <?php } ?>
 
                 <?php if (hasPermission('Quản lý phiếu nhập', $permissions)) { ?>
-                    <li
-                        class="sidebar-list-item <?php echo (in_array($current_act, ['phieunhap', 'addphieunhap', 'suaphieunhap'])) ? 'active' : ''; ?>">
-                        <a href="indexadmin.php?act=phieunhap">
-                            <span class="material-icons-outlined"><i class="bi bi-person-vcard-fill"></i></span> Quản lý
-                            phiếu nhập
-                        </a>
-                    </li>
+                <li
+                    class="sidebar-list-item <?php echo (in_array($current_act, ['phieunhap', 'addphieunhap', 'suaphieunhap'])) ? 'active' : ''; ?>">
+                    <a href="indexadmin.php?act=phieunhap">
+                        <span class="material-icons-outlined"><i class="bi bi-person-vcard-fill"></i></span> Quản lý
+                        phiếu nhập
+                    </a>
+                </li>
                 <?php } ?>
 
                 <?php if (hasPermission('Quản lý thống kê nhập kho', $permissions)) { ?>
-                    <li
-                        class="sidebar-list-item <?php echo (in_array($current_act, ['thongke_nhapkho'])) ? 'active' : ''; ?>">
-                        <a href="indexadmin.php?act=thongke_nhapkho">
-                            <span class="material-icons-outlined"><i class="bi bi-person-vcard-fill"></i></span> Quản lý
-                            thống kê nhập kho
-                        </a>
-                    </li>
+                <li
+                    class="sidebar-list-item <?php echo (in_array($current_act, ['thongke_nhapkho'])) ? 'active' : ''; ?>">
+                    <a href="indexadmin.php?act=thongke_nhapkho">
+                        <span class="material-icons-outlined"><i class="bi bi-person-vcard-fill"></i></span> Quản lý
+                        thống kê nhập kho
+                    </a>
+                </li>
                 <?php } ?>
 
 
                 <?php if (hasPermission('Quản lý phiếu bảo hành', $permissions)) { ?>
-                    <li
-                        class="sidebar-list-item <?php echo (in_array($current_act, ['bh', 'addbh1', 'addbh'])) ? 'active' : ''; ?>">
-                        <a href="indexadmin.php?act=bh">
-                            <span class="material-icons-outlined"><i class="bi bi-person-vcard-fill"></i></span> Quản lý
-                            phiếu bảo hành
-                        </a>
-                    </li>
+                <li
+                    class="sidebar-list-item <?php echo (in_array($current_act, ['bh', 'addbh1', 'addbh'])) ? 'active' : ''; ?>">
+                    <a href="indexadmin.php?act=bh">
+                        <span class="material-icons-outlined"><i class="bi bi-person-vcard-fill"></i></span> Quản lý
+                        phiếu bảo hành
+                    </a>
+                </li>
                 <?php } ?>
 
                 <?php if (hasPermission('Quản lý phiếu đổi/trả', $permissions)) { ?>
-                    <li class="sidebar-list-item">
-                        <a href="indexadmin.php?act=doitra">
-                            <span class="material-icons-outlined"><i class="bi bi-person-vcard-fill"></i></span> Quản lý
-                            phiếu đổi/trả
-                        </a>
-                    </li>
+                <li class="sidebar-list-item">
+                    <a href="indexadmin.php?act=doitra">
+                        <span class="material-icons-outlined"><i class="bi bi-person-vcard-fill"></i></span> Quản lý
+                        phiếu đổi/trả
+                    </a>
+                </li>
                 <?php } ?>
 
                 <?php if (hasPermission('Quản lý phân quyền', $permissions)) { ?>
-                    <li class="sidebar-list-item">
-                        <a href="indexadmin.php?act=pq">
-                            <span class="material-icons-outlined"><i class="bi bi-person-vcard-fill"></i></span> Quản lý
-                            phân quyền
-                        </a>
-                    </li>
+                <li class="sidebar-list-item">
+                    <a href="indexadmin.php?act=pq">
+                        <span class="material-icons-outlined"><i class="bi bi-person-vcard-fill"></i></span> Quản lý
+                        phân quyền
+                    </a>
+                </li>
                 <?php } ?>
 
                 <?php if (hasPermission('Quản lý vai trò', $permissions)) { ?>
-                    <li class="sidebar-list-item">
-                        <a href="indexadmin.php?act=vaitro">
-                            <span class="material-icons-outlined"><i class="bi bi-person-vcard-fill"></i></span> Quản lý vai
-                            trò
-                        </a>
-                    </li>
+                <li class="sidebar-list-item">
+                    <a href="indexadmin.php?act=vaitro">
+                        <span class="material-icons-outlined"><i class="bi bi-person-vcard-fill"></i></span> Quản lý vai
+                        trò
+                    </a>
+                </li>
                 <?php } ?>
                 <li class="sidebar-list-item">
                     <a href="logout_admin.php" class="text-danger">
@@ -394,6 +394,23 @@ function hasPermission($action, $permissions)
 
                     // Include file listNCC.php để hiển thị danh sách
                     include "nhacungcap/listNCC.php";
+                    break;
+
+                case 'themNCC':
+                    include "./nhacungcap/addNCC.php";
+                    break;
+
+                case 'addNCC':
+                    if (isset($_POST['themncc'])) {
+                        $ncc_name = $_POST['ncc_name'];
+                        $ncc_email = $_POST['ncc_email'];
+                        $ncc_sdt = $_POST['ncc_tel'];
+                        $ncc_diachi = $_POST['ncc_address'];
+
+                        insert_ncc($ncc_name, $ncc_email, $ncc_sdt, $ncc_diachi);
+                    }
+                    $listNCC = loadAllNcc();
+                    include "./nhacungcap/listNCC.php";
                     break;
 
                 case 'suaNCC':
