@@ -1,5 +1,5 @@
 <?php
-function query_allreceipts()
+function query_allreceipts($searchSupplier = '')
 {
     $sql = "SELECT 
     ir.id,
@@ -12,6 +12,15 @@ FROM import_receipts ir
 JOIN nhacungcap s ON ir.ncc_id = s.ncc_id
 JOIN khachhang u ON ir.created_by = u.kh_id
 ";
+
+    // Add search condition if searchSupplier is provided
+    if ($searchSupplier != '') {
+        $sql .= " WHERE s.ncc_name LIKE '%$searchSupplier%'";
+    }
+
+    // Order by latest receipts first
+    $sql .= " ORDER BY ir.id DESC";
+
     $result = pdo_queryall($sql);
     return $result;
 }
