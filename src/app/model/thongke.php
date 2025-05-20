@@ -279,3 +279,86 @@ function get_donhang_by_user($user_id, $date_from = null, $date_to = null)
 
     return pdo_queryall($sql);
 }
+
+// Hàm thống kê nhập kho theo tháng và năm
+function thongke_nhapkho($thang = null, $nam = null)
+{
+    // Nếu không có tháng/năm, sử dụng tháng/năm hiện tại
+    if ($thang === null) $thang = date('m');
+    if ($nam === null) $nam = date('Y');
+
+    // Xây dựng câu query
+    $sql = "SELECT 
+                ir.id as phieunhap_id, 
+                ir.receipt_date as ngay_nhap, 
+                ir.status as trang_thai,
+                s.ncc_name as ten_nhacungcap,
+                u.kh_name as ten_nguoitao,
+                COUNT(ird.id) as so_sanpham_nhap,
+                SUM(ird.quantity) as tong_so_luong,
+                SUM(ird.total_price) as tong_gia_tri
+            FROM 
+                import_receipts ir
+                JOIN nhacungcap s ON ir.ncc_id = s.ncc_id
+                JOIN khachhang u ON ir.created_by = u.kh_id
+                LEFT JOIN import_receipt_details ird ON ir.id = ird.receipt_id
+            WHERE 
+                MONTH(ir.receipt_date) = ? AND YEAR(ir.receipt_date) = ?
+            GROUP BY 
+                ir.id, ir.receipt_date, ir.status, s.ncc_name, u.kh_name
+            ORDER BY 
+                ir.receipt_date DESC";
+
+    $result = pdo_queryall($sql, $thang, $nam);
+    return $result;
+}
+
+// Hàm lấy tổng số lượng và giá trị nhập kho theo tháng và năm
+function thongke_nhapkho_tong($thang = null, $nam = null)
+{
+    // Nếu không có tháng/năm, sử dụng tháng/năm hiện tại
+    if ($thang === null) $thang = date('m');
+    if ($nam === null) $nam = date('Y');
+
+    $sql = "SELECT 
+                COUNT(DISTINCT ir.id) as tong_so_phieu,
+                SUM(ird.quantity) as tong_so_luong,
+                SUM(ird.total_price) as tong_gia_tri
+            FROM 
+                import_receipts ir
+                LEFT JOIN import_receipt_details ird ON ir.id = ird.receipt_id
+            WHERE 
+                MONTH(ir.receipt_date) = ? AND YEAR(ir.receipt_date) = ?";
+
+    $result = pdo_query_one($sql, $thang, $nam);
+    return $result;
+}
+
+// Hàm lấy chi tiết một phiếu nhập kho
+function thongke_nhapkho_chitiet($phieunhap_id)
+{
+    $sql = "SELECT 
+                ird.id,
+                ird.receipt_id,
+                ird.pro_id,
+                p.pro_name,
+                p.pro_img,
+                c.color_name,
+                c.color_ma,
+                s.size_name,
+                ird.quantity,
+                ird.unit_price,
+                ird.total_price
+            FROM 
+                import_receipt_details ird
+                JOIN products p ON ird.pro_id = p.pro_id
+                JOIN color c ON ird.color_id = c.color_id
+                JOIN size s ON ird.size_id = s.size_id
+            WHERE 
+                ird.receipt_id = ?
+            ORDER BY 
+                ird.id";
+
+    $result = pdo_queryall($sql, $phieunhap_id);
+    return $result;
+}

@@ -236,6 +236,17 @@ function hasPermission($action, $permissions)
                 </li>
                 <?php } ?>
 
+                <?php if (hasPermission('Quản lý thống kê nhập kho', $permissions)) { ?>
+                <li
+                    class="sidebar-list-item <?php echo (in_array($current_act, ['thongke_nhapkho'])) ? 'active' : ''; ?>">
+                    <a href="indexadmin.php?act=thongke_nhapkho">
+                        <span class="material-icons-outlined"><i class="bi bi-person-vcard-fill"></i></span> Quản lý
+                        thống kê nhập kho
+                    </a>
+                </li>
+                <?php } ?>
+
+
                 <?php if (hasPermission('Quản lý phiếu bảo hành', $permissions)) { ?>
                 <li
                     class="sidebar-list-item <?php echo (in_array($current_act, ['bh', 'addbh1', 'addbh'])) ? 'active' : ''; ?>">
@@ -1340,20 +1351,67 @@ function hasPermission($action, $permissions)
                                 JOIN khachhang k ON o.kh_id = k.kh_id 
                                 WHERE order_id = $order_id";
                         $thongtindh = pdo_query_one($sql);
+                    }
+                    break;
 
-                        // Lấy chi tiết đơn hàng
-                        $sql = "SELECT oc.*, p.pro_name, p.pro_img, c.color_name, s.size_name 
-                                FROM order_chitiet oc
-                                JOIN products p ON oc.pro_id = p.pro_id
-                                JOIN color c ON oc.color_id = c.color_id
-                                JOIN size s ON oc.size_id = s.size_id
-                                WHERE oc.order_id = $order_id";
-                        $chitietdh = pdo_queryall($sql);
+                // thống kê nhập kho
+                case 'thongke_nhapkho':
+                    // Xác định thời gian thống kê
+                    $thang = isset($_POST['thang']) ? (int)$_POST['thang'] : date('m');
+                    $nam = isset($_POST['nam']) ? (int)$_POST['nam'] : date('Y');
 
-                        // Gọi đến file xử lý tạo PDF
-                        include "./donhang/in_hoadon.php";
-                    } else {
-                        echo "Không tìm thấy đơn hàng!";
+                    // Hàm này cần được định nghĩa trong model/thongke.php
+                    $nhapkho = thongke_nhapkho($thang, $nam);
+
+                    include "./Thongke/thongke_nhapkho.php";
+                    break;
+
+                case 'thongke_nhapkho_chitiet':
+                    if (isset($_GET['id']) && $_GET['id'] > 0) {
+                        $phieunhap_id = (int)$_GET['id'];
+                        $chitiet = thongke_nhapkho_chitiet($phieunhap_id);
+
+                        // Chỉ trả về HTML để hiển thị trong modal
+                        echo '<div class="table-responsive">';
+                        echo '<table class="table table-bordered table-striped">';
+                        echo '<thead><tr><th>Sản phẩm</th><th>Màu</th><th>Size</th><th>Số lượng</th><th>Đơn giá</th><th>Thành tiền</th></tr></thead>';
+                        echo '<tbody>';
+
+                        $tong_soluong = 0;
+                        $tong_giatri = 0;
+
+                        if (!empty($chitiet)) {
+                            foreach ($chitiet as $item) {
+                                echo '<tr>';
+                                echo '<td><img src="./sanpham/img/' . $item['pro_img'] . '" class="img-thumbnail" width="50" height="50"> ' . $item['pro_name'] . '</td>';
+                                echo '<td><span class="color-box" style="background-color:' . $item['color_ma'] . '"></span> ' . $item['color_name'] . '</td>';
+                                echo '<td>' . $item['size_name'] . '</td>';
+                                echo '<td class="text-end">' . number_format($item['quantity']) . '</td>';
+                                echo '<td class="text-end">' . number_format($item['unit_price']) . ' VNĐ</td>';
+                                echo '<td class="text-end">' . number_format($item['total_price']) . ' VNĐ</td>';
+                                echo '</tr>';
+
+                                $tong_soluong += $item['quantity'];
+                                $tong_giatri += $item['total_price'];
+                            }
+                        } else {
+                            echo '<tr><td colspan="6" class="text-center">Không có dữ liệu chi tiết</td></tr>';
+                        }
+
+                        echo '</tbody>';
+                        echo '<tfoot>';
+                        echo '<tr class="table-dark">';
+                        echo '<th colspan="3" class="text-end">Tổng cộng:</th>';
+                        echo '<th class="text-end">' . number_format($tong_soluong) . '</th>';
+                        echo '<th></th>';
+                        echo '<th class="text-end">' . number_format($tong_giatri) . ' VNĐ</th>';
+                        echo '</tr>';
+                        echo '</tfoot>';
+                        echo '</table>';
+                        echo '</div>';
+
+                        // Dừng xử lý để không trả về giao diện admin
+                        exit();
                     }
                     break;
 

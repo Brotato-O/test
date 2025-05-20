@@ -133,6 +133,7 @@ INSERT INTO `chi_tiet_nhom_quyen` (`role_id`, `permission_id`, `hanh_dong`) VALU
 (1, 'Q13', NULL),
 (1, 'Q14', NULL),
 (1, 'Q15', NULL),
+(1, 'Q16', NULL),
 (1, 'Q2', NULL),
 (1, 'Q3', NULL),
 (1, 'Q4', NULL),
@@ -151,6 +152,7 @@ INSERT INTO `chi_tiet_nhom_quyen` (`role_id`, `permission_id`, `hanh_dong`) VALU
 (3, 'Q9', NULL),
 (4, 'Q1', NULL),
 (4, 'Q11', NULL),
+(4, 'Q16', NULL),
 (4, 'Q3', NULL),
 (4, 'Q8', NULL);
 
@@ -988,6 +990,7 @@ INSERT INTO `quyen` (`permission_id`, `permission_name`, `trang_thai`) VALUES
 ('Q13', 'Quản lý phiếu đổi/trả', 1),
 ('Q14', 'Quản lý phân quyền', 1),
 ('Q15', 'Quản lý vai trò', 1),
+('Q16','Quản lý thống kê nhập kho',1),
 ('Q2', 'Quản lý danh mục', 1),
 ('Q3', 'Quản lí sản phẩm', 1),
 ('Q4', 'Quản lí người dùng', 1),
