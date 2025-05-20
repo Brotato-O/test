@@ -52,15 +52,24 @@
     $date_to = isset($_POST['date_to']) && $_POST['date_to'] != '' ? $_POST['date_to'] : null;
     $sort_order = isset($_POST['sort_order']) ? $_POST['sort_order'] : 'desc';
 
-    // Format dates for display - chỉ hiển thị khoảng thời gian nếu người dùng đã nhập
-    $show_date_range = !empty($date_from) && !empty($date_to);
-    $date_from_display = $date_from ? date('d/m/Y', strtotime($date_from)) : '';
-    $date_to_display = $date_to ? date('d/m/Y', strtotime($date_to)) : '';
+    // Format dates for display
+    $show_date_range = $date_from || $date_to; // Hiển thị nếu có ít nhất một ngày
+    $date_from_display = $date_from ? date('d/m/Y', strtotime($date_from)) : 'tất cả thời gian trước đây';
+    $date_to_display = $date_to ? date('d/m/Y', strtotime($date_to)) : 'hiện tại';
 
-    // Lấy dữ liệu khách hàng top - chỉ khi có khoảng thời gian
-    $khach_hang_top = $show_date_range ? get_top_khachhang($date_from, $date_to, $top_limit, $sort_order) : [];
+    // Luôn gọi hàm get_top_khachhang(), và sử dụng tham số mặc định cho ngày không được nhập
+    $khach_hang_top = get_top_khachhang($date_from, $date_to, $top_limit, $sort_order);
 
-    // Lấy dữ liệu đơn hàng chi tiết cho mỗi khách hàng - chỉ hiển thị đơn hàng đã giao
+    // Hiển thị thông số debug nếu không có dữ liệu
+    $debug = [];
+    if (empty($khach_hang_top)) {
+        $debug['date_from'] = $date_from;
+        $debug['date_to'] = $date_to;
+        $debug['date_from_formatted'] = $date_from ? date('d-m-y', strtotime($date_from)) : 'null';
+        $debug['date_to_formatted'] = $date_to ? date('d-m-y', strtotime($date_to)) : 'null';
+    }
+
+    // Lấy dữ liệu đơn hàng chi tiết cho mỗi khách hàng
     $don_hang_chi_tiet = [];
     if (!empty($khach_hang_top)) {
         foreach ($khach_hang_top as $kh) {
@@ -82,10 +91,17 @@
     <!-- Thông báo khi không có dữ liệu -->
     <div class="alert alert-info">
         <i class="bi bi-info-circle"></i>
-        <?php if (empty($_POST['date_from']) || empty($_POST['date_to'])): ?>
-        Vui lòng nhập khoảng thời gian để xem thống kê khách hàng.
+        <?php if (empty($_POST['date_from']) && empty($_POST['date_to'])): ?>
+        Vui lòng chọn khoảng thời gian để xem thống kê khách hàng hoặc bấm nút "Xem thống kê" để xem toàn bộ.
         <?php else: ?>
         Không có dữ liệu đơn hàng đã hoàn thành trong khoảng thời gian này.
+        <?php if (!empty($debug)): ?>
+        <hr>
+        <details>
+            <summary>Thông tin debug (nhấn để hiển thị)</summary>
+            <pre><?php print_r($debug); ?></pre>
+        </details>
+        <?php endif; ?>
         <?php endif; ?>
     </div>
     <?php else: ?>

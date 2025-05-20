@@ -176,27 +176,33 @@ function thongke_donhang_theothoigian($kieu = 'thang')
 // Hàm lấy danh sách top khách hàng mua nhiều nhất trong khoảng thời gian
 function get_top_khachhang($date_from = null, $date_to = null, $top_limit = 5, $sort_order = 'desc')
 {
-    // Xử lý trường hợp không nhập ngày
-    if (!$date_from) {
-        $date_from = date('Y-m-d', strtotime('-1 year')); // Mặc định lấy 1 năm trước
-    }
+    // Xây dựng phần điều kiện WHERE cho ngày tháng
+    $date_condition = "";
 
-    if (!$date_to) {
-        $date_to = date('Y-m-d'); // Mặc định lấy ngày hiện tại
-    }
+    // Nếu cả hai ngày đều có
+    if ($date_from && $date_to) {
+        $date_from_formatted = date('d-m-y', strtotime($date_from));
+        $date_to_formatted = date('d-m-y', strtotime($date_to));
 
-    // Kiểm tra ngày từ phải nhỏ hơn ngày đến
-    if (strtotime($date_from) > strtotime($date_to)) {
-        // Nếu ngày từ lớn hơn ngày đến, đổi chỗ hai ngày
-        $temp = $date_from;
-        $date_from = $date_to;
-        $date_to = $temp;
-    }
+        // Đảm bảo date_from <= date_to
+        if (strtotime($date_from) > strtotime($date_to)) {
+            $temp = $date_from_formatted;
+            $date_from_formatted = $date_to_formatted;
+            $date_to_formatted = $temp;
+        }
 
-    // Chuyển đổi định dạng ngày để so sánh với định dạng trong database
-    // Lưu ý: Trong database, ngày đang được lưu dưới dạng dd-mm-yy
-    $date_from_formatted = date('d-m-y', strtotime($date_from));
-    $date_to_formatted = date('d-m-y', strtotime($date_to));
+        $date_condition = "AND STR_TO_DATE(o.order_date, '%d-%m-%y') BETWEEN STR_TO_DATE('$date_from_formatted', '%d-%m-%y') AND STR_TO_DATE('$date_to_formatted', '%d-%m-%y')";
+    }
+    // Chỉ có ngày bắt đầu
+    elseif ($date_from) {
+        $date_from_formatted = date('d-m-y', strtotime($date_from));
+        $date_condition = "AND STR_TO_DATE(o.order_date, '%d-%m-%y') >= STR_TO_DATE('$date_from_formatted', '%d-%m-%y')";
+    }
+    // Chỉ có ngày kết thúc
+    elseif ($date_to) {
+        $date_to_formatted = date('d-m-y', strtotime($date_to));
+        $date_condition = "AND STR_TO_DATE(o.order_date, '%d-%m-%y') <= STR_TO_DATE('$date_to_formatted', '%d-%m-%y')";
+    }
 
     $sql = "SELECT 
                 k.kh_id as user_id, 
@@ -211,7 +217,7 @@ function get_top_khachhang($date_from = null, $date_to = null, $top_limit = 5, $
             WHERE 
                 k.vaitro_id = 2 
                 AND o.order_trangthai = 'Đã giao hàng'
-                AND STR_TO_DATE(o.order_date, '%d-%m-%y') BETWEEN STR_TO_DATE('$date_from_formatted', '%d-%m-%y') AND STR_TO_DATE('$date_to_formatted', '%d-%m-%y')
+                $date_condition
             GROUP BY 
                 k.kh_id, k.kh_name, k.kh_mail 
             HAVING 
@@ -226,26 +232,33 @@ function get_top_khachhang($date_from = null, $date_to = null, $top_limit = 5, $
 // Hàm lấy chi tiết đơn hàng của khách hàng trong khoảng thời gian
 function get_donhang_by_user($user_id, $date_from = null, $date_to = null)
 {
-    // Xử lý trường hợp không nhập ngày
-    if (!$date_from) {
-        $date_from = date('Y-m-d', strtotime('-1 year')); // Mặc định lấy 1 năm trước
-    }
+    // Xây dựng phần điều kiện WHERE cho ngày tháng
+    $date_condition = "";
 
-    if (!$date_to) {
-        $date_to = date('Y-m-d'); // Mặc định lấy ngày hiện tại
-    }
+    // Nếu cả hai ngày đều có
+    if ($date_from && $date_to) {
+        $date_from_formatted = date('d-m-y', strtotime($date_from));
+        $date_to_formatted = date('d-m-y', strtotime($date_to));
 
-    // Kiểm tra ngày từ phải nhỏ hơn ngày đến
-    if (strtotime($date_from) > strtotime($date_to)) {
-        // Nếu ngày từ lớn hơn ngày đến, đổi chỗ hai ngày
-        $temp = $date_from;
-        $date_from = $date_to;
-        $date_to = $temp;
-    }
+        // Đảm bảo date_from <= date_to
+        if (strtotime($date_from) > strtotime($date_to)) {
+            $temp = $date_from_formatted;
+            $date_from_formatted = $date_to_formatted;
+            $date_to_formatted = $temp;
+        }
 
-    // Chuyển đổi định dạng ngày để so sánh với định dạng trong database
-    $date_from_formatted = date('d-m-y', strtotime($date_from));
-    $date_to_formatted = date('d-m-y', strtotime($date_to));
+        $date_condition = "AND STR_TO_DATE(o.order_date, '%d-%m-%y') BETWEEN STR_TO_DATE('$date_from_formatted', '%d-%m-%y') AND STR_TO_DATE('$date_to_formatted', '%d-%m-%y')";
+    }
+    // Chỉ có ngày bắt đầu
+    elseif ($date_from) {
+        $date_from_formatted = date('d-m-y', strtotime($date_from));
+        $date_condition = "AND STR_TO_DATE(o.order_date, '%d-%m-%y') >= STR_TO_DATE('$date_from_formatted', '%d-%m-%y')";
+    }
+    // Chỉ có ngày kết thúc
+    elseif ($date_to) {
+        $date_to_formatted = date('d-m-y', strtotime($date_to));
+        $date_condition = "AND STR_TO_DATE(o.order_date, '%d-%m-%y') <= STR_TO_DATE('$date_to_formatted', '%d-%m-%y')";
+    }
 
     $sql = "SELECT 
                 o.order_id, 
@@ -260,7 +273,7 @@ function get_donhang_by_user($user_id, $date_from = null, $date_to = null)
                 o.kh_id = '$user_id' 
                 AND k.vaitro_id = 2
                 AND o.order_trangthai = 'Đã giao hàng'
-                AND STR_TO_DATE(o.order_date, '%d-%m-%y') BETWEEN STR_TO_DATE('$date_from_formatted', '%d-%m-%y') AND STR_TO_DATE('$date_to_formatted', '%d-%m-%y')
+                $date_condition
             ORDER BY 
                 STR_TO_DATE(o.order_date, '%d-%m-%y') DESC";
 
