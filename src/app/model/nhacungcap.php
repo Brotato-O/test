@@ -26,6 +26,7 @@ function update_NCC($ncc_id, $ncc_name, $ncc_email, $ncc_sdt, $ncc_diachi)
     pdo_execute($sql);
 }
 
+
 function delete_ncc($ncc_id)
 {
     $sql = "delete from nhacungcap where ncc_id = $ncc_id";
