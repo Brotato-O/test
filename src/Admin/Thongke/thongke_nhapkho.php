@@ -151,7 +151,7 @@ function formatStatus($status)
                             <th>Số lượng</th>
                             <th>Giá trị</th>
                             <th>Trạng thái</th>
-                            <th>Thao tác</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -170,12 +170,7 @@ function formatStatus($status)
                             <td><?= number_format($item['tong_so_luong']) ?></td>
                             <td><?= number_format($item['tong_gia_tri']) ?> $</td>
                             <td><?= formatStatus($item['trang_thai']) ?></td>
-                            <td>
-                                <button type="button" class="btn btn-sm btn-info viewDetails"
-                                    data-id="<?= $item['phieunhap_id'] ?>">
-                                    <i class="fas fa-eye"></i> Chi tiết
-                                </button>
-                            </td>
+
                         </tr>
                         <?php endforeach; ?>
                         <?php endif; ?>
