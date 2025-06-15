@@ -36,7 +36,7 @@ public class HelloWorldController {
 		//create the message
 		String res = "Yo! " + theName;
 		//add message to the model
-		model.addAttribute("message", res); // Lỗi đã được sửa ở đây: addAddtribute -> addAttribute
+		model.addAttribute("message", res); 
 		return "helloworld";
 	}
 	
@@ -48,7 +48,7 @@ public class HelloWorldController {
 		//create the message
 		String res = "Yo! " + theName;
 		//add message to the model
-		model.addAttribute("message", res); // Lỗi đã được sửa ở đây: addAddtribute -> addAttribute
+		model.addAttribute("message", res); 
 		return "helloworld";
 	}
 }
