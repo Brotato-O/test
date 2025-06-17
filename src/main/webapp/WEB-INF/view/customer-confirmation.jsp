@@ -9,7 +9,8 @@
 </head>
 <body>
 
-The Customer is confirmed: ${customer.firstName} ${customer.lastName}
+The Customer is confirmed: ${customer.firstName} ${customer.lastName} <br>
+The Customer is free passes : ${customer.freePasses}
 
 	
 
