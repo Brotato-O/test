@@ -24,7 +24,10 @@
         <jakarta.validation.api.version>3.1.1</jakarta.validation.api.version>
         <hibernate.validator.version>9.0.0.Final</hibernate.validator.version>
         <jakarta.el.version>5.0.0</jakarta.el.version>
-    </properties>
+
+        <hibernate.version>6.4.4.Final</hibernate.version>
+        <mysql.connector.version>8.0.33</mysql.connector.version>
+        </properties>
 
     <dependencies>
         <dependency>
@@ -81,6 +84,18 @@
             <artifactId>expressly</artifactId>
             <version>${jakarta.el.version}</version>
             <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.connector.version}</version>
         </dependency>
         </dependencies>
 
