@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import spring_mvc_demo.vaidation.CourseCode;
 
 public class Customer {
 	
@@ -17,6 +18,16 @@ public class Customer {
 	@Max(value = 10,message = "must be less than or equal to 10")
 	private int freePasses;
 	
+	@NotNull(message = "is required")
+	@CourseCode(value="HELLO", message = "must start with HELLO")
+	private String courseCode;
+	
+	public String getCourseCode() {
+		return courseCode;
+	}
+	public void setCourseCode(String courseCode) {
+		this.courseCode = courseCode;
+	}
 	public String getFirstName() {
 		return firstName;
 	}

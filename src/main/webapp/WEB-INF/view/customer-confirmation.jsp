@@ -10,9 +10,8 @@
 <body>
 
 The Customer is confirmed: ${customer.firstName} ${customer.lastName} <br>
-The Customer is free passes : ${customer.freePasses}
-
+The Customer is free passes : ${customer.freePasses} <br>
+Course code: ${customer.courseCode}
 	
-
 </body>
 </html>
